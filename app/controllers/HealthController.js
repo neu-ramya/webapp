@@ -28,4 +28,3 @@ async function healthzHandler(req, res) {
 module.exports = {
     healthzHandler: healthzHandler,
 }
-
