@@ -22,9 +22,8 @@ const upload = multer();
   }
 })();
 
-
-
 app.use('/healthz', upload.none(), require('./app/routes/healthz'));
+app.use('/assignments', upload.none(), require('./app/routes/assignments'));
 
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
