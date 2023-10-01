@@ -1,3 +1,5 @@
+const bcrypt = require("bcrypt")
+
 async function insertDataIntoTable(Model, data) {
     try {
       for (const item of data) {
@@ -5,6 +7,8 @@ async function insertDataIntoTable(Model, data) {
         if (existingRecord) {
           console.log(`Email ${item.email} already exists. Skipping insertion.`);
         } else {
+          const hashedPassword = await bcrypt.hash(item.password, 10);
+          item.password = hashedPassword;
           await Model.create(item);
           console.log(`Data for email ${item.email} inserted successfully.`);
         }
@@ -17,4 +21,3 @@ async function insertDataIntoTable(Model, data) {
   module.exports = {
     insertDataIntoTable: insertDataIntoTable,
   };
-  
