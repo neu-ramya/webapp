@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../../config/database');
+const Account = require('../models/Account');
 
 const Assignment = sequelize.define(
   'Assignment',
@@ -9,6 +10,16 @@ const Assignment = sequelize.define(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
+    },
+    account_id: { 
+      type: DataTypes.UUID,
+      allowNull: false,
+      references: {
+        model: Account, 
+        key: 'id', 
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
     },
     name: {
       type: DataTypes.STRING,
