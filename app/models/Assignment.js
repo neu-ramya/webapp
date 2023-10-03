@@ -1,9 +1,9 @@
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../../config/database');
-const Account = require('../models/Account');
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("../../config/database");
+const Account = require("../models/Account");
 
 const Assignment = sequelize.define(
-  'Assignment',
+  "Assignment",
   {
     id: {
       type: DataTypes.UUID,
@@ -11,15 +11,15 @@ const Assignment = sequelize.define(
       primaryKey: true,
       allowNull: false,
     },
-    account_id: { 
+    account_id: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: Account, 
-        key: 'id', 
+        model: Account,
+        key: "id",
       },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
     },
     name: {
       type: DataTypes.STRING,
@@ -48,12 +48,12 @@ const Assignment = sequelize.define(
     assignment_created: {
       type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: DataTypes.NOW, 
+      defaultValue: DataTypes.NOW,
     },
     assignment_updated: {
       type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: DataTypes.NOW, 
+      defaultValue: DataTypes.NOW,
     },
   },
   {
