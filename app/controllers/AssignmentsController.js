@@ -13,19 +13,24 @@ async function putHandler(req, res) {
   console.log("assignments put handler");
 }
 async function postHandler(req, res) {
-  accountID = await checkAuth(req.headers.authorization);
-  await insertHandler(req, res, accountID);
+  await genericRequestHandler(req, res);
 }
 
 async function deleteHandler(req, res) {
   console.log("assignments delete handler");
 }
 
-async function checkAuth(authData) {
-  auth = new Buffer(authData.split(" ")[1], "base64").toString().split(":");
+async function methodDistributor(req, res, accountID){
+    if(req.method == 'POST') {
+        await insertHandler(req, res, accountID);
+    }
+}
+
+async function genericRequestHandler(req, res) {
+  auth = new Buffer(req.headers.authorization.split(" ")[1], "base64").toString().split(":");
   user = auth[0];
   pass = auth[1];
-  hashPass = await bcrypt.hash(pass, 10);
+
   try {
     const accountDetails = await account.findOne({
       where: {
@@ -35,19 +40,22 @@ async function checkAuth(authData) {
 
     if (accountDetails) {
       const pwMatch = await bcrypt.compare(pass, accountDetails.password);
-      // Account found
       if (pwMatch) {
-        console.log("Password matched");
-        return accountDetails.id;
+        await methodDistributor(req, res, accountDetails.id)
       } else {
-        console.log("Password not matched");
+        return res
+        .status(401)
+        .json({ error: "Invalid credentials" });
       }
     } else {
-      // Account not found
-      console.log("Account not found");
+        return res
+        .status(400)
+        .json({ error: "Account not found" });
     }
   } catch (error) {
-    console.error("Error finding account:", error);
+    return res
+      .status(503)
+      .json({ error: "Error while inserting data" });
   }
 }
 
