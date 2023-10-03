@@ -30,7 +30,7 @@ const Assignment = sequelize.define(
       allowNull: false,
       validate: {
         min: 1,
-        max: 10,
+        max: 100,
       },
     },
     num_of_attempts: {

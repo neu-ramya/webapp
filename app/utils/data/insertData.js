@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 
-async function insertDataIntoTable(Model, data) {
+async function insertDataIntoAccountTable(Model, data) {
   try {
     for (const item of data) {
       const existingRecord = await Model.findOne({
@@ -20,6 +20,19 @@ async function insertDataIntoTable(Model, data) {
   }
 }
 
+async function insertDataIntoAssignmentTable(Model, data) {
+  try {
+    await Model.destroy({
+      where: {},
+    })
+    await Model.bulkCreate(data);
+    console.log("Inserted into assignments table");    
+  } catch (error) {
+    console.error("Error inserting or updating data:", error);
+  }
+}
+
 module.exports = {
-  insertDataIntoTable: insertDataIntoTable,
+  insertDataIntoAccountTable: insertDataIntoAccountTable,
+  insertDataIntoAssignmentTable: insertDataIntoAssignmentTable
 };
