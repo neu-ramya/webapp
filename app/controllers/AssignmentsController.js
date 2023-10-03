@@ -11,6 +11,7 @@ async function getHandler(req, res) {
 }
 async function putHandler(req, res) {
   console.log("assignments put handler");
+  await genericRequestHandler(req, res);
 }
 async function postHandler(req, res) {
   await genericRequestHandler(req, res);
@@ -20,14 +21,19 @@ async function deleteHandler(req, res) {
   console.log("assignments delete handler");
 }
 
-async function methodDistributor(req, res, accountID){
-    if(req.method == 'POST') {
-        await insertHandler(req, res, accountID);
-    }
+async function methodDistributor(req, res, accountID) {
+  if (req.method == "POST") {
+    await insertHandler(req, res, accountID);
+  }
+  if (req.method == "PUT") {
+    await updateHandler(req, res, accountID);
+  }
 }
 
 async function genericRequestHandler(req, res) {
-  auth = new Buffer(req.headers.authorization.split(" ")[1], "base64").toString().split(":");
+  auth = new Buffer(req.headers.authorization.split(" ")[1], "base64")
+    .toString()
+    .split(":");
   user = auth[0];
   pass = auth[1];
 
@@ -41,21 +47,15 @@ async function genericRequestHandler(req, res) {
     if (accountDetails) {
       const pwMatch = await bcrypt.compare(pass, accountDetails.password);
       if (pwMatch) {
-        await methodDistributor(req, res, accountDetails.id)
+        await methodDistributor(req, res, accountDetails.id);
       } else {
-        return res
-        .status(401)
-        .json({ error: "Invalid credentials" });
+        return res.status(401).json({ error: "Invalid credentials" });
       }
     } else {
-        return res
-        .status(400)
-        .json({ error: "Account not found" });
+      return res.status(400).json({ error: "Account not found" });
     }
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: "Error while inserting data" });
+    return res.status(500).json({ error: "Error while inserting data" });
   }
 }
 
@@ -65,7 +65,7 @@ async function insertHandler(req, res, accountId) {
     "points",
     "num_of_attempts",
     "deadline",
-    "account_id"
+    "account_id",
   ];
   const missingKeys = [];
 
@@ -86,10 +86,59 @@ async function insertHandler(req, res, accountId) {
 
   try {
     postRes = await assignmentModel.create(accountData);
-    return res.status(201).json( postRes );
+    return res.status(201).json(postRes);
   } catch (error) {
     console.error("Error creating assignment:", error);
     return res.status(400).end();
+  }
+}
+
+async function updateHandler(req, res, accountId) {
+  const assignmentId = req.params.id;
+  const updateFields = req.body;
+
+  try {
+    try {
+      isAssignmentFound = await assignmentModel.findOne({
+        where: {
+          id: assignmentId,
+        },
+      });
+
+      if (isAssignmentFound) {
+        if ((isAssignmentFound.account_id == accountId)) {
+          const [updatedRowsCount] = await assignmentModel.update(
+            updateFields,
+            {
+              where: {
+                id: assignmentId,
+              },
+            }
+          );
+
+          if (updatedRowsCount > 0) {
+            res
+              .status(204)
+              .json({ message: "Assignment updated successfully" });
+          } else {
+            res.status(400).end();
+          }
+        } else {
+          res.status(403).json({ message: "Forbidden request" });
+        }
+      } else {
+        console.log('************');
+        console.log(isAssignmentFound);
+        console.log('************');
+        res.status(404).json({ error: "Assignment not found" });
+      }
+    } catch (error) {
+      console.error("Error updating assignment:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  } catch (error) {
+    console.error("Error updating assignment:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 }
 
