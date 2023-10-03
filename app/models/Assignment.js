@@ -45,10 +45,20 @@ const Assignment = sequelize.define(
       type: DataTypes.DATE,
       allowNull: false,
     },
+    assignment_created: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW, 
+    },
+    assignment_updated: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW, 
+    },
   },
   {
-    createdAt: 'assignment_created',
-    updatedAt: 'assignment_updated',
+    createdAt: false,
+    updatedAt: false,
   }
 );
 
