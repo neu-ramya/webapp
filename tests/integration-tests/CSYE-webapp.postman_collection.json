@@ -1,0 +1,1377 @@
+{
+	"info": {
+		"_postman_id": "815a726e-03c3-4af1-af48-5ab13fd7ee1c",
+		"name": "CSYE-webapp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24216985"
+	},
+	"item": [
+		{
+			"name": "New Folder",
+			"item": [
+				{
+					"name": "GET request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"GET method returns 200 OK\", function() {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/healthz",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"healthz"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Request with body",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"GET method with request body is 400 BAD REQUEST\", function() {",
+									"    pm.response.to.have.status(400)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "some-key",
+									"value": "value",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/healthz",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"healthz"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"PUT method returns 405 Method Not Allowed\", function() {",
+									"    pm.response.to.have.status(405)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/healthz",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"healthz"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"POST method returns 405 Method Not Allowed\", function() {",
+									"    pm.response.to.have.status(405)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/healthz",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"healthz"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"DELETE method returns 405 Method Not Allowed\", function() {",
+									"    pm.response.to.have.status(405)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/healthz",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"healthz"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Different website Request",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"GET method returns 404 Not Found\", function() {",
+									"    pm.response.to.have.status(404)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/health",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "assignments",
+			"item": [
+				{
+					"name": "GET request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"GET method returns 200 OK\", function() {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "mary.pop@example.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "nf536u",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:3000/assignments",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"assignments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET request with query params",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"GET method returns 400 Bad request\", function() {",
+									"    pm.response.to.have.status(400)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "mary.pop@example.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "nf536u",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:3000/assignments?asdfasdf=asdfasf",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"assignments"
+							],
+							"query": [
+								{
+									"key": "asdfasdf",
+									"value": "asdfasf"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET request Individual",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"GET method returns 200 OK\", function() {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "nf536u",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "mary.pop@example.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:3000/assignments/a623a935-01ef-4b1d-a125-59f96e45f7e5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"assignments",
+								"a623a935-01ef-4b1d-a125-59f96e45f7e5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Request with body",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"GET method with request body is 400 BAD REQUEST\", function() {",
+									"    pm.response.to.have.status(400)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "nf536u",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "mary.pop@example.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "some-key",
+									"value": "value",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/assignments",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"assignments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Request unauthorized",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"GET method with request body is 401 Unauthorized\", function() {",
+									"    pm.response.to.have.status(401)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "nf536uhfyt",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "mary.pop@example.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "some-key",
+									"value": "value",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/assignments",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"assignments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Request without auth header",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"GET method with request body is 401 Unauthorized\", function() {",
+									"    pm.response.to.have.status(401)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "some-key",
+									"value": "value",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/assignments",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"assignments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT request without ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"PUT method returns 400 BAD request\", function() {",
+									"    pm.response.to.have.status(400)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "nf536u",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "mary.pop@example.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "asdfafs",
+									"value": "asdfasf",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/assignments/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"assignments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT request withoutBody",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"PUT method returns 400 BAD request\", function() {",
+									"    pm.response.to.have.status(400)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "nf536u",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "mary.pop@example.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "asdfafs",
+									"value": "asdfasf",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/assignments/10fe6d95-c8b0-46b0-b511-ce0e2a3033be",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"assignments",
+								"10fe6d95-c8b0-46b0-b511-ce0e2a3033be"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"PUT method returns 204 Updated - Return No Content\", function() {",
+									"    pm.response.to.have.status(204)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "nf536u",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "mary.pop@example.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "{{$randomInt}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/assignments/10fe6d95-c8b0-46b0-b511-ce0e2a3033be",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"assignments",
+								"10fe6d95-c8b0-46b0-b511-ce0e2a3033be"
+							],
+							"query": [
+								{
+									"key": "asdf",
+									"value": "asdf",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT request Invalid Keys",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"PUT method returns 400 Bad Request\", function() {",
+									"    pm.response.to.have.status(400)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "nf536u",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "mary.pop@example.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nameasf",
+									"value": "asdfasfas",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/assignments/10fe6d95-c8b0-46b0-b511-ce0e2a3033be",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"assignments",
+								"10fe6d95-c8b0-46b0-b511-ce0e2a3033be"
+							],
+							"query": [
+								{
+									"key": "asdf",
+									"value": "asdf",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT request forbidden",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"PUT method returns 403 forbidden\", function() {",
+									"    pm.response.to.have.status(403)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "nf536u",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "mary.pop@example.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "{{$randomInt}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/assignments/39ae0b33-0ac2-4e1a-86e9-4ee8ec832405",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"assignments",
+								"39ae0b33-0ac2-4e1a-86e9-4ee8ec832405"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"POST method returns 201 success\", function() {",
+									"    pm.response.to.have.status(201)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "mary.pop@example.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "nf536u",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "test assignment",
+									"type": "text"
+								},
+								{
+									"key": "points",
+									"value": "13",
+									"type": "text"
+								},
+								{
+									"key": "num_of_attempts",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "deadline",
+									"value": "2020-10-29T09:00:00.001Z",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/assignments",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"assignments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Request without auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"POST method returns 401 Unauthorized\", function() {",
+									"    pm.response.to.have.status(401)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "test assignment",
+									"type": "text"
+								},
+								{
+									"key": "points",
+									"value": "13",
+									"type": "text"
+								},
+								{
+									"key": "num_of_attempts",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "deadline",
+									"value": "2020-10-29T09:00:00.001Z",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/assignments",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"assignments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Request invalid keys",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"POST method returns 400 Invalid keys\", function() {",
+									"    pm.response.to.have.status(400)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "mary.pop@example.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "nf536u",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "test assignment",
+									"type": "text"
+								},
+								{
+									"key": "points",
+									"value": "13",
+									"type": "text"
+								},
+								{
+									"key": "num_of_attempts",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "deadline",
+									"value": "2020-10-29T09:00:00.001Z",
+									"type": "text"
+								},
+								{
+									"key": "atetat",
+									"value": "asdfsaf",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/assignments",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"assignments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Request missing valid key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"POST method returns 400 Missing keys\", function() {",
+									"    pm.response.to.have.status(400)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "mary.pop@example.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "nf536u",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "test assignment",
+									"type": "text"
+								},
+								{
+									"key": "points",
+									"value": "13",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "num_of_attempts",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "deadline",
+									"value": "2020-10-29T09:00:00.001Z",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/assignments",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"assignments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE request with body",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"DELETE method returns 400 Bad request\", function() {",
+									"    pm.response.to.have.status(400)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "nf536u",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "mary.pop@example.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "some key",
+									"value": "some value",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/assignments/c214bd94-ac79-4042-b72d-5af75561c805",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"assignments",
+								"c214bd94-ac79-4042-b72d-5af75561c805"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE request without id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"DELETE method returns 400 Bad Request\", function() {",
+									"    pm.response.to.have.status(400)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "nf536u",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "mary.pop@example.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "some key",
+									"value": "some value",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/assignments/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"assignments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE request with invalid id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"DELETE method returns 404 not found\", function() {",
+									"    pm.response.to.have.status(404)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "nf536u",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "mary.pop@example.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "some key",
+									"value": "some value",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/assignments/asdfasfdasf",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"assignments",
+								"asdfasfdasf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE request forbidden",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"DELETE method returns 403 Forbidden\", function() {",
+									"    pm.response.to.have.status(403)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "nf536u",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "mary.pop@example.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "asdfsaf",
+									"value": "some value",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/assignments/fc426cd6-ad40-4f88-ac9c-5ae9b2c82251",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"assignments",
+								"fc426cd6-ad40-4f88-ac9c-5ae9b2c82251"
+							],
+							"query": [
+								{
+									"key": "asdfsafd",
+									"value": "assadf",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

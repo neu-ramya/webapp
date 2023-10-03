@@ -52,6 +52,9 @@ async function methodDistributor(req, res, accountID) {
 }
 
 async function genericRequestHandler(req, res) {
+  if(Object.keys(req.query).length > 0 ){
+    return res.status(400).end();
+  }
   if (!req.headers.authorization) {
     return res.status(401).end();
   } else {
@@ -138,7 +141,7 @@ async function insertHandler(req, res, accountId) {
   if (missingKeys.length > 0) {
     return res.status(400).end();
   }
-  
+
   delete accountData.assignment_created;
   delete accountData.assignment_updated;
 
@@ -199,10 +202,11 @@ async function updateHandler(req, res, accountId) {
 }
 
 async function deletionHandler(req, res, accountId) {
+  if((req.body && Object.keys(req.body).length > 0) || Object.keys(req.params).length === 0) {
+    return res.status(400).end();
+  }
   const assignmentId = req.params.id;
-  const updateFields = req.body;
-  delete updateFields.assignment_created;
-  delete updateFields.assignment_updated;
+
   try {
     try {
       existingAssignment = await assignmentModel.findOne({
