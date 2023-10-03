@@ -4,6 +4,7 @@ const account = require("../models/Account");
 
 async function assignmentsHandler(req, res) {
   console.log("assignments handler");
+  return res.status(404).end();
 }
 
 async function getHandler(req, res) {
