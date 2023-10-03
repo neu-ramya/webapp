@@ -8,12 +8,14 @@ async function assignmentsHandler(req, res) {
 
 async function getHandler(req, res) {
   console.log("assignments get handler");
+  await genericRequestHandler(req, res);
 }
 async function putHandler(req, res) {
   console.log("assignments put handler");
   await genericRequestHandler(req, res);
 }
 async function postHandler(req, res) {
+  console.log("assignments post handler");
   await genericRequestHandler(req, res);
 }
 
@@ -23,6 +25,9 @@ async function deleteHandler(req, res) {
 }
 
 async function methodDistributor(req, res, accountID) {
+  if (req.method == "GET") {
+    await getAllDataHandler(req, res, accountID);
+  }
   if (req.method == "POST") {
     await insertHandler(req, res, accountID);
   }
@@ -61,7 +66,17 @@ async function genericRequestHandler(req, res) {
       return res.status(400).json({ error: "Account not found" });
     }
   } catch (error) {
-    return res.status(500).json({ error: "Error while inserting data" });
+    return res.status(500).end();
+  }
+}
+
+async function getAllDataHandler(req, res, accountId) {
+  allData = await assignmentModel.findAll();
+  console.log(allData);
+  if (allData.length > 0) {
+    return res.status(200).json(allData);
+  } else {
+    return res.status(204).end();
   }
 }
 
