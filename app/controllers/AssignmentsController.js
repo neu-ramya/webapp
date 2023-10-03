@@ -9,7 +9,11 @@ async function assignmentsHandler(req, res) {
 
 async function getHandler(req, res) {
   console.log("assignments get handler");
-  await genericRequestHandler(req, res);
+  if (req.body) {
+    return res.status(400).end();
+  } else {
+    await genericRequestHandler(req, res);
+  }
 }
 async function putHandler(req, res) {
   console.log("assignments put handler");
@@ -22,7 +26,11 @@ async function postHandler(req, res) {
 
 async function deleteHandler(req, res) {
   console.log("assignments delete handler");
-  await genericRequestHandler(req, res);
+  if (req.body) {
+    return res.status(400).end();
+  } else {
+    await genericRequestHandler(req, res);
+  }
 }
 
 async function methodDistributor(req, res, accountID) {
@@ -47,30 +55,34 @@ async function genericRequestHandler(req, res) {
   //   auth = new Buffer(req.headers.authorization.split(" ")[1], "base64")
   //     .toString()
   //     .split(":");
-  const authHeader = req.headers.authorization.split(" ")[1];
-  const auth = Buffer.from(authHeader, "base64").toString().split(":");
-  user = auth[0];
-  pass = auth[1];
+  if (!req.headers.authorization) {
+    return res.status(401).end();
+  } else {
+    const authHeader = req.headers.authorization.split(" ")[1];
+    const auth = Buffer.from(authHeader, "base64").toString().split(":");
+    user = auth[0];
+    pass = auth[1];
 
-  try {
-    const accountDetails = await account.findOne({
-      where: {
-        email: user,
-      },
-    });
+    try {
+      const accountDetails = await account.findOne({
+        where: {
+          email: user,
+        },
+      });
 
-    if (accountDetails) {
-      const pwMatch = await bcrypt.compare(pass, accountDetails.password);
-      if (pwMatch) {
-        await methodDistributor(req, res, accountDetails.id);
+      if (accountDetails) {
+        const pwMatch = await bcrypt.compare(pass, accountDetails.password);
+        if (pwMatch) {
+          await methodDistributor(req, res, accountDetails.id);
+        } else {
+          return res.status(401).json({ error: "Invalid credentials" });
+        }
       } else {
-        return res.status(401).json({ error: "Invalid credentials" });
+        return res.status(400).json({ error: "Account not found" });
       }
-    } else {
-      return res.status(400).json({ error: "Account not found" });
+    } catch (error) {
+      return res.status(500).end();
     }
-  } catch (error) {
-    return res.status(500).end();
   }
 }
 
@@ -84,25 +96,24 @@ async function getAllDataHandler(req, res, accountId) {
 }
 
 async function getDataHandler(req, res, accountId) {
-    console.log("get individual Assignment")
-    const assignmentId = req.params.id;
-        try {
-          existingAssignment = await assignmentModel.findOne({
-            where: {
-              id: assignmentId,
-            },
-          });
-    
-          if (existingAssignment) {
-              return res.status(200).json(existingAssignment);
-            } else {
-              res.status(404).end();
-            }
-          } 
-        catch (error) {
-          res.status(500).json({ error: "Internal Server Error" });
-        }
+  console.log("get individual Assignment");
+  const assignmentId = req.params.id;
+  try {
+    existingAssignment = await assignmentModel.findOne({
+      where: {
+        id: assignmentId,
+      },
+    });
+
+    if (existingAssignment) {
+      return res.status(200).json(existingAssignment);
+    } else {
+      res.status(404).end();
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
   }
+}
 
 async function insertHandler(req, res, accountId) {
   const requiredKeys = [
