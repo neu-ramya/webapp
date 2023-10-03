@@ -83,6 +83,8 @@ async function insertHandler(req, res, accountId) {
       .status(400)
       .json({ error: `Missing required keys: ${missingKeys.join(", ")}` });
   }
+  delete accountData.assignment_created;
+  delete accountData.assignment_updated;
 
   try {
     postRes = await assignmentModel.create(accountData);
@@ -96,7 +98,8 @@ async function insertHandler(req, res, accountId) {
 async function updateHandler(req, res, accountId) {
   const assignmentId = req.params.id;
   const updateFields = req.body;
-
+    delete updateFields.assignment_created;
+    delete updateFields.assignment_updated;
   try {
     try {
       isAssignmentFound = await assignmentModel.findOne({
@@ -106,7 +109,7 @@ async function updateHandler(req, res, accountId) {
       });
 
       if (isAssignmentFound) {
-        if ((isAssignmentFound.account_id == accountId)) {
+        if ((isAssignmentFound.account_id === accountId)) {
           const [updatedRowsCount] = await assignmentModel.update(
             updateFields,
             {
