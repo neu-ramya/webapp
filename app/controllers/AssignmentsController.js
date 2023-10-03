@@ -54,7 +54,7 @@ async function genericRequestHandler(req, res) {
     }
   } catch (error) {
     return res
-      .status(503)
+      .status(500)
       .json({ error: "Error while inserting data" });
   }
 }
@@ -85,11 +85,11 @@ async function insertHandler(req, res, accountId) {
   }
 
   try {
-    await assignmentModel.create(accountData);
-    return res.status(200).json({ message: "Assignment created successfully" });
+    postRes = await assignmentModel.create(accountData);
+    return res.status(201).json( postRes );
   } catch (error) {
     console.error("Error creating assignment:", error);
-    return res.status(500).json({ error: "Internal Server Error" });
+    return res.status(400).end();
   }
 }
 
