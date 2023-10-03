@@ -129,11 +129,16 @@ async function insertHandler(req, res, accountId) {
     }
   });
 
-  if (missingKeys.length > 0) {
-    return res
-      .status(400)
-      .end();
+  for (const key in req.body) {
+    if (!requiredKeys.includes(key)) {
+      return res.status(400).end();
+    }
   }
+
+  if (missingKeys.length > 0) {
+    return res.status(400).end();
+  }
+  
   delete accountData.assignment_created;
   delete accountData.assignment_updated;
 
