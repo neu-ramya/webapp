@@ -19,6 +19,7 @@ async function postHandler(req, res) {
 
 async function deleteHandler(req, res) {
   console.log("assignments delete handler");
+  await genericRequestHandler(req, res);
 }
 
 async function methodDistributor(req, res, accountID) {
@@ -28,12 +29,17 @@ async function methodDistributor(req, res, accountID) {
   if (req.method == "PUT") {
     await updateHandler(req, res, accountID);
   }
+  if (req.method == "DELETE") {
+    await deletionHandler(req, res, accountID);
+  }
 }
 
 async function genericRequestHandler(req, res) {
-  auth = new Buffer(req.headers.authorization.split(" ")[1], "base64")
-    .toString()
-    .split(":");
+  //   auth = new Buffer(req.headers.authorization.split(" ")[1], "base64")
+  //     .toString()
+  //     .split(":");
+  const authHeader = req.headers.authorization.split(" ")[1];
+  const auth = Buffer.from(authHeader, "base64").toString().split(":");
   user = auth[0];
   pass = auth[1];
 
@@ -133,12 +139,47 @@ async function updateHandler(req, res, accountId) {
         res.status(404).json({ error: "Assignment not found" });
       }
     } catch (error) {
-      console.error("Error updating assignment:", error);
       res.status(500).json({ error: "Internal Server Error" });
     }
   } catch (error) {
-    console.error("Error updating assignment:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: "Error while checking account" });
+  }
+}
+
+async function deletionHandler(req, res, accountId) {
+  const assignmentId = req.params.id;
+  const updateFields = req.body;
+  delete updateFields.assignment_created;
+  delete updateFields.assignment_updated;
+  try {
+    try {
+      existingAssignment = await assignmentModel.findOne({
+        where: {
+          id: assignmentId,
+        },
+      });
+
+      if (existingAssignment) {
+        if (existingAssignment.account_id === accountId) {
+          await assignmentModel.destroy({
+            where: {
+              id: assignmentId,
+            },
+          });
+          return res
+            .status(204)
+            .json({ message: "Assignment deleted successfully" });
+        } else {
+          res.status(403).end();
+        }
+      } else {
+        res.status(404).json({ message: "Assignment not found" });
+      }
+    } catch (error) {
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Error while checking account" });
   }
 }
 
