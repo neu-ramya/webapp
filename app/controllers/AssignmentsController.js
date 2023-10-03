@@ -25,8 +25,11 @@ async function deleteHandler(req, res) {
 }
 
 async function methodDistributor(req, res, accountID) {
-  if (req.method == "GET") {
+  if (req.method == "GET" && !req.params.id) {
     await getAllDataHandler(req, res, accountID);
+  }
+  if (req.method == "GET" && req.params.id) {
+    await getDataHandler(req, res, accountID);
   }
   if (req.method == "POST") {
     await insertHandler(req, res, accountID);
@@ -72,13 +75,33 @@ async function genericRequestHandler(req, res) {
 
 async function getAllDataHandler(req, res, accountId) {
   allData = await assignmentModel.findAll();
-  console.log(allData);
   if (allData.length > 0) {
     return res.status(200).json(allData);
   } else {
     return res.status(204).end();
   }
 }
+
+async function getDataHandler(req, res, accountId) {
+    console.log("get individual Assignment")
+    const assignmentId = req.params.id;
+        try {
+          existingAssignment = await assignmentModel.findOne({
+            where: {
+              id: assignmentId,
+            },
+          });
+    
+          if (existingAssignment) {
+              return res.status(200).json(existingAssignment);
+            } else {
+              res.status(404).end();
+            }
+          } 
+        catch (error) {
+          res.status(500).json({ error: "Internal Server Error" });
+        }
+  }
 
 async function insertHandler(req, res, accountId) {
   const requiredKeys = [
