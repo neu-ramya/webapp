@@ -52,9 +52,6 @@ async function methodDistributor(req, res, accountID) {
 }
 
 async function genericRequestHandler(req, res) {
-  //   auth = new Buffer(req.headers.authorization.split(" ")[1], "base64")
-  //     .toString()
-  //     .split(":");
   if (!req.headers.authorization) {
     return res.status(401).end();
   } else {
@@ -62,23 +59,21 @@ async function genericRequestHandler(req, res) {
     const auth = Buffer.from(authHeader, "base64").toString().split(":");
     user = auth[0];
     pass = auth[1];
-
     try {
       const accountDetails = await account.findOne({
         where: {
           email: user,
         },
       });
-
       if (accountDetails) {
         const pwMatch = await bcrypt.compare(pass, accountDetails.password);
         if (pwMatch) {
           await methodDistributor(req, res, accountDetails.id);
         } else {
-          return res.status(401).json({ error: "Invalid credentials" });
+          return res.status(401).end();
         }
       } else {
-        return res.status(400).json({ error: "Account not found" });
+        return res.status(400).end();
       }
     } catch (error) {
       return res.status(500).end();
@@ -111,7 +106,7 @@ async function getDataHandler(req, res, accountId) {
       res.status(404).end();
     }
   } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).end();
   }
 }
 
@@ -137,7 +132,7 @@ async function insertHandler(req, res, accountId) {
   if (missingKeys.length > 0) {
     return res
       .status(400)
-      .json({ error: `Missing required keys: ${missingKeys.join(", ")}` });
+      .end();
   }
   delete accountData.assignment_created;
   delete accountData.assignment_updated;
@@ -152,10 +147,14 @@ async function insertHandler(req, res, accountId) {
 }
 
 async function updateHandler(req, res, accountId) {
+  if((typeof req.body === "undefined" || Object.keys(req.body).length === 0) ||  !req.params.id) {
+    return res.status(400).end();
+  } 
   const assignmentId = req.params.id;
   const updateFields = req.body;
   delete updateFields.assignment_created;
   delete updateFields.assignment_updated;
+
   try {
     try {
       existingAssignment = await assignmentModel.findOne({
@@ -176,23 +175,21 @@ async function updateHandler(req, res, accountId) {
           );
 
           if (updatedRowsCount > 0) {
-            res
-              .status(204)
-              .json({ message: "Assignment updated successfully" });
+            return res.status(204).end();
           } else {
-            res.status(400).end();
+            return res.status(400).end();
           }
         } else {
-          res.status(403).json({ message: "Forbidden request" });
+          return res.status(403).end();
         }
       } else {
-        res.status(404).json({ error: "Assignment not found" });
+        return res.status(404).end();
       }
     } catch (error) {
-      res.status(500).json({ error: "Internal Server Error" });
+      return res.status(500).end();
     }
   } catch (error) {
-    res.status(500).json({ error: "Error while checking account" });
+    return res.status(500).end();
   }
 }
 
@@ -216,20 +213,18 @@ async function deletionHandler(req, res, accountId) {
               id: assignmentId,
             },
           });
-          return res
-            .status(204)
-            .json({ message: "Assignment deleted successfully" });
+          return res.status(204).end();
         } else {
           res.status(403).end();
         }
       } else {
-        res.status(404).json({ message: "Assignment not found" });
+        res.status(404).end();
       }
     } catch (error) {
-      res.status(500).json({ error: "Internal Server Error" });
+      res.status(500).end();
     }
   } catch (error) {
-    res.status(500).json({ error: "Error while checking account" });
+    res.status(500).end();
   }
 }
 

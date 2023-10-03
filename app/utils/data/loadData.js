@@ -7,7 +7,7 @@ const { insertDataIntoAccountTable, insertDataIntoAssignmentTable } = require(".
 const accountCSVPath = "/Users/ramya/Cloud/webapp/app/data/users.csv";
 
 async function loadData() {
-  if(process.env.LOCAL_TABLES === "true") {
+  if(process.env.PROF_TABLES === "true") {
     try {
       const accountData = await parseCSV(accountCSVPath);
       await insertDataIntoAccountTable(Account, accountData);
