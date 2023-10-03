@@ -1,14 +1,14 @@
-require('dotenv').config()
-const express = require('express');
+require("dotenv").config();
+const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
-const { sequelize } = require('./config/database');
-const { loadData } = require('./app/utils/data/loadData');
+const { sequelize } = require("./config/database");
+const { loadData } = require("./app/utils/data/loadData");
 
-const Account = require('./app/models/Account');
-const Assignment = require('./app/models/assignment');
+const Account = require("./app/models/Account");
+const Assignment = require("./app/models/assignment");
 
-const multer  = require('multer');
+const multer = require("multer");
 const upload = multer();
 
 (async () => {
@@ -16,16 +16,15 @@ const upload = multer();
     await sequelize.authenticate();
     await sequelize.sync();
     await loadData();
-    console.log('Database connection has been established successfully.');
+    console.log("Database connection has been established successfully.");
   } catch (error) {
-    console.error('Unable to connect to the database:', error);
+    console.error("Unable to connect to the database:", error);
   }
 })();
 
-app.use('/healthz', upload.none(), require('./app/routes/healthz'));
-app.use('/assignments', upload.none(), require('./app/routes/assignments'));
+app.use("/healthz", upload.none(), require("./app/routes/healthz"));
+app.use("/assignments", upload.none(), require("./app/routes/assignments"));
 
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
-

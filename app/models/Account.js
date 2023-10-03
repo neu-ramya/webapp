@@ -1,8 +1,8 @@
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../../config/database');
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("../../config/database");
 
 const Account = sequelize.define(
-  'Account',
+  "Account",
   {
     id: {
       type: DataTypes.UUID,
@@ -22,7 +22,7 @@ const Account = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
       set(value) {
-        this.setDataValue('password', value);
+        this.setDataValue("password", value);
       },
     },
     email: {
@@ -35,8 +35,8 @@ const Account = sequelize.define(
     },
   },
   {
-    createdAt: 'account_created',
-    updatedAt: 'account_updated',
+    createdAt: "account_created",
+    updatedAt: "account_updated",
   }
 );
 

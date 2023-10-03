@@ -1,4 +1,4 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize } = require("sequelize");
 
 const sequelize = new Sequelize(
   "assignment_2",
@@ -10,8 +10,6 @@ const sequelize = new Sequelize(
   }
 );
 
-
 module.exports = {
   sequelize,
 };
-

@@ -98,18 +98,18 @@ async function insertHandler(req, res, accountId) {
 async function updateHandler(req, res, accountId) {
   const assignmentId = req.params.id;
   const updateFields = req.body;
-    delete updateFields.assignment_created;
-    delete updateFields.assignment_updated;
+  delete updateFields.assignment_created;
+  delete updateFields.assignment_updated;
   try {
     try {
-      isAssignmentFound = await assignmentModel.findOne({
+      existingAssignment = await assignmentModel.findOne({
         where: {
           id: assignmentId,
         },
       });
 
-      if (isAssignmentFound) {
-        if ((isAssignmentFound.account_id === accountId)) {
+      if (existingAssignment) {
+        if (existingAssignment.account_id === accountId) {
           const [updatedRowsCount] = await assignmentModel.update(
             updateFields,
             {
@@ -130,9 +130,6 @@ async function updateHandler(req, res, accountId) {
           res.status(403).json({ message: "Forbidden request" });
         }
       } else {
-        console.log('************');
-        console.log(isAssignmentFound);
-        console.log('************');
         res.status(404).json({ error: "Assignment not found" });
       }
     } catch (error) {
