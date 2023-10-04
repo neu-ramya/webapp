@@ -52,7 +52,7 @@ jobs:
         run: mysql -e 'SHOW DATABASES;'
         
       - name: set root user DB password
-        run: mysql -D mysql -e "ALTER USER '$DB_USER'@'$DB_DATABASE' IDENTIFIED BY '$DB_USER'";
+        run: mysql -D mysql -e "ALTER USER 'root'@'webapp' IDENTIFIED BY 'root'";
 
       - name: flush privileges
         run: mysql -D mysql -e "flush privileges";
