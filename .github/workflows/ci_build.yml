@@ -20,7 +20,7 @@ jobs:
       DB_DATABASE: assignment_2
       DB_USER: root
       DB_PASS: root
-      PROF_TABLES: true
+      PROF_TABLES: false
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -41,7 +41,7 @@ jobs:
           echo "DB_DATABASE=assignment_2" >> .env
           echo "DB_USER=root" >> .env
           echo "DB_PASS=root" >> .env
-          echo "PROF_TABLES=true" >> .env
+          echo "PROF_TABLES=false" >> .env
 
       - name: Setup node
         uses: actions/setup-node@v3
