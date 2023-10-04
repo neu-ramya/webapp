@@ -59,8 +59,8 @@ jobs:
 
       - name: Create Database
         run: |
-          mysql -e 'SHOW DATABASES;' -uroot -proot
-          mysql -uroot -proot -e "CREATE DATABASE assignment_2;"
+          sudo mysql -e 'SHOW DATABASES;' -uroot
+          sudo mysql -uroot -e "CREATE DATABASE assignment_2;"
 
       # - name: Set up MySQL
       #   run: |
