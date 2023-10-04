@@ -1,12 +1,12 @@
-name: ci-build
-run-name: Build system for our webapp
+name: pr-ci-build
+run-name: Build system for webapp during PR
 on:
-  push:
+  pull_request_target:
     branches:
       - main
       - master
 jobs:
-  ci-build:
+  pr-ci-build:
     runs-on: ubuntu-latest
     env:
       DB_CONNECTION: mysql
@@ -19,6 +19,12 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+      
+      - name: Fetch the merge commit
+        run: git fetch origin "refs/pull/${{ github.event.pull_request.number}}/merge:refs/pull/${{ github.event.pull_request.number}}/merge"
+
+      - name: Check out the merge commit
+        run: git checkout "refs/pull/${{ github.event.pull_request.number}}/merge"
         
       - name: create tmp env file
         run: |
@@ -55,9 +61,14 @@ jobs:
           mysql -u root -e "CREATE DATABASE assignment_2;"
           mysql -e 'SHOW DATABASES;' -uroot
 
+      # - name: Set up MySQL
+      #   run: |
+      #     sudo systemctl start mysql
+      #     mysql -e 'CREATE DATABASE assignment_2;' -uroot -proot
+      #     mysql -e 'SHOW DATABASES;' -uroot -proot
+
       - name: Start Express.js Server
         run: |
-          pwd
           npm run ci
 
       - uses: matt-ball/newman-action@master
