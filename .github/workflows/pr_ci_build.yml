@@ -28,12 +28,12 @@ jobs:
           ls -al
           touch .env
           echo "DB_CONNECTION=mysql" >> .env
-          echo "DB_HOST=${{ vars.DB_HOST }}" >> .env
-          echo "DB_PORT=${{ vars.DB_PORT }}" >> .env
-          echo "DB_DATABASE=${{ vars.DB_DATABASE }}" >> .env
-          echo "DB_USER=${{ vars.DB_USER }}" >> .env
-          echo "DB_PASS=${{ vars.DB_PASS }}" >> .env
-          echo "PROF_TABLES=${{ vars.PROF_TABLES }}" >> .env
+          echo "DB_HOST=$DB_HOST" >> .env
+          echo "DB_PORT=$DB_PORT" >> .env
+          echo "DB_DATABASE=$DB_DATABASE" >> .env
+          echo "DB_USER=$DB_USER" >> .env
+          echo "DB_PASS=$DB_PASS" >> .env
+          echo "PROF_TABLES=$PROF_TABLES" >> .env
 
       - name: Setup node
         uses: actions/setup-node@v3
@@ -51,7 +51,7 @@ jobs:
         run: mysql -e 'SHOW DATABASES;'
         
       - name: set root user DB password
-        run: mysql -D mysql -e "ALTER USER '${{ vars.DB_USER }}'@'${{ vars.DB_DATABASE }}' IDENTIFIED BY '${{ vars.DB_USER }}'";
+        run: mysql -D mysql -e "ALTER USER '$DB_USER'@'$DB_DATABASE' IDENTIFIED BY '$DB_USER'";
 
       - name: flush privileges
         run: mysql -D mysql -e "flush privileges";
