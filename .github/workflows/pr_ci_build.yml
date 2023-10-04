@@ -62,28 +62,6 @@ jobs:
       - name: flush privileges
         run: mysql -D mysql -e "flush privileges";
 
-      # - name: install mariaDB
-      #   run: |
-      #     sudo apt update
-      #     sudo apt install mariadb-server
-      #     sudo systemctl status mariadb
-
-      # - name: Start MariaDB service
-      #   run: |
-      #     sudo systemctl start mariadb
-      #     sudo systemctl enable mariadb
-
-      # - name: Create Database
-      #   run: |
-      #     sudo mysql -e 'SHOW DATABASES;' -uroot
-      #     sudo mysql -uroot -e "CREATE DATABASE assignment_2;"
-
-      # - name: Set up MySQL
-      #   run: |
-      #     sudo systemctl start mysql
-      #     mysql -e 'CREATE DATABASE assignment_2;' -uroot -proot
-      #     mysql -e 'SHOW DATABASES;' -uroot -proot
-
       - name: Start Express.js Server
         run: |
           npm run ci
