@@ -1,0 +1,59 @@
+name: ci-build
+run-name: Build system for our webapp
+on:
+  push:
+    branches:
+      - main
+      - master
+
+  pull_request_target:
+    branches:
+      - main
+      - master
+jobs:
+  ci-build:
+    runs-on: ubuntu-latest
+    env:
+      DB_CONNECTION: mysql
+      DB_HOST: localhost
+      DB_PORT: 3306
+      DB_DATABASE: assignment_2
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      PROF_TABLES: true
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: create tmp env file
+        run: |
+          touch .env
+          echo "DB_CONNECTION=mysql" >> .env
+          echo "DB_HOST=localhost" >> .env
+          echo "DB_PORT=3306" >> .env
+          echo "DB_DATABASE=assignment_2" >> .env
+          echo "DB_USERNAME=root" >> .env
+          echo "DB_PASSWORD=root" >> .env
+          echo "PROF_TABLES=true" >> .env
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - name: Install dependencies
+        run: npm install
+
+      - name: Set up MySQL
+        run: |
+          sudo systemctl start mysql
+          mysql -e 'CREATE DATABASE assignment_2;' -uroot -proot
+          mysql -e 'SHOW DATABASES;' -uroot -proot
+
+      - name: Start Express.js Server
+        run: |
+          pwd
+          npm run dev
+
+      - uses: matt-ball/newman-action@master
+        with:
+          collection: tests/integration-tests/CSYE-webapp.postman_collection.json
