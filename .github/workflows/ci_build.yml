@@ -5,11 +5,6 @@ on:
     branches:
       - main
       - master
-
-  pull_request_target:
-    branches:
-      - main
-      - master
 jobs:
   ci-build:
     runs-on: ubuntu-latest
@@ -24,12 +19,6 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-      
-      # - name: Fetch the merge commit
-      #   run: git fetch origin "refs/pull/${{ github.event.pull_request.number}}/merge:refs/pull/${{ github.event.pull_request.number}}/merge"
-
-      # - name: Check out the merge commit
-      #   run: git checkout "refs/pull/${{ github.event.pull_request.number}}/merge"
         
       - name: create tmp env file
         run: |
@@ -50,11 +39,21 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Set up MySQL
+      - name: install mariaDB
         run: |
-          sudo systemctl start mysql
-          mysql -e 'CREATE DATABASE assignment_2;' -uroot -proot
-          mysql -e 'SHOW DATABASES;' -uroot -proot
+          sudo apt update
+          sudo apt install mariadb-server
+          sudo systemctl status mariadb
+
+      - name: Start MariaDB service
+        run: |
+          sudo systemctl start mariadb
+          sudo systemctl enable mariadb
+
+      - name: Create Database
+        run: |
+          mysql -u root -e "CREATE DATABASE assignment_2;"
+          mysql -e 'SHOW DATABASES;' -uroot
 
       - name: Start Express.js Server
         run: |
