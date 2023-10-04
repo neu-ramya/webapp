@@ -59,7 +59,7 @@ jobs:
       - name: Start Express.js Server
         run: |
           pwd
-          npm run dev
+          npm run ci
 
       - uses: matt-ball/newman-action@master
         with:
