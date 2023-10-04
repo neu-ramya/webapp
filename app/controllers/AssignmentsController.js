@@ -52,7 +52,7 @@ async function methodDistributor(req, res, accountID) {
 }
 
 async function genericRequestHandler(req, res) {
-  if(Object.keys(req.query).length > 0 ){
+  if (Object.keys(req.query).length > 0) {
     return res.status(400).end();
   }
   if (!req.headers.authorization) {
@@ -142,26 +142,31 @@ async function insertHandler(req, res, accountId) {
     return res.status(400).end();
   }
 
-  delete accountData.assignment_created;
-  delete accountData.assignment_updated;
-
-  try {
-    postRes = await assignmentModel.create(accountData);
-    return res.status(201).json(postRes);
-  } catch (error) {
-    console.error("Error creating assignment:", error);
+  if (accountData.assignment_created || accountData.assignment_updated) {
     return res.status(400).end();
+  } else {
+    try {
+      postRes = await assignmentModel.create(accountData);
+      return res.status(201).json(postRes);
+    } catch (error) {
+      console.error("Error creating assignment:", error);
+      return res.status(400).end();
+    }
   }
 }
 
 async function updateHandler(req, res, accountId) {
-  if((typeof req.body === "undefined" || Object.keys(req.body).length === 0) ||  !req.params.id) {
+  if (
+    typeof req.body === "undefined" ||
+    req.body.assignment_created ||
+    req.body.assignment_updated ||
+    Object.keys(req.body).length === 0 ||
+    !req.params.id
+  ) {
     return res.status(400).end();
-  } 
+  }
   const assignmentId = req.params.id;
   const updateFields = req.body;
-  delete updateFields.assignment_created;
-  delete updateFields.assignment_updated;
 
   try {
     try {
@@ -202,7 +207,10 @@ async function updateHandler(req, res, accountId) {
 }
 
 async function deletionHandler(req, res, accountId) {
-  if((req.body && Object.keys(req.body).length > 0) || Object.keys(req.params).length === 0) {
+  if (
+    (req.body && Object.keys(req.body).length > 0) ||
+    Object.keys(req.params).length === 0
+  ) {
     return res.status(400).end();
   }
   const assignmentId = req.params.id;
