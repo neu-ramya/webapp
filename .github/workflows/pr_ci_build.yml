@@ -48,21 +48,29 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: install mariaDB
-        run: |
-          sudo apt update
-          sudo apt install mariadb-server
-          sudo systemctl status mariadb
+      - name: Setup mariadb action
+        uses: ankane/setup-mariadb@v1
+        with:
+          database: assignment_2
+      
+      - name: Show database
+        run: mysql -e 'SHOW DATABASES;' 
 
-      - name: Start MariaDB service
-        run: |
-          sudo systemctl start mariadb
-          sudo systemctl enable mariadb
+      # - name: install mariaDB
+      #   run: |
+      #     sudo apt update
+      #     sudo apt install mariadb-server
+      #     sudo systemctl status mariadb
 
-      - name: Create Database
-        run: |
-          sudo mysql -e 'SHOW DATABASES;' -uroot
-          sudo mysql -uroot -e "CREATE DATABASE assignment_2;"
+      # - name: Start MariaDB service
+      #   run: |
+      #     sudo systemctl start mariadb
+      #     sudo systemctl enable mariadb
+
+      # - name: Create Database
+      #   run: |
+      #     sudo mysql -e 'SHOW DATABASES;' -uroot
+      #     sudo mysql -uroot -e "CREATE DATABASE assignment_2;"
 
       # - name: Set up MySQL
       #   run: |
