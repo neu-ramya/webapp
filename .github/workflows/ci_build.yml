@@ -1,15 +1,10 @@
 name: ci-build
 run-name: Build system for our webapp
 on:
+  pull_request:
   push:
     branches:
       - main
-      - master
-
-  pull_request_target:
-    branches:
-      - main
-      - master
 jobs:
   ci-build:
     runs-on: ubuntu-latest
@@ -18,23 +13,30 @@ jobs:
       DB_HOST: localhost
       DB_PORT: 3306
       DB_DATABASE: assignment_2
-      DB_USERNAME: root
-      DB_PASSWORD: root
-      PROF_TABLES: true
+      DB_USER: root
+      DB_PASS: root
+      PROF_TABLES: false
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+      
+      # - name: Fetch the merge commit
+      #   run: git fetch origin "refs/pull/${{ github.event.pull_request.number}}/merge:refs/pull/${{ github.event.pull_request.number}}/merge"
 
+      # - name: Check out the merge commit
+      #   run: git checkout "refs/pull/${{ github.event.pull_request.number}}/merge"
+        
       - name: create tmp env file
         run: |
+          ls -al
           touch .env
           echo "DB_CONNECTION=mysql" >> .env
           echo "DB_HOST=localhost" >> .env
           echo "DB_PORT=3306" >> .env
           echo "DB_DATABASE=assignment_2" >> .env
-          echo "DB_USERNAME=root" >> .env
-          echo "DB_PASSWORD=root" >> .env
-          echo "PROF_TABLES=true" >> .env
+          echo "DB_USER=root" >> .env
+          echo "DB_PASS=root" >> .env
+          echo "PROF_TABLES=false" >> .env
 
       - name: Setup node
         uses: actions/setup-node@v3
@@ -43,16 +45,32 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Set up MySQL
+      - name: install mariaDB
         run: |
-          sudo systemctl start mysql
-          mysql -e 'CREATE DATABASE assignment_2;' -uroot -proot
-          mysql -e 'SHOW DATABASES;' -uroot -proot
+          sudo apt update
+          sudo apt install mariadb-server
+          sudo systemctl status mariadb
+
+      - name: Start MariaDB service
+        run: |
+          sudo systemctl start mariadb
+          sudo systemctl enable mariadb
+
+      - name: Create Database
+        run: |
+          mysql -u root -e "CREATE DATABASE assignment_2;"
+          mysql -e 'SHOW DATABASES;' -uroot
+
+      # - name: Set up MySQL
+      #   run: |
+      #     sudo systemctl start mysql
+      #     mysql -e 'CREATE DATABASE assignment_2;' -uroot -proot
+      #     mysql -e 'SHOW DATABASES;' -uroot -proot
 
       - name: Start Express.js Server
         run: |
           pwd
-          npm run dev
+          npm run ci
 
       - uses: matt-ball/newman-action@master
         with:
