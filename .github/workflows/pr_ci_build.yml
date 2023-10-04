@@ -10,6 +10,7 @@ on:
 
 jobs:
   pr-ci-build:
+    environment: Actions-CI
     runs-on: ubuntu-latest
     env:
       DB_CONNECTION: mysql
