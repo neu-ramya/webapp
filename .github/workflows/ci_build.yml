@@ -27,6 +27,7 @@ jobs:
 
       - name: create tmp env file
         run: |
+          ls -al
           touch .env
           echo "DB_CONNECTION=mysql" >> .env
           echo "DB_HOST=localhost" >> .env
