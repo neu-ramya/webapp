@@ -7,7 +7,10 @@ const { loadData } = require("./app/utils/data/loadData");
 
 const Account = require("./app/models/Account");
 const Assignment = require("./app/models/Assignment");
-
+console.log(process.env.DB_HOST)
+console.log(process.env.DB_PASS)
+console.log(process.env.DB_USER)
+console.log(process.env.PROF_TABLES)
 const multer = require("multer");
 const upload = multer();
 
