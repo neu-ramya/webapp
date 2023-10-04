@@ -13,12 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DB_CONNECTION: mysql
-      DB_HOST: localhost
-      DB_PORT: 3306
-      DB_DATABASE: webapp
-      DB_USER: root
-      DB_PASS: root
-      PROF_TABLES: false
+      DB_HOST: ${{ vars.DB_HOST }}
+      DB_PORT: ${{ vars.DB_PORT }}
+      DB_DATABASE: ${{ vars.DB_DATABASE }}
+      DB_USER: ${{ vars.DB_USER }}
+      DB_PASS: ${{ vars.DB_PASS }}
+      PROF_TABLES: ${{ vars.PROF_TABLES }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -28,12 +28,12 @@ jobs:
           ls -al
           touch .env
           echo "DB_CONNECTION=mysql" >> .env
-          echo "DB_HOST=localhost" >> .env
-          echo "DB_PORT=3306" >> .env
-          echo "DB_DATABASE=webapp" >> .env
-          echo "DB_USER=root" >> .env
-          echo "DB_PASS=root" >> .env
-          echo "PROF_TABLES=false" >> .env
+          echo "DB_HOST=${{ vars.DB_HOST }}" >> .env
+          echo "DB_PORT=${{ vars.DB_PORT }}" >> .env
+          echo "DB_DATABASE=${{ vars.DB_DATABASE }}" >> .env
+          echo "DB_USER=${{ vars.DB_USER }}" >> .env
+          echo "DB_PASS=${{ vars.DB_PASS }}" >> .env
+          echo "PROF_TABLES=${{ vars.PROF_TABLES }}" >> .env
 
       - name: Setup node
         uses: actions/setup-node@v3
@@ -51,7 +51,7 @@ jobs:
         run: mysql -e 'SHOW DATABASES;'
         
       - name: set root user DB password
-        run: mysql -D mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'root'";
+        run: mysql -D mysql -e "ALTER USER '${{ vars.DB_USER }}'@'${{ vars.DB_DATABASE }}' IDENTIFIED BY '${{ vars.DB_USER }}'";
 
       - name: flush privileges
         run: mysql -D mysql -e "flush privileges";
