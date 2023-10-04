@@ -54,7 +54,13 @@ jobs:
           database: assignment_2
       
       - name: Show database
-        run: mysql -e 'SHOW DATABASES;' 
+        run: mysql -e 'SHOW DATABASES;'
+        
+      - name: set root user DB password
+        run: mysql -D mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'root'";
+
+      - name: flush privileges
+        run: mysql -D mysql -e "flush privileges";
 
       # - name: install mariaDB
       #   run: |
