@@ -1,6 +1,6 @@
 name: pr-ci-build
 run-name: Build system for webapp during PR
-'on':
+on:
   pull_request:
     branches:
       - main
