@@ -1,25 +1,29 @@
+const path = require('path');
 const Account = require("../../models/Account");
 const Assignment = require("../../models/Assignment");
 
 const { parseCSV } = require("./parsecsv");
 const { insertDataIntoAccountTable, insertDataIntoAssignmentTable } = require("./insertData");
 
-const accountCSVPath = "/Users/ramya/Cloud/webapp/app/data/users.csv";
+const accountCSVRelativePath = '../../data/users.csv';
+const localAccountCSVRelativePath = '../../data/seed/users.csv';
+const localAssignmentCSVRelativePath = '../../data/seed/assignments.csv';
+const fullAccountCSVPath = path.resolve(__dirname, accountCSVRelativePath);
 
 async function loadData() {
   if(process.env.PROF_TABLES === "true") {
     try {
-      const accountData = await parseCSV(accountCSVPath);
+      const accountData = await parseCSV(fullAccountCSVPath);
       await insertDataIntoAccountTable(Account, accountData);
     } catch (error) {
       console.error("Error:", error);
     }
   } else {
     try {
-      const localAccountDataCSVPath = "/Users/ramya/Cloud/webapp/app/data/seed/users.csv";
-      const localAssignmentDataCSVPath = "/Users/ramya/Cloud/webapp/app/data/seed/assignments.csv";
-      const accountData = await parseCSV(localAccountDataCSVPath);
-      const assignmentData = await parseCSV(localAssignmentDataCSVPath);
+      const fullLocalAccountCSVPath = path.resolve(__dirname, localAccountCSVRelativePath);
+      const fullLocalAssignmentCSVPath = path.resolve(__dirname, localAssignmentCSVRelativePath);
+      const accountData = await parseCSV(fullLocalAccountCSVPath);
+      const assignmentData = await parseCSV(fullLocalAssignmentCSVPath);
       await insertDataIntoAccountTable(Account, accountData);
       await insertDataIntoAssignmentTable(Assignment, assignmentData);
     } catch (error) {
