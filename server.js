@@ -6,7 +6,7 @@ const { sequelize } = require("./config/database");
 const { loadData } = require("./app/utils/data/loadData");
 
 const Account = require("./app/models/Account");
-const Assignment = require("./app/models/assignment");
+const Assignment = require("./app/models/Assignment");
 
 const multer = require("multer");
 const upload = multer();
