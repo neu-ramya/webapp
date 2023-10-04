@@ -1,5 +1,5 @@
 const Account = require("../../models/Account");
-const Assignment = require("../../models/assignment");
+const Assignment = require("../../models/Assignment");
 
 const { parseCSV } = require("./parsecsv");
 const { insertDataIntoAccountTable, insertDataIntoAssignmentTable } = require("./insertData");

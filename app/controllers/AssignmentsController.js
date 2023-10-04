@@ -1,4 +1,4 @@
-const assignmentModel = require("../models/assignment");
+const assignmentModel = require("../models/Assignment");
 const bcrypt = require("bcrypt");
 const account = require("../models/Account");
 
