@@ -25,11 +25,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
       
-      - name: Fetch the merge commit
-        run: git fetch origin "refs/pull/${{ github.event.pull_request.number}}/merge:refs/pull/${{ github.event.pull_request.number}}/merge"
+      # - name: Fetch the merge commit
+      #   run: git fetch origin "refs/pull/${{ github.event.pull_request.number}}/merge:refs/pull/${{ github.event.pull_request.number}}/merge"
 
-      - name: Check out the merge commit
-        run: git checkout "refs/pull/${{ github.event.pull_request.number}}/merge"
+      # - name: Check out the merge commit
+      #   run: git checkout "refs/pull/${{ github.event.pull_request.number}}/merge"
         
       - name: create tmp env file
         run: |
