@@ -18,8 +18,8 @@ jobs:
       DB_HOST: localhost
       DB_PORT: 3306
       DB_DATABASE: assignment_2
-      DB_USERNAME: root
-      DB_PASSWORD: root
+      DB_USER: root
+      DB_PASS: root
       PROF_TABLES: true
     steps:
       - name: Checkout Repository
@@ -39,8 +39,8 @@ jobs:
           echo "DB_HOST=localhost" >> .env
           echo "DB_PORT=3306" >> .env
           echo "DB_DATABASE=assignment_2" >> .env
-          echo "DB_USERNAME=root" >> .env
-          echo "DB_PASSWORD=root" >> .env
+          echo "DB_USER=root" >> .env
+          echo "DB_PASS=root" >> .env
           echo "PROF_TABLES=true" >> .env
 
       - name: Setup node
