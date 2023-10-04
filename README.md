@@ -27,4 +27,3 @@
 - Inside the webapp, install npm using 'npm install'
 - Run the npm using 'npm run dev'
 - Run the integration tests using 'newman run webapp/tests/integration-tests/CSYE-webapp.postman_collection.json'
-- 
