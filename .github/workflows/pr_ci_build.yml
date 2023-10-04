@@ -1,10 +1,11 @@
 name: pr-ci-build
 run-name: Build system for webapp during PR
-on:
-  pull_request_target:
+'on':
+  pull_request:
+  push:
     branches:
       - main
-      - master
+
 jobs:
   pr-ci-build:
     runs-on: ubuntu-latest
@@ -18,7 +19,7 @@ jobs:
       PROF_TABLES: false
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
       
       - name: Fetch the merge commit
         run: git fetch origin "refs/pull/${{ github.event.pull_request.number}}/merge:refs/pull/${{ github.event.pull_request.number}}/merge"
@@ -58,8 +59,8 @@ jobs:
 
       - name: Create Database
         run: |
-          mysql -u root -e "CREATE DATABASE assignment_2;"
-          mysql -e 'SHOW DATABASES;' -uroot
+          mysql -e 'SHOW DATABASES;' -uroot -proot
+          mysql -uroot -proot -e "CREATE DATABASE assignment_2;"
 
       # - name: Set up MySQL
       #   run: |
