@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "815a726e-03c3-4af1-af48-5ab13fd7ee1c",
+		"_postman_id": "d20910e2-94fc-45b6-8000-07e00fecb3a1",
 		"name": "CSYE-webapp",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "24216985"
@@ -888,31 +888,6 @@
 						},
 						"method": "POST",
 						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "name",
-									"value": "test assignment",
-									"type": "text"
-								},
-								{
-									"key": "points",
-									"value": "13",
-									"type": "text"
-								},
-								{
-									"key": "num_of_attempts",
-									"value": "3",
-									"type": "text"
-								},
-								{
-									"key": "deadline",
-									"value": "2020-10-29T09:00:00.001Z",
-									"type": "text"
-								}
-							]
-						},
 						"url": {
 							"raw": "localhost:3000/assignments",
 							"host": [
