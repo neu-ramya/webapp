@@ -9,6 +9,7 @@ router.put("/", assignmentsController.putHandler);
 router.post("/", assignmentsController.postHandler);
 router.delete("/:id", assignmentsController.deleteHandler);
 router.delete("/", assignmentsController.deleteHandler);
+router.patch("/", assignmentsController.patchHandler);
 router.use("/", assignmentsController.assignmentsHandler);
 
 module.exports = router;

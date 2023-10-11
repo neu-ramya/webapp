@@ -7,6 +7,11 @@ async function assignmentsHandler(req, res) {
   return res.status(404).end();
 }
 
+async function patchHandler(req, res) {
+  console.log("patch handler");
+  return res.status(405).end();
+}
+
 async function getHandler(req, res) {
   console.log("assignments get handler");
   if (req.body) {
@@ -251,4 +256,5 @@ module.exports = {
   putHandler: putHandler,
   postHandler: postHandler,
   deleteHandler: deleteHandler,
+  patchHandler: patchHandler,
 };
