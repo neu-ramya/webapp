@@ -1,15 +1,14 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+var bodyParser = require('body-parser')
+
 const port = process.env.PORT || 3000;
 const { sequelize } = require("./config/database");
 const { loadData } = require("./app/utils/data/loadData");
 
 const Account = require("./app/models/Account");
 const Assignment = require("./app/models/Assignment");
-
-const multer = require("multer");
-const upload = multer();
 
 (async () => {
   try {
@@ -22,8 +21,8 @@ const upload = multer();
   }
 })();
 
-app.use("/healthz", upload.none(), require("./app/routes/healthz"));
-app.use("/assignments", upload.none(), require("./app/routes/assignments"));
+app.use("/healthz", bodyParser.raw(), bodyParser.json(), bodyParser.urlencoded(), bodyParser.text(), require("./app/routes/healthz"));
+app.use("/assignments", bodyParser.raw(), bodyParser.json(), bodyParser.urlencoded(), bodyParser.text(), require("./app/routes/assignments"));
 
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
