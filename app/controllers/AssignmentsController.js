@@ -14,7 +14,7 @@ async function patchHandler(req, res) {
 
 async function getHandler(req, res) {
   console.log("assignments get handler");
-  if (req.body) {
+  if (Object.keys(req.body).length != 0) {
     return res.status(400).end();
   } else {
     await genericRequestHandler(req, res);
@@ -31,7 +31,7 @@ async function postHandler(req, res) {
 
 async function deleteHandler(req, res) {
   console.log("assignments delete handler");
-  if (req.body) {
+  if (Object.keys(req.body).length != 0) {
     return res.status(400).end();
   } else {
     await genericRequestHandler(req, res);
@@ -73,6 +73,7 @@ async function genericRequestHandler(req, res) {
           email: user,
         },
       });
+
       if (accountDetails) {
         const pwMatch = await bcrypt.compare(pass, accountDetails.password);
         if (pwMatch) {
@@ -111,10 +112,11 @@ async function getDataHandler(req, res, accountId) {
     if (existingAssignment) {
       return res.status(200).json(existingAssignment);
     } else {
-      res.status(404).end();
+      return res.status(404).end();
     }
   } catch (error) {
-    res.status(500).end();
+    console.log("GET 500************")
+    return res.status(500).end();
   }
 }
 
@@ -131,6 +133,9 @@ async function insertHandler(req, res, accountId) {
   accountData = req.body;
   accountData.account_id = accountId;
 
+  if(typeof req.body.name !== 'string'){
+    return req.status(400).end();
+  }
   requiredKeys.forEach((key) => {
     if (!(key in accountData)) {
       missingKeys.push(key);
@@ -154,13 +159,24 @@ async function insertHandler(req, res, accountId) {
       postRes = await assignmentModel.create(accountData);
       return res.status(201).json(postRes);
     } catch (error) {
-      console.error("Error creating assignment:", error);
-      return res.status(400).end();
+      return res.status(500).end();
     }
   }
 }
 
 async function updateHandler(req, res, accountId) {
+  const requiredKeys = [
+    "name",
+    "points",
+    "num_of_attempts",
+    "deadline",
+    "account_id",
+  ];
+
+  if(typeof req.body.name !== 'string'){
+    return res.status(400).end();
+  }
+
   if (
     typeof req.body === "undefined" ||
     req.body.assignment_created ||
@@ -173,38 +189,40 @@ async function updateHandler(req, res, accountId) {
   const assignmentId = req.params.id;
   const updateFields = req.body;
 
+  for (const key in req.body) {
+    if (!requiredKeys.includes(key)) {
+      return res.status(400).end();
+    }
+  }
+
   try {
-    try {
-      existingAssignment = await assignmentModel.findOne({
-        where: {
-          id: assignmentId,
-        },
-      });
+    existingAssignment = await assignmentModel.findOne({
+      where: {
+        id: assignmentId,
+      },
+    });
 
-      if (existingAssignment) {
-        if (existingAssignment.account_id === accountId) {
-          const [updatedRowsCount] = await assignmentModel.update(
-            updateFields,
-            {
-              where: {
-                id: assignmentId,
-              },
-            }
-          );
-
-          if (updatedRowsCount > 0) {
-            return res.status(204).end();
-          } else {
-            return res.status(400).end();
+    if (existingAssignment) {
+      if (existingAssignment.account_id === accountId) {
+        const [updatedRowsCount] = await assignmentModel.update(
+          updateFields,
+          {
+            where: {
+              id: assignmentId,
+            },
           }
+        );
+
+        if (updatedRowsCount > 0) {
+          return res.status(204).end();
         } else {
-          return res.status(403).end();
+          return res.status(400).end();
         }
       } else {
-        return res.status(404).end();
+        return res.status(403).end();
       }
-    } catch (error) {
-      return res.status(500).end();
+    } else {
+      return res.status(404).end();
     }
   } catch (error) {
     return res.status(500).end();
@@ -246,6 +264,7 @@ async function deletionHandler(req, res, accountId) {
       res.status(500).end();
     }
   } catch (error) {
+    console.log("DELETE 500************")
     res.status(500).end();
   }
 }
