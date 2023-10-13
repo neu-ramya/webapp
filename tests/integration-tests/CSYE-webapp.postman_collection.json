@@ -28,11 +28,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}:3000/healthz",
+							"raw": "{{droplet_ip}}:3001/healthz",
 							"host": [
 								"{{droplet_ip}}"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"healthz"
 							]
