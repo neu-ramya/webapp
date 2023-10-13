@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "7015d656-cf86-411e-9c20-08de3ae1a477",
-		"name": "CSYE-webapp FOR DROPLET",
+		"_postman_id": "8f3fce77-1147-407d-b95e-d6c9eb1c9df6",
+		"name": "CSYE-webapp",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "24216985"
 	},
@@ -237,9 +237,6 @@
 							}
 						}
 					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"auth": {
 							"type": "basic",
@@ -258,10 +255,6 @@
 						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
 						"url": {
 							"raw": "{{droplet_ip}}:3000/assignments",
 							"host": [
@@ -290,9 +283,6 @@
 							}
 						}
 					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"auth": {
 							"type": "basic",
@@ -311,10 +301,6 @@
 						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
 						"url": {
 							"raw": "{{droplet_ip}}:3000/assignments?asdfasdf=asdfasf",
 							"host": [
@@ -426,7 +412,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"value\": \"something\"\n}",
+							"raw": "{\n    \"name\": \"something\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -461,9 +447,6 @@
 							}
 						}
 					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"auth": {
 							"type": "basic",
@@ -482,17 +465,6 @@
 						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "some-key",
-									"value": "value",
-									"type": "text",
-									"disabled": true
-								}
-							]
-						},
 						"url": {
 							"raw": "{{droplet_ip}}:3000/assignments",
 							"host": [
@@ -521,26 +493,12 @@
 							}
 						}
 					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"auth": {
 							"type": "noauth"
 						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "some-key",
-									"value": "value",
-									"type": "text",
-									"disabled": true
-								}
-							]
-						},
 						"url": {
 							"raw": "{{droplet_ip}}:3000/assignments",
 							"host": [
@@ -587,16 +545,6 @@
 						},
 						"method": "PUT",
 						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "asdfafs",
-									"value": "asdfasf",
-									"type": "text"
-								}
-							]
-						},
 						"url": {
 							"raw": "{{droplet_ip}}:3000/assignments/",
 							"host": [
@@ -644,17 +592,6 @@
 						},
 						"method": "PUT",
 						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "asdfafs",
-									"value": "asdfasf",
-									"type": "text",
-									"disabled": true
-								}
-							]
-						},
 						"url": {
 							"raw": "{{droplet_ip}}:3000/assignments/10fe6d95-c8b0-46b0-b511-ce0e2a3033be",
 							"host": [
@@ -703,14 +640,13 @@
 						"method": "PUT",
 						"header": [],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "{{$randomInt}}",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"assignment087\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
 							"raw": "{{droplet_ip}}:3000/assignments/10fe6d95-c8b0-46b0-b511-ce0e2a3033be",
@@ -767,14 +703,13 @@
 						"method": "PUT",
 						"header": [],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "nameasf",
-									"value": "asdfasfas",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\n    \"nameasf\" : \"ygefuwgefi\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
 							"raw": "{{droplet_ip}}:3000/assignments/10fe6d95-c8b0-46b0-b511-ce0e2a3033be",
@@ -951,29 +886,13 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "testassignment",
-									"type": "text"
-								},
-								{
-									"key": "points",
-									"value": "13",
-									"type": "text"
-								},
-								{
-									"key": "num_of_attempts",
-									"value": "3",
-									"type": "text"
-								},
-								{
-									"key": "deadline",
-									"value": "2020-10-29T09:00:00.001Z",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"points\" : \"53\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2020-10-29T09:00:00.001Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
 							"raw": "{{droplet_ip}}:3000/assignments",
@@ -1010,29 +929,13 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "name",
-									"value": "test assignment",
-									"type": "text"
-								},
-								{
-									"key": "points",
-									"value": "13",
-									"type": "text"
-								},
-								{
-									"key": "num_of_attempts",
-									"value": "3",
-									"type": "text"
-								},
-								{
-									"key": "deadline",
-									"value": "2020-10-29T09:00:00.001Z",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"points\" : \"53\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2020-10-29T09:00:00.001Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
 							"raw": "{{droplet_ip}}:3000/assignments",
@@ -1081,34 +984,13 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "test assignment",
-									"type": "text"
-								},
-								{
-									"key": "points",
-									"value": "13",
-									"type": "text"
-								},
-								{
-									"key": "num_of_attempts",
-									"value": "3",
-									"type": "text"
-								},
-								{
-									"key": "deadline",
-									"value": "2020-10-29T09:00:00.001Z",
-									"type": "text"
-								},
-								{
-									"key": "atetat",
-									"value": "asdfsaf",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"points\" : \"53\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2020-10-29T09:00:00.001Z\",\n    \"jhsakdjfghia\": \"usdgfugai\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
 							"raw": "{{droplet_ip}}:3000/assignments",
@@ -1157,30 +1039,13 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "test assignment",
-									"type": "text"
-								},
-								{
-									"key": "points",
-									"value": "13",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "num_of_attempts",
-									"value": "3",
-									"type": "text"
-								},
-								{
-									"key": "deadline",
-									"value": "2020-10-29T09:00:00.001Z",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2020-10-29T09:00:00.001Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
 							"raw": "{{droplet_ip}}:3000/assignments",
@@ -1229,14 +1094,13 @@
 						"method": "DELETE",
 						"header": [],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "some key",
-									"value": "some value",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"points\" : \"53\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2020-10-29T09:00:00.001Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
 							"raw": "{{droplet_ip}}:3000/assignments/c214bd94-ac79-4042-b72d-5af75561c805",
@@ -1285,17 +1149,6 @@
 						},
 						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "some key",
-									"value": "some value",
-									"type": "text",
-									"disabled": true
-								}
-							]
-						},
 						"url": {
 							"raw": "{{droplet_ip}}:3000/assignments/",
 							"host": [
@@ -1343,17 +1196,6 @@
 						},
 						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "some key",
-									"value": "some value",
-									"type": "text",
-									"disabled": true
-								}
-							]
-						},
 						"url": {
 							"raw": "{{droplet_ip}}:3000/assignments/asdfasfdasf",
 							"host": [
@@ -1401,17 +1243,6 @@
 						},
 						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "asdfsaf",
-									"value": "some value",
-									"type": "text",
-									"disabled": true
-								}
-							]
-						},
 						"url": {
 							"raw": "{{droplet_ip}}:3000/assignments/fc426cd6-ad40-4f88-ac9c-5ae9b2c82251",
 							"host": [
@@ -1424,8 +1255,8 @@
 							],
 							"query": [
 								{
-									"key": "asdfsafd",
-									"value": "assadf",
+									"key": "",
+									"value": "",
 									"disabled": true
 								}
 							]
