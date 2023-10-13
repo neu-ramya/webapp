@@ -115,7 +115,6 @@ async function getDataHandler(req, res, accountId) {
       return res.status(404).end();
     }
   } catch (error) {
-    console.log("GET 500************")
     return res.status(500).end();
   }
 }
@@ -134,7 +133,7 @@ async function insertHandler(req, res, accountId) {
   accountData.account_id = accountId;
 
   if(typeof req.body.name !== 'string'){
-    return req.status(400).end();
+    return res.status(400).end();
   }
   requiredKeys.forEach((key) => {
     if (!(key in accountData)) {
@@ -264,7 +263,6 @@ async function deletionHandler(req, res, accountId) {
       res.status(500).end();
     }
   } catch (error) {
-    console.log("DELETE 500************")
     res.status(500).end();
   }
 }
