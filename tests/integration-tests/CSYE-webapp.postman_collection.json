@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "815a726e-03c3-4af1-af48-5ab13fd7ee1c",
-		"name": "CSYE-webapp",
+		"_postman_id": "7015d656-cf86-411e-9c20-08de3ae1a477",
+		"name": "CSYE-webapp FOR DROPLET",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "24216985"
 	},
@@ -28,9 +28,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/healthz",
+							"raw": "{{droplet_ip}}:3000/healthz",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -62,19 +62,19 @@
 						"method": "GET",
 						"header": [],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
+							"mode": "urlencoded",
+							"urlencoded": [
 								{
 									"key": "some-key",
-									"value": "value",
+									"value": "asdf",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/healthz",
+							"raw": "{{droplet_ip}}:3000/healthz",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -103,9 +103,9 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/healthz",
+							"raw": "{{droplet_ip}}:3000/healthz",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -134,9 +134,9 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/healthz",
+							"raw": "{{droplet_ip}}:3000/healthz",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -165,9 +165,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/healthz",
+							"raw": "{{droplet_ip}}:3000/healthz",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -205,9 +205,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/health",
+							"raw": "{{droplet_ip}}:3000/health",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -263,9 +263,9 @@
 							"formdata": []
 						},
 						"url": {
-							"raw": "localhost:3000/assignments",
+							"raw": "{{droplet_ip}}:3000/assignments",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -316,9 +316,9 @@
 							"formdata": []
 						},
 						"url": {
-							"raw": "localhost:3000/assignments?asdfasdf=asdfasf",
+							"raw": "{{droplet_ip}}:3000/assignments?asdfasdf=asdfasf",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -375,9 +375,9 @@
 							"formdata": []
 						},
 						"url": {
-							"raw": "localhost:3000/assignments/a623a935-01ef-4b1d-a125-59f96e45f7e5",
+							"raw": "{{droplet_ip}}:3000/assignments/a623a935-01ef-4b1d-a125-59f96e45f7e5",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -425,19 +425,18 @@
 						"method": "GET",
 						"header": [],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "some-key",
-									"value": "value",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\n    \"value\": \"something\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
-							"raw": "localhost:3000/assignments",
+							"raw": "{{droplet_ip}}:3000/assignments",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -495,9 +494,9 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/assignments",
+							"raw": "{{droplet_ip}}:3000/assignments",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -543,9 +542,9 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/assignments",
+							"raw": "{{droplet_ip}}:3000/assignments",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -599,9 +598,9 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/assignments/",
+							"raw": "{{droplet_ip}}:3000/assignments/",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -657,9 +656,9 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/assignments/10fe6d95-c8b0-46b0-b511-ce0e2a3033be",
+							"raw": "{{droplet_ip}}:3000/assignments/10fe6d95-c8b0-46b0-b511-ce0e2a3033be",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -704,8 +703,8 @@
 						"method": "PUT",
 						"header": [],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
+							"mode": "urlencoded",
+							"urlencoded": [
 								{
 									"key": "name",
 									"value": "{{$randomInt}}",
@@ -714,9 +713,9 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/assignments/10fe6d95-c8b0-46b0-b511-ce0e2a3033be",
+							"raw": "{{droplet_ip}}:3000/assignments/10fe6d95-c8b0-46b0-b511-ce0e2a3033be",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -778,9 +777,72 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/assignments/10fe6d95-c8b0-46b0-b511-ce0e2a3033be",
+							"raw": "{{droplet_ip}}:3000/assignments/10fe6d95-c8b0-46b0-b511-ce0e2a3033be",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
+							],
+							"port": "3000",
+							"path": [
+								"assignments",
+								"10fe6d95-c8b0-46b0-b511-ce0e2a3033be"
+							],
+							"query": [
+								{
+									"key": "asdf",
+									"value": "asdf",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT request Integer name values",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"PUT method returns 400 Bad Request\", function() {",
+									"    pm.response.to.have.status(400)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "nf536u",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "mary.pop@example.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": 12\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{droplet_ip}}:3000/assignments/10fe6d95-c8b0-46b0-b511-ce0e2a3033be",
+							"host": [
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -832,19 +894,19 @@
 						"method": "PUT",
 						"header": [],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
+							"mode": "urlencoded",
+							"urlencoded": [
 								{
 									"key": "name",
-									"value": "{{$randomInt}}",
+									"value": "{{$randomFirstName}}",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/assignments/39ae0b33-0ac2-4e1a-86e9-4ee8ec832405",
+							"raw": "{{droplet_ip}}:3000/assignments/39ae0b33-0ac2-4e1a-86e9-4ee8ec832405",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -889,11 +951,11 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
+							"mode": "urlencoded",
+							"urlencoded": [
 								{
 									"key": "name",
-									"value": "test assignment",
+									"value": "testassignment",
 									"type": "text"
 								},
 								{
@@ -914,9 +976,9 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/assignments",
+							"raw": "{{droplet_ip}}:3000/assignments",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -973,9 +1035,9 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/assignments",
+							"raw": "{{droplet_ip}}:3000/assignments",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -1019,8 +1081,8 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
+							"mode": "urlencoded",
+							"urlencoded": [
 								{
 									"key": "name",
 									"value": "test assignment",
@@ -1049,9 +1111,9 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/assignments",
+							"raw": "{{droplet_ip}}:3000/assignments",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -1095,8 +1157,8 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
+							"mode": "urlencoded",
+							"urlencoded": [
 								{
 									"key": "name",
 									"value": "test assignment",
@@ -1121,9 +1183,9 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/assignments",
+							"raw": "{{droplet_ip}}:3000/assignments",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -1167,8 +1229,8 @@
 						"method": "DELETE",
 						"header": [],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
+							"mode": "urlencoded",
+							"urlencoded": [
 								{
 									"key": "some key",
 									"value": "some value",
@@ -1177,9 +1239,9 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/assignments/c214bd94-ac79-4042-b72d-5af75561c805",
+							"raw": "{{droplet_ip}}:3000/assignments/c214bd94-ac79-4042-b72d-5af75561c805",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -1235,9 +1297,9 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/assignments/",
+							"raw": "{{droplet_ip}}:3000/assignments/",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -1293,9 +1355,9 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/assignments/asdfasfdasf",
+							"raw": "{{droplet_ip}}:3000/assignments/asdfasfdasf",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -1351,9 +1413,9 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/assignments/fc426cd6-ad40-4f88-ac9c-5ae9b2c82251",
+							"raw": "{{droplet_ip}}:3000/assignments/fc426cd6-ad40-4f88-ac9c-5ae9b2c82251",
 							"host": [
-								"localhost"
+								"{{droplet_ip}}"
 							],
 							"port": "3000",
 							"path": [
@@ -1372,6 +1434,39 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "droplet_ip",
+			"value": "143.244.148.250",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "droplet_ip",
+			"value": "localhost",
+			"type": "string"
 		}
 	]
 }
