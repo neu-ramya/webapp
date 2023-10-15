@@ -1,5 +1,5 @@
 name: build_ami
-run-name: Build system for webapp during PR
+run-name: Build AMI during merge
 on:
   push:
     branches:
