@@ -16,6 +16,7 @@ sudo mysql -e "UPDATE mysql.user SET Password = PASSWORD('root') WHERE User = 'r
 sudo mysql -e "DROP USER ''@'localhost'"
 sudo mysql -e "DROP USER ''@'$(hostname)'"
 sudo mysql -e "DROP DATABASE test"
+sudo mysql -e "GRANT ALL PRIVILEGES ON database_name.* TO 'root'@'localhost' IDENTIFIED BY 'root'"
 sudo mysql -e "FLUSH PRIVILEGES"
 sudo mysql -e "CREATE DATABASE webapp"
 sudo mysql -e "SHOW DATABASES"

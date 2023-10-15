@@ -43,10 +43,10 @@ build {
     "source.amazon-ebs.debian12"
   ]
 
-provisioner "file" {
-  source = "./install-dependencies.sh"
-  destination = "/home/admin/install-dependencies.sh"
-}
+  provisioner "file" {
+    source      = "./install-dependencies.sh"
+    destination = "/home/admin/install-dependencies.sh"
+  }
 
   provisioner "shell" {
     inline = [
