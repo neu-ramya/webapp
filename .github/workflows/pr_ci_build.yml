@@ -1,4 +1,4 @@
-name: pr-ci-build
+name: PR-Action
 run-name: Build system for webapp during PR
 on:
   pull_request_target:
@@ -29,7 +29,7 @@ jobs:
         id: validate
         run: "packer validate ./packer/aws-debian.pkr.hcl"
 
-  pr-ci-build:
+  test-webapp-locally:
     environment: Actions-CI
     runs-on: ubuntu-latest
     env:
