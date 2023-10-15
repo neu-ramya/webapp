@@ -6,6 +6,26 @@ on:
       - opened
 
 jobs:
+  packer_validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Setup `packer`
+        uses: hashicorp/setup-packer@main
+        id: setup
+      - name: Run `packer init`
+        id: init
+        run: "packer init ./packer/aws-debian.pkr.hcl"
+      - name: Run `packer format`
+        id: fmt
+        run: "packer fmt ./packer/aws-debian.pkr.hcl" 
+      - name: Run `packer validate`
+        id: validate
+        run: "packer validate ./packer/aws-debian.pkr.hcl"
+
   pr-ci-build:
     environment: Actions-CI
     runs-on: ubuntu-latest
@@ -63,3 +83,4 @@ jobs:
       - uses: matt-ball/newman-action@master
         with:
           collection: tests/integration-tests/CSYE-webapp.postman_collection.json
+    
