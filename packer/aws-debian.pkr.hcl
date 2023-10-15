@@ -44,7 +44,7 @@ build {
   ]
 
   provisioner "file" {
-    source      = "./install-dependencies.sh"
+    source      = "${path.root}/install-dependencies.sh"
     destination = "/home/admin/install-dependencies.sh"
   }
 
