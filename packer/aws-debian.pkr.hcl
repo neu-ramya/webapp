@@ -7,20 +7,22 @@ packer {
   }
 }
 
-// variable "aws_access_key" {
-//   type    = string
-//   default = env("AWS_ACCESS_KEY_ID")
-// }
+variable "aws_access_key" {
+  type    = string
+  default = env("AWS_ACCESS_KEY_ID")
+}
 
-// variable "aws_secret_key" {
-//   type    = string
-//   default = env("AWS_SECRET_ACCESS_KEY")
-// }
+variable "aws_secret_key" {
+  type    = string
+  default = env("AWS_SECRET_ACCESS_KEY")
+}
 
 source "amazon-ebs" "debian12" {
   ami_name      = "csye6225-debian12"
   instance_type = "t2.micro"
   region        = "us-west-2"
+  access_key    = var.aws_access_key
+  secret_key    = var.aws_secret_key
   ami_users = [
     "544530547780"
   ]
