@@ -10,13 +10,9 @@ sudo apt install nodejs -y
 sudo apt install build-essential -y 
 sudo apt install npm -y
 sudo npm install -g newman
-sudo apt install mariadb-server -y
-# sudo mariadb-secure-installation -y
-sudo mysql -e "UPDATE mysql.user SET Password = PASSWORD('root') WHERE User = 'root'"
-# sudo mysql -e "DROP USER ''@'localhost'"
-# sudo mysql -e "DROP USER ''@'$(hostname)'"
-# sudo mysql -e "DROP DATABASE test"
+sudo DEBIAN_FRONTEND=noninteractive apt install mariadb-server -y
+sudo mysql -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('root')"
 sudo mysql -e "GRANT ALL PRIVILEGES ON database_name.* TO 'root'@'localhost' IDENTIFIED BY 'root'"
-sudo mysql -e "FLUSH PRIVILEGES"
-sudo mysql -e "CREATE DATABASE webapp"
-sudo mysql -e "SHOW DATABASES"
+sudo mysql -u root -proot  -e "FLUSH PRIVILEGES"
+sudo mysql -u root -proot  -e "CREATE DATABASE webapp"
+sudo mysql -u root -proot  -e "SHOW DATABASES"
