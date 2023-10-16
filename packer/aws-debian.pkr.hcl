@@ -9,7 +9,7 @@ packer {
 
 variable "ami_name" {
   type    = string
-  default = "csye6225-debian12"
+  default = "csye6225-debian12-{{ timestamp }}"
   // default = env("AMI_NAME")
 }
 
