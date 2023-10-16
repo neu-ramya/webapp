@@ -7,6 +7,24 @@ packer {
   }
 }
 
+variable "ami_name" {
+  type    = string
+  default = "csye6225-debian12"
+  // default = env("AMI_NAME")
+}
+
+variable "ec2_instance_types" {
+  type    = string
+  default = "t2.micro"
+  // default = env("EC2_INSTANCE_TYPES")
+}
+
+variable "aws_region" {
+  type    = string
+  default = "us-west-2"
+  // default = env("AWS_REGION")
+}
+
 variable "aws_access_key" {
   type    = string
   default = env("AWS_ACCESS_KEY_ID")
@@ -18,9 +36,9 @@ variable "aws_secret_key" {
 }
 
 source "amazon-ebs" "debian12" {
-  ami_name      = "csye6225-debian12"
-  instance_type = "t2.micro"
-  region        = "us-west-2"
+  ami_name      = var.ami_name
+  instance_type = var.ec2_instance_types
+  region        = var.aws_region
   access_key    = var.aws_access_key
   secret_key    = var.aws_secret_key
   ami_users = [
@@ -53,8 +71,6 @@ build {
   provisioner "shell" {
     inline = [
       "./install-dependencies.sh",
-      "pwd",
-      "ls -al"
     ]
   }
 
