@@ -8,12 +8,65 @@ on:
 jobs:
   build-and-deploy-ami:
     runs-on: ubuntu-latest
+    environment: Actions-CI
     env:
+      DB_CONNECTION: mysql
+      DB_HOST: ${{ vars.DB_HOST }}
+      DB_PORT: ${{ vars.DB_PORT }}
+      DB_DATABASE: ${{ vars.DB_DATABASE }}
+      DB_USER: ${{ vars.DB_USER }}
+      DB_PASS: ${{ vars.DB_PASS }}
+      PROF_TABLES: ${{ vars.PROF_TABLES }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: create tmp env file
+        run: |
+          ls -al
+          touch .env
+          echo "DB_CONNECTION=mysql" >> .env
+          echo "DB_HOST=$DB_HOST" >> .env
+          echo "DB_PORT=$DB_PORT" >> .env
+          echo "DB_DATABASE=$DB_DATABASE" >> .env
+          echo "DB_USER=$DB_USER" >> .env
+          echo "DB_PASS=$DB_PASS" >> .env
+          echo "PROF_TABLES=$PROF_TABLES" >> .env
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - name: Install dependencies
+        run: npm install
+
+      - name: Setup mariadb action
+        uses: ankane/setup-mariadb@v1
+        with:
+          database: webapp
+      
+      - name: Show database
+        run: mysql -e 'SHOW DATABASES;'
+        
+      - name: set root user DB password
+        run: mysql -D mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'root'";
+
+      - name: flush privileges
+        run: mysql -D mysql -e "flush privileges";
+
+      - name: Start Express.js Server
+        run: |
+          npm run ci
+
+      - name: run integration tests
+        uses: matt-ball/newman-action@master
+        with:
+          collection: tests/integration-tests/CSYE-webapp.postman_collection.json
+      
+      - name: build zip artifact
+        run: ls -al ../
 
       - name: Setup `packer`
         uses: hashicorp/setup-packer@main
