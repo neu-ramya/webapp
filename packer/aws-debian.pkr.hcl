@@ -21,18 +21,27 @@ variable "ec2_instance_types" {
 
 variable "aws_region" {
   type    = string
-  default = "us-west-2"
+  default = "us-east-1"
   // default = env("AWS_REGION")
 }
 
 variable "aws_access_key" {
+  sensitive = true
   type    = string
   default = env("AWS_ACCESS_KEY_ID")
 }
 
 variable "aws_secret_key" {
+  sensitive = true
   type    = string
   default = env("AWS_SECRET_ACCESS_KEY")
+}
+
+variable "shared_users" {
+  type    = list(string)
+  default = [
+    "544530547780"
+  ]
 }
 
 source "amazon-ebs" "debian12" {
@@ -41,9 +50,7 @@ source "amazon-ebs" "debian12" {
   region        = var.aws_region
   access_key    = var.aws_access_key
   secret_key    = var.aws_secret_key
-  ami_users = [
-    "544530547780"
-  ]
+  ami_users     = var.shared_users
   source_ami_filter {
     filters = {
       name                = "debian-12-*"
