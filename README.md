@@ -8,6 +8,7 @@
 - To understand APIs and HTTP response codes
 - To understand CI pipeline with the use of GitHub actions
 - To familiarize with using Digital Ocean
+- To create AMI using packer
 
 ### Building from source
 
@@ -21,9 +22,12 @@
 - Inside the webapp install Node using 'sudo apt install nodejs' and 'sudo apt install build-essential'
 - Inside the webapp install Node Npm using 'sudo apt install npm -y'
 - Install newman using 'sudo npm install -g newman'
+- Build AMI using packer following the steps in https://developer.hashicorp.com/packer/tutorials/aws-get-started/aws-get-started-build-image
+- Add required provisioners in the packer - provisioner to read the dependencies bash file for building the AMI
 
 ### Demo purpose
 
 - Inside the webapp, install npm using 'npm install'
 - Run the npm using 'npm run dev'
 - Run the integration tests using 'newman run webapp/tests/integration-tests/CSYE-webapp.postman_collection.json'
+- Run the packer to build AMI using 'AWS_PROFILE=profile_name packer build ./packer/aws-debian.pkr.hcl'
