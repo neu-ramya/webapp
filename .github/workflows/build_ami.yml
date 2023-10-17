@@ -70,7 +70,7 @@ jobs:
           ls -al ../
           sudo apt install zip -y
           cd ..
-          zip webapp
+          zip -r webapp.zip webapp
           ls -al
           cd webapp
 
