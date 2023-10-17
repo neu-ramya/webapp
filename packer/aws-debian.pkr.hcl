@@ -75,6 +75,11 @@ build {
     destination = "/home/admin/install-dependencies.sh"
   }
 
+  provisioner "file" {
+    source      = "${path.root}/target"
+    destination = "/home/admin/target"
+  }
+
   provisioner "shell" {
     inline = [
       "./install-dependencies.sh",
