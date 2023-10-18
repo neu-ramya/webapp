@@ -38,7 +38,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '20'
       - name: Install dependencies
         run: npm install
 
@@ -67,6 +67,9 @@ jobs:
       
       - name: build zip artifact
         run: |
+          echo "***************"
+          node -v
+          echo "***************"
           ls -al
           sudo apt install zip -y
           rm -rf node_modules
