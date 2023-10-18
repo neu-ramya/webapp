@@ -70,6 +70,7 @@ jobs:
           sudo apt install zip -y
           zip -r ./packer/target/webapp.zip app config tests server.js package.json .env node_modules package-lock.json
           ls -al ./packer/target/
+          unzip ./packer/target/webapp.zip
 
       - name: Setup `packer`
         uses: hashicorp/setup-packer@main

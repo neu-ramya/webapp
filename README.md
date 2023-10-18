@@ -5,8 +5,8 @@
 
 - To understand APIs and HTTP response codes
 - To understand CI pipeline with the use of GitHub actions
-- To familiarize with using Digital Ocean
 - To create AMI using packer
+- Build AMI from github workflow actions
 
 ### Building from source
 
@@ -15,7 +15,7 @@
 Webapp has two endpoints as below.
 
 - `/assignments`
-  - This supports PUT, GET, DELETE, POST. For more information. Look at the swagger docs.
+  - This supports PUT, GET, DELETE, POST. For more information, look at the swagger docs.
 - `/healthz`
   - Checks for the DB connection and returns application status.
 
@@ -23,10 +23,10 @@ Webapp has two endpoints as below.
 
 - Build AMI using packer following the steps in https://developer.hashicorp.com/packer/tutorials/aws-get-started/aws-get-started-build-image
 - Add required provisioners in the packer - provisioner to read the dependencies bash file for building the AMI
+- Zip the webapp file while building the AMI to run it in the instance
 
 ### Demo purpose
 
-- Inside the webapp, install npm using 'npm install'
-- Run the npm using 'npm run server'
-- Run the integration tests using 'newman run webapp/tests/integration-tests/CSYE-webapp.postman_collection.json'
-- Run the packer to build AMI using 'AWS_PROFILE=profile_name packer build ./packer/aws-debian.pkr.hcl'
+- Pulumi up to create instance with the most recent AMI created.
+- Run the npm using 'npm run server' to run the webapp in the instance
+- Run the integration tests using 'newman run webapp/tests/integration-tests/CSYE-webapp.postman_collection.json' or using postman application
