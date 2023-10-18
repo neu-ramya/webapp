@@ -67,9 +67,9 @@ jobs:
       
       - name: build zip artifact
         run: |
-          ls -al ../
+          ls -al
           sudo apt install zip -y
-          zip -r ./webapp/packer/target/webapp.zip app config tests server.js package.json .env node_modules package-lock.json
+          zip -r ./packer/target/webapp.zip app config tests server.js package.json .env node_modules package-lock.json
           ls -al
 
       - name: Setup `packer`
