@@ -12,16 +12,12 @@
 
 #### webapp
 
-- create a Debian12 droplet following steps from https://docs.digitalocean.com/products/droplets/how-to/create/ 
-- SSH into Debian12 using 'ssh -i ~/.ssh/digitalocean root@ip_address'
-- Install MariaDB in Debian12 following steps from https://linuxgenie.net/how-to-install-mariadb-on-debian-12-bookworm-distribution/
-- Create a database named 'webapp' in mariaDB
-- Install unzip using 'sudo apt-get install unzip'
-- Unzip the webapp file in Debian12 using 'unzip file.zip -d destination_folder'
-- Remove node modules and package if it exists using 'rm -rf node_modules' and 'rm package-lock.json'
-- Inside the webapp install Node using 'sudo apt install nodejs' and 'sudo apt install build-essential'
-- Inside the webapp install Node Npm using 'sudo apt install npm -y'
-- Install newman using 'sudo npm install -g newman'
+Webapp has two endpoints as below.
+
+- `/assignments`
+  - This supports PUT, GET, DELETE, POST. For more information. Look at the swagger docs.
+- `/healthz`
+  - Checks for the DB connection and returns application status.
 
 #### packer
 
@@ -31,6 +27,6 @@
 ### Demo purpose
 
 - Inside the webapp, install npm using 'npm install'
-- Run the npm using 'npm run dev'
+- Run the npm using 'npm run server'
 - Run the integration tests using 'newman run webapp/tests/integration-tests/CSYE-webapp.postman_collection.json'
 - Run the packer to build AMI using 'AWS_PROFILE=profile_name packer build ./packer/aws-debian.pkr.hcl'

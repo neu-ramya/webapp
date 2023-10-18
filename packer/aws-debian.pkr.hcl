@@ -7,22 +7,29 @@ packer {
   }
 }
 
+variable "db_username" {
+  type    = string
+  default = "root"
+}
+
+variable "db_password" {
+  type    = string
+  default = "root"
+}
+
 variable "ami_name" {
   type    = string
   default = "csye6225-debian12-{{ timestamp }}"
-  // default = env("AMI_NAME")
 }
 
 variable "ec2_instance_types" {
   type    = string
   default = "t2.micro"
-  // default = env("EC2_INSTANCE_TYPES")
 }
 
 variable "aws_region" {
   type    = string
   default = "us-east-1"
-  // default = env("AWS_REGION")
 }
 
 variable "aws_access_key" {
@@ -82,7 +89,7 @@ build {
 
   provisioner "shell" {
     inline = [
-      "./install-dependencies.sh",
+      "./install-dependencies.sh ${var.db_username} ${var.db_password}",
     ]
   }
 

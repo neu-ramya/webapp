@@ -11,7 +11,7 @@ sudo apt install build-essential -y
 sudo apt install npm -y
 sudo npm install -g newman
 sudo DEBIAN_FRONTEND=noninteractive apt install mariadb-server -y
-sudo mysql -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('root')"
-sudo mysql -e "GRANT ALL PRIVILEGES ON database_name.* TO 'root'@'localhost' IDENTIFIED BY 'root'"
-sudo mysql -u root -proot  -e "FLUSH PRIVILEGES"
-sudo mysql -u root -proot  -e "CREATE DATABASE webapp"
+sudo mysql -e "SET PASSWORD FOR '$1'@'localhost' = PASSWORD('$2')"
+sudo mysql -e "GRANT ALL PRIVILEGES ON database_name.* TO '$1'@'localhost' IDENTIFIED BY '$2'"
+sudo mysql -u "$1" -p"$2"  -e "FLUSH PRIVILEGES"
+sudo mysql -u "$1" -p"$2"  -e "CREATE DATABASE webapp"
