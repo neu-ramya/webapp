@@ -71,7 +71,6 @@ jobs:
           sudo apt install zip -y
           zip -r ./packer/target/webapp.zip app config tests server.js package.json .env
           ls -al
-          cd webapp
 
       - name: Setup `packer`
         uses: hashicorp/setup-packer@main
