@@ -69,6 +69,9 @@ jobs:
         run: |
           ls -al
           sudo apt install zip -y
+          rm -rf node_modules
+          rm package-lock.json
+          npm install
           zip -r ./packer/target/webapp.zip app config tests server.js package.json .env node_modules package-lock.json
           ls -al
 
