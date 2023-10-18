@@ -67,10 +67,9 @@ jobs:
       
       - name: build zip artifact
         run: |
-          ls -al ../
+          ls -al 
           sudo apt install zip -y
-          cd ..
-          zip -r ./webapp/packer/target/webapp.zip webapp
+          zip -r ./packer/target/webapp.zip app config tests server.js package.json .env
           ls -al
           cd webapp
 
