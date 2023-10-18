@@ -1,8 +1,6 @@
 [![pr-ci-build](https://github.com/neu-ramya/webapp/actions/workflows/pr_ci_build.yml/badge.svg)](https://github.com/neu-ramya/webapp/actions/workflows/pr_ci_build.yml)
 # csye6225-fall2023 webapp
 
-## Assignment 3
-
 ### Objectives
 
 - To understand APIs and HTTP response codes
@@ -11,6 +9,8 @@
 - To create AMI using packer
 
 ### Building from source
+
+#### webapp
 
 - create a Debian12 droplet following steps from https://docs.digitalocean.com/products/droplets/how-to/create/ 
 - SSH into Debian12 using 'ssh -i ~/.ssh/digitalocean root@ip_address'
@@ -22,6 +22,9 @@
 - Inside the webapp install Node using 'sudo apt install nodejs' and 'sudo apt install build-essential'
 - Inside the webapp install Node Npm using 'sudo apt install npm -y'
 - Install newman using 'sudo npm install -g newman'
+
+#### packer
+
 - Build AMI using packer following the steps in https://developer.hashicorp.com/packer/tutorials/aws-get-started/aws-get-started-build-image
 - Add required provisioners in the packer - provisioner to read the dependencies bash file for building the AMI
 
