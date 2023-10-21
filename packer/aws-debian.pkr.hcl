@@ -53,7 +53,7 @@ variable "shared_users" {
 
 source "amazon-ebs" "debian12" {
   ami_name      = var.ami_name
-  instance_type = var.ec2_instance_type
+  instance_type = var.ec2_instance_types
   region        = var.aws_region
   access_key    = var.aws_access_key
   secret_key    = var.aws_secret_key
