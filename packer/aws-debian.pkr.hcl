@@ -7,7 +7,7 @@ packer {
   }
 }
 
-variable "db_username" {
+variable "db_username"    {
   type    = string
   default = "root"
 }
