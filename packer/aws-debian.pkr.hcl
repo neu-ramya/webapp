@@ -89,7 +89,7 @@ build {
 
   provisioner "file" {
     source      = "${path.root}/csye-webapp.service"
-    destination = "/lib/systemd/system/csye-webapp.service"
+    destination = "/home/admin/csye-webapp.service"
   }
 
   provisioner "shell" {
