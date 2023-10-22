@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 
-# sudo groupadd csye6225
-# sudo useradd -s /bin/false -g csye6225 -d /opt/csye6225 -m csye6225
+sudo groupadd csye6225
+sudo useradd -s /bin/false -g csye6225 -d /opt/csye6225 -m csye6225
+
 sudo mv /home/admin/csye-webapp.service /etc/systemd/system/csye-webapp.service
+sudo chmod 777 /etc/systemd/system/csye-webapp.service
+sudo chown root /etc/systemd/system/csye-webapp.service
+sudo chgrp root /etc/systemd/system/csye-webapp.service
 sudo systemctl daemon-reload
 sudo systemctl enable csye-webapp
-sudo systemctl start csye-webapp
+
 sudo apt update -y
 sudo apt upgrade -y
 sudo apt install curl -y
