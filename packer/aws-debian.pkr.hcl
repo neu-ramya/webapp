@@ -87,6 +87,11 @@ build {
     destination = "/home/admin/target"
   }
 
+  provisioner "file" {
+    source      = "${path.root}/csye-webapp.service"
+    destination = "/lib/systemd/system/csye-webapp.service"
+  }
+
   provisioner "shell" {
     inline = [
       "./install-dependencies.sh ${var.db_username} ${var.db_password}",
