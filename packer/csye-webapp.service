@@ -1,0 +1,13 @@
+[Unit]
+Description=csye-webapp.service - starts the webapp application
+Documentation=starts all the necessary needed for webapp
+After=network.target
+
+[Service]
+Type=simple
+User=admin
+ExecStart=/usr/bin/node /home/admin/target/server.js
+Restart=on-failure
+
+[Install]
+WantedBy=cloud-init.target
