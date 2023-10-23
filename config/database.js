@@ -1,7 +1,7 @@
 const { Sequelize } = require("sequelize");
 
 const sequelize = new Sequelize(
-	"webapp",
+	"csye6225",
 	process.env.DB_USER,
 	process.env.DB_PASS,
 	{
@@ -9,7 +9,6 @@ const sequelize = new Sequelize(
 		dialect: "mariadb",
 		dialectOptions: {
 			port: 3306,
-			socketPath: "/var/run/mysqld/mysqld.sock"
 		}
 	}
 );
