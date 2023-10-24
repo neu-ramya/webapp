@@ -8,13 +8,6 @@ sudo chmod 777 /etc/systemd/system/csye-webapp.service
 sudo chown root /etc/systemd/system/csye-webapp.service
 sudo chgrp root /etc/systemd/system/csye-webapp.service
 
-cp /home/admin/target/webapp.zip /opt/csye6225
-unzip /opt/csye6225/webapp.zip -d /opt/csye6225 
-cd /opt/csye6225 || exit
-sudo rm -rf node_modules
-npm install
-sudo chown -R  csye6225:csye6225 *
-
 sudo systemctl daemon-reload
 sudo systemctl enable csye-webapp
 sudo systemctl start csye-webapp
