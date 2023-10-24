@@ -7,8 +7,18 @@ sudo mv /home/admin/csye-webapp.service /etc/systemd/system/csye-webapp.service
 sudo chmod 777 /etc/systemd/system/csye-webapp.service
 sudo chown root /etc/systemd/system/csye-webapp.service
 sudo chgrp root /etc/systemd/system/csye-webapp.service
+
+cp /home/admin/target/webapp.zip /opt/csye6225
+unzip /opt/csye6225/webapp.zip -d /opt/csye6225 
+cd /opt/csye6225 || exit
+sudo rm -rf node_modules
+npm install
+sudo chown -R  csye6225:csye6225 *
+
 sudo systemctl daemon-reload
 sudo systemctl enable csye-webapp
+sudo systemctl start csye-webapp
+# sudo systemctl stop csye-webapp
 
 sudo apt update -y
 sudo apt upgrade -y
@@ -20,8 +30,8 @@ sudo apt install nodejs -y
 sudo apt install build-essential -y 
 sudo apt install npm -y
 sudo npm install -g newman
-sudo DEBIAN_FRONTEND=noninteractive apt install mariadb-server -y
-sudo mysql -e "SET PASSWORD FOR '$1'@'localhost' = PASSWORD('$2')"
-sudo mysql -e "GRANT ALL PRIVILEGES ON database_name.* TO '$1'@'localhost' IDENTIFIED BY '$2'"
-sudo mysql -u "$1" -p"$2"  -e "FLUSH PRIVILEGES"
-sudo mysql -u "$1" -p"$2"  -e "CREATE DATABASE webapp"
+# sudo DEBIAN_FRONTEND=noninteractive apt install mariadb-server -y
+# sudo mysql -e "SET PASSWORD FOR '$1'@'localhost' = PASSWORD('$2')"
+# sudo mysql -e "GRANT ALL PRIVILEGES ON database_name.* TO '$1'@'localhost' IDENTIFIED BY '$2'"
+# sudo mysql -u "$1" -p"$2"  -e "FLUSH PRIVILEGES"
+# sudo mysql -u "$1" -p"$2"  -e "CREATE DATABASE webapp"
