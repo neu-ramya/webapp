@@ -34,18 +34,18 @@ variable "aws_region" {
 
 variable "aws_access_key" {
   sensitive = true
-  type    = string
-  default = env("AWS_ACCESS_KEY_ID")
+  type      = string
+  default   = env("AWS_ACCESS_KEY_ID")
 }
 
 variable "aws_secret_key" {
   sensitive = true
-  type    = string
-  default = env("AWS_SECRET_ACCESS_KEY")
+  type      = string
+  default   = env("AWS_SECRET_ACCESS_KEY")
 }
 
 variable "shared_users" {
-  type    = list(string)
+  type = list(string)
   default = [
     "544530547780"
   ]

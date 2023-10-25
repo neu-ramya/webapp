@@ -10,6 +10,7 @@ on:
 
 jobs:
   packer_validate:
+    if: github.repository == neu-ramya/webapp
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -24,12 +25,13 @@ jobs:
         run: "packer init ./packer/aws-debian.pkr.hcl"
       - name: Run `packer format`
         id: fmt
-        run: "packer fmt ./packer/aws-debian.pkr.hcl" 
+        run: "packer fmt -check ./packer/aws-debian.pkr.hcl" 
       - name: Run `packer validate`
         id: validate
         run: "packer validate ./packer/aws-debian.pkr.hcl"
 
   test-webapp-locally:
+    if: github.repository == neu-ramya/webapp
     environment: Actions-CI
     runs-on: ubuntu-latest
     env:
