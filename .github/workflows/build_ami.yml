@@ -7,6 +7,7 @@ on:
 
 jobs:
   build-and-deploy-ami:
+    if: github.repository == 'neu-ramya/webapp'
     runs-on: ubuntu-latest
     environment: Actions-CI
     env:
