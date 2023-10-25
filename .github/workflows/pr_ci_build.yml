@@ -10,7 +10,7 @@ on:
 
 jobs:
   packer_validate:
-    if: github.repository == neu-ramya/webapp
+    if: github.repository == 'neu-ramya/webapp'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -31,7 +31,7 @@ jobs:
         run: "packer validate ./packer/aws-debian.pkr.hcl"
 
   test-webapp-locally:
-    if: github.repository == neu-ramya/webapp
+    if: github.repository == 'neu-ramya/webapp'
     environment: Actions-CI
     runs-on: ubuntu-latest
     env:
