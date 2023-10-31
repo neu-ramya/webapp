@@ -23,10 +23,10 @@ Webapp has two endpoints as below.
 
 - Build AMI using packer following the steps in https://developer.hashicorp.com/packer/tutorials/aws-get-started/aws-get-started-build-image
 - Add required provisioners in the packer - provisioner to read the dependencies bash file for building the AMI
-- Zip the webapp file while building the AMI to run it in the instance
+- Zip the webapp file while building the AMI to run it in the instance.
 
 ### Demo purpose
 
 - Pulumi up to create instance with the most recent AMI created.
 - Run the npm using 'npm run server' to run the webapp in the instance
-- Run the integration tests using 'newman run webapp/tests/integration-tests/CSYE-webapp.postman_collection.json' or using postman application
+- Run the integration tests using 'newman run webapp/tests/integration-tests/CSYE-webapp.postman_collection.json' or using postman application.
