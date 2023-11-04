@@ -23,14 +23,9 @@ curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg 
 echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
 sudo apt-get update
 sudo apt-get install nodejs -y
-# curl -sL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh
-# sudo bash nodesource_setup.sh -y
-# sudo apt install nodejs -y
 sudo apt install build-essential -y 
 sudo apt install npm -y
 sudo npm install -g newman
-# sudo DEBIAN_FRONTEND=noninteractive apt install mariadb-server -y
-# sudo mysql -e "SET PASSWORD FOR '$1'@'localhost' = PASSWORD('$2')"
-# sudo mysql -e "GRANT ALL PRIVILEGES ON database_name.* TO '$1'@'localhost' IDENTIFIED BY '$2'"
-# sudo mysql -u "$1" -p"$2"  -e "FLUSH PRIVILEGES"
-# sudo mysql -u "$1" -p"$2"  -e "CREATE DATABASE webapp"
+wget https://amazoncloudwatch-agent.s3.amazonaws.com/debian/amd64/latest/amazon-cloudwatch-agent.deb
+sudo dpkg -i -E ./amazon-cloudwatch-agent.deb /usr/local/bin
+sudo /usr/local/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:/home/admin/cloudwatch-config.json

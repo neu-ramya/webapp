@@ -92,6 +92,11 @@ build {
     destination = "/home/admin/csye-webapp.service"
   }
 
+  provisioner "file" {
+    source      = "${path.root}/cloudwatch-config.json"
+    destination = "/home/admin/cloudwatch-config.json"
+  }
+
   provisioner "shell" {
     inline = [
       "./install-dependencies.sh ${var.db_username} ${var.db_password}",
