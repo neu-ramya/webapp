@@ -1,5 +1,6 @@
 const assignmentModel = require("../models/Assignment");
 const bcrypt = require("bcrypt");
+const { statdClient } = require("../../config/statsd");
 const { logger } = require("../../config/logger");
 const account = require("../models/Account");
 
@@ -9,11 +10,13 @@ async function assignmentsHandler(req, res) {
 }
 
 async function patchHandler(req, res) {
+  statdClient.increment('webapp.assignment.patch.total');
   logger.info("patch handler");
   return res.status(405).end();
 }
 
 async function getHandler(req, res) {
+  statdClient.increment('webapp.assignment.get.total');
   logger.info("assignments get handler");
   if (Object.keys(req.body).length != 0) {
     return res.status(400).end();
@@ -94,6 +97,7 @@ async function genericRequestHandler(req, res) {
 async function getAllDataHandler(req, res, accountId) {
   allData = await assignmentModel.findAll();
   if (allData.length > 0) {
+    statdClient.increment('webapp.assignment.get.success');
     return res.status(200).json(allData);
   } else {
     return res.status(204).end();
@@ -102,6 +106,7 @@ async function getAllDataHandler(req, res, accountId) {
 
 async function getDataHandler(req, res, accountId) {
   logger.info("get individual Assignment");
+  statdClient.increment('webapp.assignment.getOne.total');
   const assignmentId = req.params.id;
   try {
     existingAssignment = await assignmentModel.findOne({
@@ -111,6 +116,7 @@ async function getDataHandler(req, res, accountId) {
     });
 
     if (existingAssignment) {
+      statdClient.increment('webapp.assignment.getOne.success');
       return res.status(200).json(existingAssignment);
     } else {
       return res.status(404).end();
@@ -121,6 +127,7 @@ async function getDataHandler(req, res, accountId) {
 }
 
 async function insertHandler(req, res, accountId) {
+  statdClient.increment('webapp.assignment.insert.total');
   const requiredKeys = [
     "name",
     "points",
@@ -157,6 +164,7 @@ async function insertHandler(req, res, accountId) {
   } else {
     try {
       postRes = await assignmentModel.create(accountData);
+      statdClient.increment('webapp.assignment.insert.success');
       return res.status(201).json(postRes);
     } catch (error) {
       return res.status(500).end();
@@ -165,6 +173,7 @@ async function insertHandler(req, res, accountId) {
 }
 
 async function updateHandler(req, res, accountId) {
+  statdClient.increment('webapp.assignment.update.total');
   const requiredKeys = [
     "name",
     "points",
@@ -214,6 +223,7 @@ async function updateHandler(req, res, accountId) {
         );
 
         if (updatedRowsCount > 0) {
+          statdClient.increment('webapp.assignment.update.success');
           return res.status(204).end();
         } else {
           return res.status(400).end();
@@ -230,6 +240,7 @@ async function updateHandler(req, res, accountId) {
 }
 
 async function deletionHandler(req, res, accountId) {
+  statdClient.increment('webapp.assignment.delete.total');
   if (
     (req.body && Object.keys(req.body).length > 0) ||
     Object.keys(req.params).length === 0
@@ -253,6 +264,7 @@ async function deletionHandler(req, res, accountId) {
               id: assignmentId,
             },
           });
+          statdClient.increment('webapp.assignment.delete.success');
           return res.status(204).end();
         } else {
           res.status(403).end();

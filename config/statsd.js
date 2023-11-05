@@ -1,6 +1,6 @@
-const StatsD = require('node-statsd');
+let StatsD = require('node-statsd');
 
-const statdClient = new StatsD();
+let statdClient = new StatsD();
 statdClient.host = 'localhost';
 statdClient.port = 8125;
 
