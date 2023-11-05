@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const { logger } = require("./config/logger");
+const { logger } = require("../../../config/logger");
 
 async function insertDataIntoAccountTable(Model, data) {
   try {

@@ -1,6 +1,6 @@
 const assignmentModel = require("../models/Assignment");
 const bcrypt = require("bcrypt");
-const { logger } = require("./config/logger");
+const { logger } = require("../../config/logger");
 const account = require("../models/Account");
 
 async function assignmentsHandler(req, res) {
