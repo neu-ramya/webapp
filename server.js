@@ -5,6 +5,7 @@ var bodyParser = require('body-parser')
 
 const port = process.env.PORT || 3000;
 const { sequelize } = require("./config/database");
+const { logger } = require("./config/logger");
 const { loadData } = require("./app/utils/data/loadData");
 
 const Account = require("./app/models/Account");
@@ -15,9 +16,9 @@ const Assignment = require("./app/models/Assignment");
     await sequelize.authenticate();
     await sequelize.sync();
     await loadData();
-    console.log("Database connection has been established successfully.");
+    logger.info("Database connection has been established successfully.");
   } catch (error) {
-    console.error("Unable to connect to the database:", error);
+    logger.error(error);
   }
 })();
 
@@ -25,5 +26,5 @@ app.use("/healthz", bodyParser.raw(), bodyParser.json(), bodyParser.urlencoded()
 app.use("/assignments", bodyParser.raw(), bodyParser.json(), bodyParser.urlencoded(), bodyParser.text(), require("./app/routes/assignments"));
 
 app.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
+  logger.info(`Server is listening on port ${port}`);
 });

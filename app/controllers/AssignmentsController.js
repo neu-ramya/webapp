@@ -1,19 +1,20 @@
 const assignmentModel = require("../models/Assignment");
 const bcrypt = require("bcrypt");
+const { logger } = require("./config/logger");
 const account = require("../models/Account");
 
 async function assignmentsHandler(req, res) {
-  console.log("assignments handler");
+  logger.info("assignments handler");
   return res.status(404).end();
 }
 
 async function patchHandler(req, res) {
-  console.log("patch handler");
+  logger.info("patch handler");
   return res.status(405).end();
 }
 
 async function getHandler(req, res) {
-  console.log("assignments get handler");
+  logger.info("assignments get handler");
   if (Object.keys(req.body).length != 0) {
     return res.status(400).end();
   } else {
@@ -21,16 +22,16 @@ async function getHandler(req, res) {
   }
 }
 async function putHandler(req, res) {
-  console.log("assignments put handler");
+  logger.info("assignments put handler");
   await genericRequestHandler(req, res);
 }
 async function postHandler(req, res) {
-  console.log("assignments post handler");
+  logger.info("assignments post handler");
   await genericRequestHandler(req, res);
 }
 
 async function deleteHandler(req, res) {
-  console.log("assignments delete handler");
+  logger.info("assignments delete handler");
   if (Object.keys(req.body).length != 0) {
     return res.status(400).end();
   } else {
@@ -100,7 +101,7 @@ async function getAllDataHandler(req, res, accountId) {
 }
 
 async function getDataHandler(req, res, accountId) {
-  console.log("get individual Assignment");
+  logger.info("get individual Assignment");
   const assignmentId = req.params.id;
   try {
     existingAssignment = await assignmentModel.findOne({

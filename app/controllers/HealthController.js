@@ -1,5 +1,6 @@
 const { sequelize } = require("../../config/database");
 const { statsd } = require("../../config/statsd");
+const { logger } = require("./config/logger");
 
 function validateDBConnection(req, res) {
   sequelize
