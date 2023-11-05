@@ -8,7 +8,9 @@ Type=simple
 User=csye6225
 Group=csye6225
 WorkingDirectory=/opt/csye6225
-ExecStart=/usr/bin/node /opt/csye6225/server.js > /opt/csye6225/webapp.log
+ExecStart=/usr/bin/node /opt/csye6225/server.js
+StandardOutput=file:/opt/csye6225/webapp-app.log
+StandardError=file:/opt/csye6225/webapp-error.log
 Restart=always
 
 [Install]
