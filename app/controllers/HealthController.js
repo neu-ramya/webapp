@@ -1,25 +1,22 @@
 const { sequelize } = require("../../config/database");
-const { statsd } = require("../../config/statsd");
+const { statdClient } = require("../../config/statsd");
 const { logger } = require("../../config/logger");
-
-console.log("!!!!!!!!!!!!!!!!!!!!!")
-console.log(statsd)
-console.log(logger)
-console.log("!!!!!!!!!!!!!!!!!!!!!")
 
 function validateDBConnection(req, res) {
   sequelize
     .authenticate()
     .then(() => {
+      logger.info("Successfull DB connection")
       res.status(200).end();
     })
     .catch((error) => {
+      logger.error("Unable to connect to DB")
       res.status(503).end();
     });
 }
 
 async function healthzHandler(req, res) {
-  // statsd.increment('webapp.totalHealthzCounter');
+  statdClient.increment('webapp.totalHealthzCounter');
   res.setHeader("Cache-Control", "no-cache");
   if (req.method !== "GET") {
     res.status(405).end();
@@ -31,7 +28,7 @@ async function healthzHandler(req, res) {
     res.status(400).end();
     return;
   } else {
-    // statsd.increment('webapp.validHealthzCounter');
+    statdClient.increment('webapp.validHealthzCounter');
     validateDBConnection(req, res);
   }
 }
