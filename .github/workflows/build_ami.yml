@@ -35,6 +35,7 @@ jobs:
           echo "DB_USER=$DB_USER" >> .env
           echo "DB_PASS=$DB_PASS" >> .env
           echo "PROF_TABLES=$PROF_TABLES" >> .env
+          cat .env
 
       - name: Setup node
         uses: actions/setup-node@v3
