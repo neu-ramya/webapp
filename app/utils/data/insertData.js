@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const { logger } = require("../../../config/logger");
 
 async function insertDataIntoAccountTable(Model, data) {
   try {
@@ -7,16 +8,16 @@ async function insertDataIntoAccountTable(Model, data) {
         where: { email: item.email },
       });
       if (existingRecord) {
-        console.log(`Email ${item.email} already exists. Skipping insertion.`);
+        logger.info(`Email ${item.email} already exists. Skipping insertion.`);
       } else {
         const hashedPassword = await bcrypt.hash(item.password, 10);
         item.password = hashedPassword;
         await Model.create(item);
-        console.log(`Data for email ${item.email} inserted successfully.`);
+        logger.info(`Data for email ${item.email} inserted successfully.`);
       }
     }
   } catch (error) {
-    console.error("Error inserting or updating data:", error);
+    logger.error(error);
   }
 }
 
@@ -26,9 +27,9 @@ async function insertDataIntoAssignmentTable(Model, data) {
       where: {},
     })
     await Model.bulkCreate(data);
-    console.log("Inserted into assignments table");    
+    logger.info("Inserted into assignments table");    
   } catch (error) {
-    console.error("Error inserting or updating data:", error);
+    logger.error(error);
   }
 }
 

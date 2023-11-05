@@ -1,6 +1,7 @@
 const path = require('path');
 const Account = require("../../models/Account");
 const Assignment = require("../../models/Assignment");
+const { logger } = require("../../../config/logger");
 
 const { parseCSV } = require("./parsecsv");
 const { insertDataIntoAccountTable, insertDataIntoAssignmentTable } = require("./insertData");
@@ -16,7 +17,7 @@ async function loadData() {
       const accountData = await parseCSV(fullAccountCSVPath);
       await insertDataIntoAccountTable(Account, accountData);
     } catch (error) {
-      console.error("Error:", error);
+      logger.error(error);
     }
   } else {
     try {
@@ -27,7 +28,7 @@ async function loadData() {
       await insertDataIntoAccountTable(Account, accountData);
       await insertDataIntoAssignmentTable(Assignment, assignmentData);
     } catch (error) {
-      console.error("Error:", error);
+      logger.error(error);
     }
   }
 

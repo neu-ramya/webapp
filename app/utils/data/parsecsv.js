@@ -1,5 +1,6 @@
 const fs = require("fs");
 const csv = require("csv-parser");
+const { logger } = require("../../../config/logger");
 
 function parseCSV(filePath) {
   const results = [];
