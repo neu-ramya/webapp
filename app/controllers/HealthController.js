@@ -1,4 +1,5 @@
 const { sequelize } = require("../../config/database");
+const { statsd } = require("../../config/statsd");
 
 function validateDBConnection(req, res) {
   sequelize
@@ -12,6 +13,7 @@ function validateDBConnection(req, res) {
 }
 
 async function healthzHandler(req, res) {
+  statsd.increment('webapp.totalHealthzCounter');
   res.setHeader("Cache-Control", "no-cache");
   if (req.method !== "GET") {
     res.status(405).end();
@@ -23,6 +25,7 @@ async function healthzHandler(req, res) {
     res.status(400).end();
     return;
   } else {
+    statsd.increment('webapp.validHealthzCounter');
     validateDBConnection(req, res);
   }
 }
