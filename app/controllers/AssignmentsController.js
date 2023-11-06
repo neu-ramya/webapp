@@ -11,7 +11,7 @@ async function assignmentsHandler(req, res) {
 
 async function patchHandler(req, res) {
   statdClient.increment('webapp.assignment.patch.total');
-  logger.info("patch handler");
+  logger.warning("patch not allowed");
   return res.status(405).end();
 }
 

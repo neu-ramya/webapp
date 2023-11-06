@@ -18,6 +18,7 @@ const Assignment = require("./app/models/Assignment");
     await loadData();
     logger.info("Database connection has been established successfully.");
   } catch (error) {
+    logger.fatal("Unable to connect to Database");
     logger.error(error);
   }
 })();
