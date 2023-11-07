@@ -1286,7 +1286,7 @@
 	"variable": [
 		{
 			"key": "droplet_ip",
-			"value": "dev.ramyadevie.me",
+			"value": "localhost",
 			"type": "string"
 		}
 	]
