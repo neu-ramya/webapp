@@ -65,7 +65,7 @@ jobs:
       - name: run integration tests
         uses: matt-ball/newman-action@master
         with:
-          collection: tests/integration-tests/CSYE-webapp.postman_collection.json
+          collection: tests/integration-tests/Webapp-latest.postman_collection.json
       
       - name: build zip artifact
         run: |
