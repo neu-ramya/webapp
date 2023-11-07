@@ -27,5 +27,8 @@ sudo apt install build-essential -y
 sudo apt install npm -y
 sudo npm install -g newman
 wget https://amazoncloudwatch-agent.s3.amazonaws.com/debian/amd64/latest/amazon-cloudwatch-agent.deb
-sudo dpkg -i -E /opt/aws/amazon-cloudwatch-agent.deb 
+# sudo dpkg -i -E ./amazon-cloudwatch-agent.deb 
+sudo mkdir /opt/aws
+sudo dpkg-deb -x ./amazon-cloudwatch-agent.deb /opt/aws/
+sudo mv /home/admin/cloudwatch-config.json /opt/cloudwatch-config.json
 # sudo /usr/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:/home/admin/cloudwatch-config.json
