@@ -7,6 +7,7 @@
 - To understand CI pipeline with the use of GitHub actions
 - To create AMI using packer
 - Build AMI from github workflow actions
+- Configure cloudwatch agent for the webapp
 
 ### Building from source
 
@@ -25,6 +26,7 @@ Webapp has two endpoints as below.
 - Build AMI using packer following the steps in https://developer.hashicorp.com/packer/tutorials/aws-get-started/aws-get-started-build-image
 - Add required provisioners in the packer - provisioner to read the dependencies bash file for building the AMI
 - Zip the webapp file while building the AMI to run it in the instance.
+- Cloudwatch agent configuration file is attached while building the AMI
 
 ### Demo purpose
 
