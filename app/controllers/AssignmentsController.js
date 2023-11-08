@@ -11,7 +11,7 @@ async function assignmentsHandler(req, res) {
 
 async function patchHandler(req, res) {
   statdClient.increment('webapp.assignment.patch.total');
-  logger.warning("patch not allowed");
+  logger.warn("patch not allowed");
   return res.status(405).end();
 }
 
@@ -62,9 +62,11 @@ async function methodDistributor(req, res, accountID) {
 
 async function genericRequestHandler(req, res) {
   if (Object.keys(req.query).length > 0) {
+    logger.warn("Query Parameters not allowed");
     return res.status(400).end();
   }
   if (!req.headers.authorization) {
+    logger.warn("Authorisation headers required");
     return res.status(401).end();
   } else {
     const authHeader = req.headers.authorization.split(" ")[1];
@@ -83,12 +85,15 @@ async function genericRequestHandler(req, res) {
         if (pwMatch) {
           await methodDistributor(req, res, accountDetails.id);
         } else {
+          logger.warn("Invalid Credentials");
           return res.status(401).end();
         }
       } else {
+        logger.warn("User not found");
         return res.status(400).end();
       }
     } catch (error) {
+      logger.error(error)
       return res.status(500).end();
     }
   }
@@ -98,14 +103,15 @@ async function getAllDataHandler(req, res, accountId) {
   allData = await assignmentModel.findAll();
   if (allData.length > 0) {
     statdClient.increment('webapp.assignment.get.success');
+    logger.info("Fetching all the assignments")
     return res.status(200).json(allData);
   } else {
+    logger.info("No data in assignments")
     return res.status(204).end();
   }
 }
 
 async function getDataHandler(req, res, accountId) {
-  logger.info("get individual Assignment");
   statdClient.increment('webapp.assignment.getOne.total');
   const assignmentId = req.params.id;
   try {
@@ -117,11 +123,14 @@ async function getDataHandler(req, res, accountId) {
 
     if (existingAssignment) {
       statdClient.increment('webapp.assignment.getOne.success');
+      logger.info("get individual Assignment");
       return res.status(200).json(existingAssignment);
     } else {
+      logger.info("Individual Assignment not found");
       return res.status(404).end();
     }
   } catch (error) {
+    logger.error(error);
     return res.status(500).end();
   }
 }
@@ -141,6 +150,7 @@ async function insertHandler(req, res, accountId) {
   accountData.account_id = accountId;
 
   if(typeof req.body.name !== 'string'){
+    logger.warn("Name should be of type string");
     return res.status(400).end();
   }
   requiredKeys.forEach((key) => {
@@ -151,6 +161,7 @@ async function insertHandler(req, res, accountId) {
 
   for (const key in req.body) {
     if (!requiredKeys.includes(key)) {
+      logger.warn("Missing required keys");
       return res.status(400).end();
     }
   }
@@ -165,8 +176,10 @@ async function insertHandler(req, res, accountId) {
     try {
       postRes = await assignmentModel.create(accountData);
       statdClient.increment('webapp.assignment.insert.success');
+      logger.info("Successfully created assignment");
       return res.status(201).json(postRes);
     } catch (error) {
+      logger.error(error);
       return res.status(500).end();
     }
   }
@@ -183,6 +196,7 @@ async function updateHandler(req, res, accountId) {
   ];
 
   if(typeof req.body.name !== 'string'){
+    logger.warn("Name should be of type string");
     return res.status(400).end();
   }
 
@@ -200,6 +214,7 @@ async function updateHandler(req, res, accountId) {
 
   for (const key in req.body) {
     if (!requiredKeys.includes(key)) {
+      logger.warn("Missing required keys");
       return res.status(400).end();
     }
   }
@@ -224,17 +239,21 @@ async function updateHandler(req, res, accountId) {
 
         if (updatedRowsCount > 0) {
           statdClient.increment('webapp.assignment.update.success');
+          logger.info("Successfully updat eassignments");
           return res.status(204).end();
         } else {
           return res.status(400).end();
         }
       } else {
+        logger.warn("User not authorized to update the assignment")
         return res.status(403).end();
       }
     } else {
+      logger.warn("assignment not found")
       return res.status(404).end();
     }
   } catch (error) {
+    logger.error(error)
     return res.status(500).end();
   }
 }
@@ -265,17 +284,22 @@ async function deletionHandler(req, res, accountId) {
             },
           });
           statdClient.increment('webapp.assignment.delete.success');
+          logger.info("Successfully delete assignment");
           return res.status(204).end();
         } else {
+          logger.warn("User not authorized to delete the assignment");
           res.status(403).end();
         }
       } else {
+        logger.warn("Assignment not found");
         res.status(404).end();
       }
     } catch (error) {
+      logger.error(error);
       res.status(500).end();
     }
   } catch (error) {
+    logger.error(error);
     res.status(500).end();
   }
 }
