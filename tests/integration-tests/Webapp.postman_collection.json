@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "8f3fce77-1147-407d-b95e-d6c9eb1c9df6",
-		"name": "CSYE-webapp",
+		"_postman_id": "07cba226-295e-488a-aa26-d3021cd94371",
+		"name": "Webapp",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "24216985"
 	},
 	"item": [
 		{
-			"name": "New Folder",
+			"name": "Healthz",
 			"item": [
 				{
 					"name": "GET request",
@@ -28,11 +28,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}:3000/healthz",
+							"raw": "{{droplet_ip}}/healthz",
 							"host": [
 								"{{droplet_ip}}"
 							],
-							"port": "3000",
 							"path": [
 								"healthz"
 							]
@@ -72,11 +71,10 @@
 							]
 						},
 						"url": {
-							"raw": "{{droplet_ip}}:3000/healthz",
+							"raw": "{{droplet_ip}}/healthz",
 							"host": [
 								"{{droplet_ip}}"
 							],
-							"port": "3000",
 							"path": [
 								"healthz"
 							]
@@ -103,11 +101,10 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}:3000/healthz",
+							"raw": "{{droplet_ip}}/healthz",
 							"host": [
 								"{{droplet_ip}}"
 							],
-							"port": "3000",
 							"path": [
 								"healthz"
 							]
@@ -134,11 +131,10 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}:3000/healthz",
+							"raw": "{{droplet_ip}}/healthz",
 							"host": [
 								"{{droplet_ip}}"
 							],
-							"port": "3000",
 							"path": [
 								"healthz"
 							]
@@ -165,11 +161,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}:3000/healthz",
+							"raw": "{{droplet_ip}}/healthz",
 							"host": [
 								"{{droplet_ip}}"
 							],
-							"port": "3000",
 							"path": [
 								"healthz"
 							]
@@ -205,11 +200,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}:3000/health",
+							"raw": "{{droplet_ip}}/health",
 							"host": [
 								"{{droplet_ip}}"
 							],
-							"port": "3000",
 							"path": [
 								"health"
 							]
@@ -222,6 +216,109 @@
 		{
 			"name": "assignments",
 			"item": [
+				{
+					"name": "Post Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"POST method returns 201 success\", function() {",
+									"    pm.response.to.have.status(201)",
+									"})",
+									"var jsonData = pm.response.json();",
+									"console.log(jsonData.id);",
+									"pm.environment.set(\"assignmentId\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "nf536u",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "mary.pop@example.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"points\" : \"53\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2020-10-29T09:00:00.001Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{droplet_ip}}/assignments",
+							"host": [
+								"{{droplet_ip}}"
+							],
+							"path": [
+								"assignments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET request individual",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"GET method returns 200 OK\", function() {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "mary.pop@example.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "nf536u",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{droplet_ip}}/assignments/{{assignmentId}}",
+							"host": [
+								"{{droplet_ip}}"
+							],
+							"path": [
+								"assignments",
+								"{{assignmentId}}"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "GET request",
 					"event": [
@@ -256,11 +353,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}:3000/assignments",
+							"raw": "{{droplet_ip}}/assignments",
 							"host": [
 								"{{droplet_ip}}"
 							],
-							"port": "3000",
 							"path": [
 								"assignments"
 							]
@@ -302,11 +398,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}:3000/assignments?asdfasdf=asdfasf",
+							"raw": "{{droplet_ip}}/assignments?asdfasdf=asdfasf",
 							"host": [
 								"{{droplet_ip}}"
 							],
-							"port": "3000",
 							"path": [
 								"assignments"
 							],
@@ -315,60 +410,6 @@
 									"key": "asdfasdf",
 									"value": "asdfasf"
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET request Individual",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"GET method returns 200 OK\", function() {",
-									"    pm.response.to.have.status(200)",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "password",
-									"value": "nf536u",
-									"type": "string"
-								},
-								{
-									"key": "username",
-									"value": "mary.pop@example.com",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "{{droplet_ip}}:3000/assignments/a623a935-01ef-4b1d-a125-59f96e45f7e5",
-							"host": [
-								"{{droplet_ip}}"
-							],
-							"port": "3000",
-							"path": [
-								"assignments",
-								"a623a935-01ef-4b1d-a125-59f96e45f7e5"
 							]
 						}
 					},
@@ -420,11 +461,10 @@
 							}
 						},
 						"url": {
-							"raw": "{{droplet_ip}}:3000/assignments",
+							"raw": "{{droplet_ip}}/assignments",
 							"host": [
 								"{{droplet_ip}}"
 							],
-							"port": "3000",
 							"path": [
 								"assignments"
 							]
@@ -466,11 +506,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}:3000/assignments",
+							"raw": "{{droplet_ip}}/assignments",
 							"host": [
 								"{{droplet_ip}}"
 							],
-							"port": "3000",
 							"path": [
 								"assignments"
 							]
@@ -500,11 +539,160 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}:3000/assignments",
+							"raw": "{{droplet_ip}}/assignments",
 							"host": [
 								"{{droplet_ip}}"
 							],
-							"port": "3000",
+							"path": [
+								"assignments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Request without auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"POST method returns 401 Unauthorized\", function() {",
+									"    pm.response.to.have.status(401)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"points\" : \"53\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2020-10-29T09:00:00.001Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{droplet_ip}}/assignments",
+							"host": [
+								"{{droplet_ip}}"
+							],
+							"path": [
+								"assignments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Request invalid keys",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"POST method returns 400 Invalid keys\", function() {",
+									"    pm.response.to.have.status(400)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "mary.pop@example.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "nf536u",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"points\" : \"53\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2020-10-29T09:00:00.001Z\",\n    \"jhsakdjfghia\": \"usdgfugai\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{droplet_ip}}/assignments",
+							"host": [
+								"{{droplet_ip}}"
+							],
+							"path": [
+								"assignments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Request missing valid key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"POST method returns 400 Missing keys\", function() {",
+									"    pm.response.to.have.status(400)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "mary.pop@example.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "nf536u",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2020-10-29T09:00:00.001Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{droplet_ip}}/assignments",
+							"host": [
+								"{{droplet_ip}}"
+							],
 							"path": [
 								"assignments"
 							]
@@ -546,11 +734,10 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}:3000/assignments/",
+							"raw": "{{droplet_ip}}/assignments/",
 							"host": [
 								"{{droplet_ip}}"
 							],
-							"port": "3000",
 							"path": [
 								"assignments",
 								""
@@ -593,21 +780,20 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}:3000/assignments/10fe6d95-c8b0-46b0-b511-ce0e2a3033be",
+							"raw": "{{droplet_ip}}/assignments/{{assignmentId}}",
 							"host": [
 								"{{droplet_ip}}"
 							],
-							"port": "3000",
 							"path": [
 								"assignments",
-								"10fe6d95-c8b0-46b0-b511-ce0e2a3033be"
+								"{{assignmentId}}"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "PUT request",
+					"name": "PUT request success",
 					"event": [
 						{
 							"listen": "test",
@@ -649,14 +835,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{droplet_ip}}:3000/assignments/10fe6d95-c8b0-46b0-b511-ce0e2a3033be",
+							"raw": "{{droplet_ip}}/assignments/{{assignmentId}}",
 							"host": [
 								"{{droplet_ip}}"
 							],
-							"port": "3000",
 							"path": [
 								"assignments",
-								"10fe6d95-c8b0-46b0-b511-ce0e2a3033be"
+								"{{assignmentId}}"
 							],
 							"query": [
 								{
@@ -712,14 +897,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{droplet_ip}}:3000/assignments/10fe6d95-c8b0-46b0-b511-ce0e2a3033be",
+							"raw": "{{droplet_ip}}/assignments/{{assignmentId}}",
 							"host": [
 								"{{droplet_ip}}"
 							],
-							"port": "3000",
 							"path": [
 								"assignments",
-								"10fe6d95-c8b0-46b0-b511-ce0e2a3033be"
+								"{{assignmentId}}"
 							],
 							"query": [
 								{
@@ -775,14 +959,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{droplet_ip}}:3000/assignments/10fe6d95-c8b0-46b0-b511-ce0e2a3033be",
+							"raw": "{{droplet_ip}}/assignments/{{assignmentId}}",
 							"host": [
 								"{{droplet_ip}}"
 							],
-							"port": "3000",
 							"path": [
 								"assignments",
-								"10fe6d95-c8b0-46b0-b511-ce0e2a3033be"
+								"{{assignmentId}}"
 							],
 							"query": [
 								{
@@ -816,12 +999,12 @@
 							"basic": [
 								{
 									"key": "password",
-									"value": "nf536u",
+									"value": "njf5jf",
 									"type": "string"
 								},
 								{
 									"key": "username",
-									"value": "mary.pop@example.com",
+									"value": "sara.ray@example.com",
 									"type": "string"
 								}
 							]
@@ -839,229 +1022,20 @@
 							]
 						},
 						"url": {
-							"raw": "{{droplet_ip}}:3000/assignments/39ae0b33-0ac2-4e1a-86e9-4ee8ec832405",
+							"raw": "{{droplet_ip}}/assignments/{{assignmentId}}",
 							"host": [
 								"{{droplet_ip}}"
 							],
-							"port": "3000",
 							"path": [
 								"assignments",
-								"39ae0b33-0ac2-4e1a-86e9-4ee8ec832405"
+								"{{assignmentId}}"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "POST Request",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"POST method returns 201 success\", function() {",
-									"    pm.response.to.have.status(201)",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "mary.pop@example.com",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "nf536u",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"points\" : \"53\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2020-10-29T09:00:00.001Z\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{droplet_ip}}:3000/assignments",
-							"host": [
-								"{{droplet_ip}}"
-							],
-							"port": "3000",
-							"path": [
-								"assignments"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "POST Request without auth",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"POST method returns 401 Unauthorized\", function() {",
-									"    pm.response.to.have.status(401)",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"points\" : \"53\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2020-10-29T09:00:00.001Z\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{droplet_ip}}:3000/assignments",
-							"host": [
-								"{{droplet_ip}}"
-							],
-							"port": "3000",
-							"path": [
-								"assignments"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "POST Request invalid keys",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"POST method returns 400 Invalid keys\", function() {",
-									"    pm.response.to.have.status(400)",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "mary.pop@example.com",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "nf536u",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"points\" : \"53\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2020-10-29T09:00:00.001Z\",\n    \"jhsakdjfghia\": \"usdgfugai\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{droplet_ip}}:3000/assignments",
-							"host": [
-								"{{droplet_ip}}"
-							],
-							"port": "3000",
-							"path": [
-								"assignments"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "POST Request missing valid key",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"POST method returns 400 Missing keys\", function() {",
-									"    pm.response.to.have.status(400)",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "mary.pop@example.com",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "nf536u",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2020-10-29T09:00:00.001Z\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{droplet_ip}}:3000/assignments",
-							"host": [
-								"{{droplet_ip}}"
-							],
-							"port": "3000",
-							"path": [
-								"assignments"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE request with body",
+					"name": "DELETE request with body Copy",
 					"event": [
 						{
 							"listen": "test",
@@ -1103,21 +1077,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{droplet_ip}}:3000/assignments/c214bd94-ac79-4042-b72d-5af75561c805",
+							"raw": "{{droplet_ip}}/assignments/{{assignmentId}}",
 							"host": [
 								"{{droplet_ip}}"
 							],
-							"port": "3000",
 							"path": [
 								"assignments",
-								"c214bd94-ac79-4042-b72d-5af75561c805"
+								"{{assignmentId}}"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "DELETE request without id",
+					"name": "DELETE request without id Copy",
 					"event": [
 						{
 							"listen": "test",
@@ -1150,11 +1123,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}:3000/assignments/",
+							"raw": "{{droplet_ip}}/assignments/",
 							"host": [
 								"{{droplet_ip}}"
 							],
-							"port": "3000",
 							"path": [
 								"assignments",
 								""
@@ -1164,7 +1136,7 @@
 					"response": []
 				},
 				{
-					"name": "DELETE request with invalid id",
+					"name": "DELETE request with invalid id Copy",
 					"event": [
 						{
 							"listen": "test",
@@ -1197,11 +1169,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}:3000/assignments/asdfasfdasf",
+							"raw": "{{droplet_ip}}/assignments/asdfasfdasf",
 							"host": [
 								"{{droplet_ip}}"
 							],
-							"port": "3000",
 							"path": [
 								"assignments",
 								"asdfasfdasf"
@@ -1211,7 +1182,7 @@
 					"response": []
 				},
 				{
-					"name": "DELETE request forbidden",
+					"name": "DELETE request forbidden Copy",
 					"event": [
 						{
 							"listen": "test",
@@ -1231,12 +1202,12 @@
 							"basic": [
 								{
 									"key": "password",
-									"value": "nf536u",
+									"value": "njf5jf",
 									"type": "string"
 								},
 								{
 									"key": "username",
-									"value": "mary.pop@example.com",
+									"value": "sara.ray@example.com",
 									"type": "string"
 								}
 							]
@@ -1244,14 +1215,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}:3000/assignments/fc426cd6-ad40-4f88-ac9c-5ae9b2c82251",
+							"raw": "{{droplet_ip}}/assignments/{{assignmentId}}",
 							"host": [
 								"{{droplet_ip}}"
 							],
-							"port": "3000",
 							"path": [
 								"assignments",
-								"fc426cd6-ad40-4f88-ac9c-5ae9b2c82251"
+								"{{assignmentId}}"
 							],
 							"query": [
 								{
@@ -1290,14 +1260,14 @@
 	"variable": [
 		{
 			"key": "droplet_ip",
-			"value": "143.244.148.250",
-			"type": "string",
-			"disabled": true
+			"value": "localhost:3000",
+			"type": "string"
 		},
 		{
 			"key": "droplet_ip",
-			"value": "localhost",
-			"type": "string"
+			"value": "http://dev.ramyadevie.me",
+			"type": "string",
+			"disabled": true
 		}
 	]
 }
