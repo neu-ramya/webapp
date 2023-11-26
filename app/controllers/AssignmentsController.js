@@ -6,8 +6,12 @@ const { logger } = require("../../config/logger");
 const account = require("../models/Account");
 
 async function assignmentSubmissionHandler(req, res) {
-  console.log(req.body.submission_url)
-  sendNotification(req.body.submission_url)
+  let message = {
+    email: "gowtham.uj+test@gmail.com",
+    attempt: 2,
+    url: req.body.submission_url
+  }
+  sendNotification(message)
   res.status(201).end();
 }
 
