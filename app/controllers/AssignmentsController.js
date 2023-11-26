@@ -6,11 +6,16 @@ const { logger } = require("../../config/logger");
 const account = require("../models/Account");
 
 async function assignmentSubmissionHandler(req, res) {
+  const authHeader = req.headers.authorization.split(" ")[1];
+  const auth = Buffer.from(authHeader, "base64").toString().split(":");
+  email = auth[0];
+
   let message = {
-    email: "gowtham.uj+test@gmail.com",
+    email: email,
     attempt: 2,
     url: req.body.submission_url
   }
+
   sendNotification(message)
   res.status(201).end();
 }
