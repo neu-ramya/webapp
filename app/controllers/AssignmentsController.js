@@ -1,8 +1,15 @@
 const assignmentModel = require("../models/Assignment");
 const bcrypt = require("bcrypt");
 const { statdClient } = require("../../config/statsd");
+const { sendNotification } = require("../utils/sendSNSNotification");
 const { logger } = require("../../config/logger");
 const account = require("../models/Account");
+
+async function assignmentSubmissionHandler(req, res) {
+  console.log(req.body.submission_url)
+  sendNotification(req.body.submission_url)
+  res.status(201).end();
+}
 
 async function assignmentsHandler(req, res) {
   logger.info("assignments handler");
@@ -50,7 +57,12 @@ async function methodDistributor(req, res, accountID) {
     await getDataHandler(req, res, accountID);
   }
   if (req.method == "POST") {
-    await insertHandler(req, res, accountID);
+    isUrlAssignmentSubmission = (req.path === ("/" +req.params.id + '/submission'))
+    if(isUrlAssignmentSubmission){
+      assignmentSubmissionHandler(req, res)
+    } else{
+      await insertHandler(req, res, accountID);
+    }
   }
   if (req.method == "PUT") {
     await updateHandler(req, res, accountID);
@@ -311,4 +323,5 @@ module.exports = {
   postHandler: postHandler,
   deleteHandler: deleteHandler,
   patchHandler: patchHandler,
+  assignmentSubmissionHandler: assignmentSubmissionHandler,
 };
