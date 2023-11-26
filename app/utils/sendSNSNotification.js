@@ -4,7 +4,7 @@ async function sendNotification(message) {
   const snsClient = new SNSClient({ region: process.env.AWS_REGION });
 
   const params = {
-    Message: message,
+    Message: JSON.stringify(message),
     TopicArn: process.env.SNS_TOPIC_ARN,
   };
 
