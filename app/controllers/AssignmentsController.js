@@ -17,10 +17,11 @@ async function assignmentExists(id){
 }
 
 async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
+  logger.info("assignments Handler......")
   const authHeader = req.headers.authorization.split(" ")[1];
   const auth = Buffer.from(authHeader, "base64").toString().split(":");
   email = auth[0];
-  let submissionCount = await submissionModel.findAndCountAll({account_id: accountID})
+  let submissionCount = (await submissionModel.findAndCountAll({account_id: accountID, assignmentId: req.params.id})).count;
   let allowedSubmissionAttempts = (await assignmentModel.findOne({id: req.params.id})).dataValues.num_of_attempts;
 
   let snsMessage = {
@@ -35,9 +36,6 @@ async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
     submission_url: submissionURL,
   }
 
-  logger.info('################')
-  logger.info(allowedSubmissionAttempts)
-  logger.info('################')
   if(allowedSubmissionAttempts > submissionCount) {
     try {
       postRes = await submissionModel.create(submissionData);
@@ -101,16 +99,17 @@ async function methodDistributor(req, res, accountID) {
     await getDataHandler(req, res, accountID);
   }
   if (req.method == "POST") {
-    isUrlAssignmentSubmission = (req.path === ("/" + req.params.id + '/submission'))
-    existingAssignment = await assignmentExists(req.params.id)
-
-    if(isUrlAssignmentSubmission && existingAssignment){
-      assignmentSubmissionHandler(req, res, accountID, req.body.submission_url)
-    } else if(!req.path.includes('/submission')) {
+    ifSubmission = req.path.includes('/submission');
+    if(ifSubmission){
+      isUrlAssignmentSubmission = (req.path === ("/" + req.params.id + '/submission'))
+      existingAssignment = await assignmentExists(req.params.id) 
+      if(isUrlAssignmentSubmission && existingAssignment){
+        assignmentSubmissionHandler(req, res, accountID, req.body.submission_url)
+      } else {
+        return res.status(8888).end();
+      }
+    } else {
       await insertHandler(req, res, accountID);
-    }
-    else {
-      return res.status(400).json();
     }
   }
   if (req.method == "PUT") {
