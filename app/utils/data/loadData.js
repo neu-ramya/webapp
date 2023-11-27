@@ -1,6 +1,7 @@
 const path = require('path');
 const Account = require("../../models/Account");
 const Assignment = require("../../models/Assignment");
+const Submission = require("../../models/Submission");
 const { logger } = require("../../../config/logger");
 
 const { parseCSV } = require("./parsecsv");
