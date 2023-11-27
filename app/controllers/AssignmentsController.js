@@ -1,23 +1,58 @@
 const assignmentModel = require("../models/Assignment");
+const submissionModel = require("../models/Submission");
 const bcrypt = require("bcrypt");
 const { statdClient } = require("../../config/statsd");
 const { sendNotification } = require("../utils/sendSNSNotification");
 const { logger } = require("../../config/logger");
 const account = require("../models/Account");
 
-async function assignmentSubmissionHandler(req, res) {
+async function assignmentExists(id){
+  existingAssignment = await assignmentModel.findOne({
+    where: {
+      id: id,
+    },
+  });
+
+  return (existingAssignment ? true : false)
+}
+
+async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
   const authHeader = req.headers.authorization.split(" ")[1];
   const auth = Buffer.from(authHeader, "base64").toString().split(":");
   email = auth[0];
+  let submissionCount = await submissionModel.findAndCountAll({account_id: accountID})
+  let allowedSubmissionAttempts = (await assignmentModel.findOne({id: req.params.id})).dataValues.num_of_attempts;
 
-  let message = {
+  let snsMessage = {
     email: email,
-    attempt: 2,
+    attempt: submissionCount.count,
     url: req.body.submission_url
   }
 
-  sendNotification(message)
-  res.status(201).end();
+  let submissionData = {
+    account_id: accountID,
+    assignment_id: req.params.id,
+    submission_url: submissionURL,
+  }
+
+  logger.info('################')
+  logger.info(allowedSubmissionAttempts)
+  logger.info('################')
+  if(allowedSubmissionAttempts > submissionCount) {
+    try {
+      postRes = await submissionModel.create(submissionData);
+      statdClient.increment('webapp.submission.insert.success');
+      logger.info("Successfully created submission");
+      sendNotification(snsMessage)
+      return res.status(201).end();
+    } catch (error) {
+      logger.error(error);
+      return res.status(500).end();
+    }
+  } else {
+    return res.status(400).json({message: "Exceeded number of attempts"});
+  }
+  
 }
 
 async function assignmentsHandler(req, res) {
@@ -66,11 +101,16 @@ async function methodDistributor(req, res, accountID) {
     await getDataHandler(req, res, accountID);
   }
   if (req.method == "POST") {
-    isUrlAssignmentSubmission = (req.path === ("/" +req.params.id + '/submission'))
-    if(isUrlAssignmentSubmission){
-      assignmentSubmissionHandler(req, res)
-    } else{
+    isUrlAssignmentSubmission = (req.path === ("/" + req.params.id + '/submission'))
+    existingAssignment = await assignmentExists(req.params.id)
+
+    if(isUrlAssignmentSubmission && existingAssignment){
+      assignmentSubmissionHandler(req, res, accountID, req.body.submission_url)
+    } else if(!req.path.includes('/submission')) {
       await insertHandler(req, res, accountID);
+    }
+    else {
+      return res.status(400).json();
     }
   }
   if (req.method == "PUT") {

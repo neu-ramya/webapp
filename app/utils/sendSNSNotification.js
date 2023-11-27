@@ -1,4 +1,5 @@
 const { SNSClient, PublishCommand } = require("@aws-sdk/client-sns");
+const { logger } = require("../../config/logger");
 
 async function sendNotification(message) {
   const snsClient = new SNSClient({ region: process.env.AWS_REGION });
@@ -13,10 +14,10 @@ async function sendNotification(message) {
   snsClient
     .send(publishCommand)
     .then((data) => {
-      console.log("SNS message published successfully:", data.MessageId);
+      logger.info("SNS message published successfully:", data.MessageId);
     })
     .catch((err) => {
-      console.error("Error publishing SNS message:", err);
+      logger.error("Error publishing SNS message:", err);
     });
 }
 
