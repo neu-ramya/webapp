@@ -249,10 +249,12 @@ async function insertHandler(req, res, accountId) {
   ];
   const missingKeys = [];
 
-  accountData = req.body;
+  const accountData = req.body;
   accountData.account_id = accountId;
   
   if (
+    accountData.points === null ||
+    accountData.num_of_attempts === null ||
     accountData.points < 0 ||
     !Number.isInteger(accountData.points) ||
     accountData.num_of_attempts < 0 ||
@@ -325,6 +327,8 @@ async function updateHandler(req, res, accountId) {
   const updateFields = req.body;
 
   if (
+    updateFields.points === null ||
+    updateFields.num_of_attempts === null ||
     updateFields.points < 0 ||
     !Number.isInteger(updateFields.points) ||
     updateFields.num_of_attempts < 0 ||
