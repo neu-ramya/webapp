@@ -25,9 +25,17 @@ async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
 
   let submissionCount = (await submissionModel.findAndCountAll({where: {account_id: accountID, assignment_id: req.params.id}})).count;
   let allowedSubmissionAttempts = (await assignmentModel.findOne({where: {id: req.params.id}})).dataValues.num_of_attempts;
+// TODO: 
+// 1. check if submission URL existins in body
+// 2. Check if no other body params
+// 3. check if the url points to zip file
+// 4. Check if current submission time is less than the deadline
+// 5. check if the data the empty or null
+// 6. check if the url format is correct
 
   let snsMessage = {
     email: email,
+    assignmentID: req.params.id,
     attempt: submissionCount.count,
     url: req.body.submission_url
   }
@@ -44,6 +52,7 @@ async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
       statdClient.increment('webapp.submission.insert.success');
       logger.info("Successfully created submission");
       sendNotification(snsMessage)
+      //TODO: send json back without account ID
       return res.status(201).end();
     } catch (error) {
       logger.error(error);
@@ -145,11 +154,6 @@ async function genericRequestHandler(req, res) {
       if (accountDetails) {
         const pwMatch = await bcrypt.compare(pass, accountDetails.password);
         if (pwMatch) {
-          console.log('==================')
-          console.log('method distributor id',accountDetails.id)
-          // let ass = await assignmentModel.findOne({id: req.params.id})
-          // console.log('allowed attempt', ass.dataValues)
-          console.log('==================')
           await methodDistributor(req, res, accountDetails.id);
         } else {
           logger.warn("Invalid Credentials");
