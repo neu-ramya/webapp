@@ -34,12 +34,13 @@ async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
 // 4. Check if current submission time is less than the deadline
 // 5. check if the data the empty or null
 // 6. check if the url format is correct
+// 7. Float values for score? Range?
 
   let snsMessage = {
     email: email,
     assignmentName: assignName,
     assignmentID: req.params.id,
-    attempt: submissionCount.count,
+    attempt: submissionCount,
     url: req.body.submission_url
   }
 
