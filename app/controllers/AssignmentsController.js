@@ -5,6 +5,8 @@ const { statdClient } = require("../../config/statsd");
 const { sendNotification } = require("../utils/sendSNSNotification");
 const { logger } = require("../../config/logger");
 const accountModel = require("../models/Account");
+const path = require("path");
+const moment = require("moment");
 
 async function assignmentExists(id){
   logger.info("--- check if assignment exists----")
@@ -50,14 +52,40 @@ async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
     submission_url: submissionURL,
   }
 
+  if (!req.body.submission_url) {
+    return res.status(400).json({ message: "Submission URL is required." });
+  }
+
+  const currentSubmissionTime = moment(); // Assuming you have a deadline field in your assignment model
+  const deadline = moment(currentAssignment.dataValues.deadline);
+
+  if (currentSubmissionTime.isAfter(deadline)) {
+    return res.status(400).json({ message: "Submission deadline has passed." });
+  }
+
+  const allowedParams = ["submission_url"];
+  const extraParams = Object.keys(req.body).filter(param => !allowedParams.includes(param));
+  if (extraParams.length > 0) {
+    return res.status(400).json({ message: "Only submission_url is allowed in the request body." });
+  }
+
+  // if (!req.body.submission_url.endsWith(".zip")) {
+  //   return res.status(400).json({ message: "Submission URL must point to a zip file." });
+  // }
+
+  if (!req.body.submission_url.trim()) {
+    return res.status(400).json({ message: "Submission URL cannot be empty or whitespace." });
+  }
+
   if(allowedSubmissionAttempts > submissionCount) {
     try {
       postRes = await submissionModel.create(submissionData);
+      const responseData = { ...postRes };
+      delete responseData.account_id;
       statdClient.increment('webapp.submission.insert.success');
       logger.info("Successfully created submission");
       sendNotification(snsMessage)
-      //TODO: send json back without account ID
-      return res.status(201).end();
+      return res.status(201).json(responseData);
     } catch (error) {
       logger.error(error);
       return res.status(500).end();
@@ -223,7 +251,16 @@ async function insertHandler(req, res, accountId) {
 
   accountData = req.body;
   accountData.account_id = accountId;
-
+  
+  if (
+    accountData.points < 0 ||
+    !Number.isInteger(accountData.points) ||
+    accountData.num_of_attempts < 0 ||
+    !Number.isInteger(accountData.num_of_attempts)
+  ) {
+    logger.warn("Invalid values for points or num_of_attempts");
+    return res.status(400).end();
+  }
   if(typeof req.body.name !== 'string'){
     logger.warn("Name should be of type string");
     return res.status(400).end();
@@ -286,6 +323,16 @@ async function updateHandler(req, res, accountId) {
   }
   const assignmentId = req.params.id;
   const updateFields = req.body;
+
+  if (
+    updateFields.points < 0 ||
+    !Number.isInteger(updateFields.points) ||
+    updateFields.num_of_attempts < 0 ||
+    !Number.isInteger(updateFields.num_of_attempts)
+  ) {
+    logger.warn("Invalid values for points or num_of_attempts");
+    return res.status(400).end();
+  }
 
   for (const key in req.body) {
     if (!requiredKeys.includes(key)) {
