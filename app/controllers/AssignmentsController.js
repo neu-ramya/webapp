@@ -84,7 +84,7 @@ async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
       delete responseData.account_id;
       statdClient.increment('webapp.submission.insert.success');
       logger.info("Successfully created submission");
-      sendNotification(snsMessage)
+      // sendNotification(snsMessage)
       return res.status(201).json(responseData);
     } catch (error) {
       logger.error(error);
@@ -251,22 +251,31 @@ async function insertHandler(req, res, accountId) {
 
   const accountData = req.body;
   accountData.account_id = accountId;
-  
+
+  if (typeof req.body.name !== 'string') {
+    return res.status(400).json({ error: "Name should be of type string" });
+  }
+
   if (
     accountData.points === null ||
-    accountData.num_of_attempts === null ||
     accountData.points < 0 ||
-    !Number.isInteger(accountData.points) ||
-    accountData.num_of_attempts < 0 ||
-    !Number.isInteger(accountData.num_of_attempts)
+    isNaN(accountData.points) ||
+    !Number.isInteger(Number(accountData.points))
   ) {
-    logger.warn("Invalid values for points or num_of_attempts");
+    logger.warn("Invalid value for 'points'");
     return res.status(400).end();
   }
-  if(typeof req.body.name !== 'string'){
-    logger.warn("Name should be of type string");
+
+  if (
+    accountData.num_of_attempts === null ||
+    accountData.num_of_attempts < 0 ||
+    isNaN(accountData.num_of_attempts) ||
+    !Number.isInteger(Number(accountData.num_of_attempts))
+  ) {
+    logger.warn("Invalid value for 'num_of_attempts'");
     return res.status(400).end();
   }
+  
   requiredKeys.forEach((key) => {
     if (!(key in accountData)) {
       missingKeys.push(key);
@@ -275,17 +284,16 @@ async function insertHandler(req, res, accountId) {
 
   for (const key in req.body) {
     if (!requiredKeys.includes(key)) {
-      logger.warn("Missing required keys");
-      return res.status(400).end();
+      return res.status(400).json({ error: "Missing required keys" });
     }
   }
 
   if (missingKeys.length > 0) {
-    return res.status(400).end();
+    return res.status(400).json({ error: "Missing required keys" });
   }
 
   if (accountData.assignment_created || accountData.assignment_updated) {
-    return res.status(400).end();
+    return res.status(400).json({ error: "Invalid assignment data" });
   } else {
     try {
       postRes = await assignmentModel.create(accountData);
@@ -294,10 +302,11 @@ async function insertHandler(req, res, accountId) {
       return res.status(201).json(postRes);
     } catch (error) {
       logger.error(error);
-      return res.status(500).end();
+      return res.status(500).json({ error: "Internal server error" });
     }
   }
 }
+
 
 async function updateHandler(req, res, accountId) {
   statdClient.increment('webapp.assignment.update.total');
@@ -326,23 +335,28 @@ async function updateHandler(req, res, accountId) {
   const assignmentId = req.params.id;
   const updateFields = req.body;
 
-  if (
-    updateFields.points === null ||
-    updateFields.num_of_attempts === null ||
-    updateFields.points < 0 ||
-    !Number.isInteger(updateFields.points) ||
-    updateFields.num_of_attempts < 0 ||
-    !Number.isInteger(updateFields.num_of_attempts)
-  ) {
-    logger.warn("Invalid values for points or num_of_attempts");
-    return res.status(400).end();
-  }
 
   for (const key in req.body) {
     if (!requiredKeys.includes(key)) {
       logger.warn("Missing required keys");
       return res.status(400).end();
     }
+  }
+
+  if (
+    updateFields.num_of_attempts === null ||
+    updateFields.num_of_attempts < 0
+  ) {
+    logger.warn("Invalid value for 'num_of_attempts'");
+    return res.status(400).end();
+  }
+
+  if (
+    updateFields.points === null ||
+    updateFields.points < 0
+  ) {
+    logger.warn("Invalid value for 'points'");
+    return res.status(400).end();
   }
 
   try {
@@ -383,6 +397,7 @@ async function updateHandler(req, res, accountId) {
     return res.status(500).end();
   }
 }
+
 
 async function deletionHandler(req, res, accountId) {
   statdClient.increment('webapp.assignment.delete.total');
