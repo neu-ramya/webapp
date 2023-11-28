@@ -4,9 +4,10 @@ const bcrypt = require("bcrypt");
 const { statdClient } = require("../../config/statsd");
 const { sendNotification } = require("../utils/sendSNSNotification");
 const { logger } = require("../../config/logger");
-const account = require("../models/Account");
+const accountModel = require("../models/Account");
 
 async function assignmentExists(id){
+  logger.info("--- check if assignment exists----")
   existingAssignment = await assignmentModel.findOne({
     where: {
       id: id,
@@ -21,8 +22,9 @@ async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
   const authHeader = req.headers.authorization.split(" ")[1];
   const auth = Buffer.from(authHeader, "base64").toString().split(":");
   email = auth[0];
-  let submissionCount = (await submissionModel.findAndCountAll({account_id: accountID, assignmentId: req.params.id})).count;
-  let allowedSubmissionAttempts = (await assignmentModel.findOne({id: req.params.id})).dataValues.num_of_attempts;
+
+  let submissionCount = (await submissionModel.findAndCountAll({where: {account_id: accountID, assignment_id: req.params.id}})).count;
+  let allowedSubmissionAttempts = (await assignmentModel.findOne({where: {id: req.params.id}})).dataValues.num_of_attempts;
 
   let snsMessage = {
     email: email,
@@ -106,7 +108,7 @@ async function methodDistributor(req, res, accountID) {
       if(isUrlAssignmentSubmission && existingAssignment){
         assignmentSubmissionHandler(req, res, accountID, req.body.submission_url)
       } else {
-        return res.status(8888).end();
+        return res.status(400).end();
       }
     } else {
       await insertHandler(req, res, accountID);
@@ -134,7 +136,7 @@ async function genericRequestHandler(req, res) {
     user = auth[0];
     pass = auth[1];
     try {
-      const accountDetails = await account.findOne({
+      const accountDetails = await accountModel.findOne({
         where: {
           email: user,
         },
@@ -143,6 +145,11 @@ async function genericRequestHandler(req, res) {
       if (accountDetails) {
         const pwMatch = await bcrypt.compare(pass, accountDetails.password);
         if (pwMatch) {
+          console.log('==================')
+          console.log('method distributor id',accountDetails.id)
+          // let ass = await assignmentModel.findOne({id: req.params.id})
+          // console.log('allowed attempt', ass.dataValues)
+          console.log('==================')
           await methodDistributor(req, res, accountDetails.id);
         } else {
           logger.warn("Invalid Credentials");
