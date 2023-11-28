@@ -24,7 +24,9 @@ async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
   email = auth[0];
 
   let submissionCount = (await submissionModel.findAndCountAll({where: {account_id: accountID, assignment_id: req.params.id}})).count;
-  let allowedSubmissionAttempts = (await assignmentModel.findOne({where: {id: req.params.id}})).dataValues.num_of_attempts;
+  let currentAssignment = await assignmentModel.findOne({where: {id: req.params.id}});
+  let allowedSubmissionAttempts = currentAssignment.dataValues.num_of_attempts;
+  let assignName = currentAssignment.dataValues.name;
 // TODO: 
 // 1. check if submission URL existins in body
 // 2. Check if no other body params
@@ -35,6 +37,7 @@ async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
 
   let snsMessage = {
     email: email,
+    assignmentName: assignName,
     assignmentID: req.params.id,
     attempt: submissionCount.count,
     url: req.body.submission_url
