@@ -53,11 +53,12 @@ async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
     assignmentName: assignName,
     assignmentID: req.params.id,
     attempt: { 
-                limit: allowedSubmissionAttempts,
-                attemptCount: submissionCount,
-              },
+      limit: allowedSubmissionAttempts,
+      attemptCount: submissionCount,
+    },
     url: req.body.submission_url,
     deadlineExceeded: false,
+    deadlineDate: deadline
   }
 
   let submissionData = {
