@@ -38,6 +38,27 @@ async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
 // 6. check if the url format is correct
 // 7. Float values for score? Range?
 
+const requiredKeys = [
+  "submission_url",
+];
+const missingKeys = [];
+
+requiredKeys.forEach((key) => {
+  if (!(key in accountData)) {
+    missingKeys.push(key);
+  }
+});
+
+for (const key in req.body) {
+  if (!requiredKeys.includes(key)) {
+    return res.status(400).json({ error: "Missing required keys" });
+  }
+}
+
+if (missingKeys.length > 0) {
+  return res.status(400).json({ error: "Missing required keys" });
+}
+
   let snsMessage = {
     email: email,
     assignmentName: assignName,
@@ -52,30 +73,6 @@ async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
     submission_url: submissionURL,
   }
 
-  if (!req.body.submission_url) {
-    return res.status(400).json({ message: "Submission URL is required." });
-  }
-
-  const currentSubmissionTime = moment(); // Assuming you have a deadline field in your assignment model
-  const deadline = moment(currentAssignment.dataValues.deadline);
-
-  if (currentSubmissionTime.isAfter(deadline)) {
-    return res.status(400).json({ message: "Submission deadline has passed." });
-  }
-
-  const allowedParams = ["submission_url"];
-  const extraParams = Object.keys(req.body).filter(param => !allowedParams.includes(param));
-  if (extraParams.length > 0) {
-    return res.status(400).json({ message: "Only submission_url is allowed in the request body." });
-  }
-
-  // if (!req.body.submission_url.endsWith(".zip")) {
-  //   return res.status(400).json({ message: "Submission URL must point to a zip file." });
-  // }
-
-  if (!req.body.submission_url.trim()) {
-    return res.status(400).json({ message: "Submission URL cannot be empty or whitespace." });
-  }
 
   if(allowedSubmissionAttempts > submissionCount) {
     try {
@@ -156,6 +153,11 @@ async function methodDistributor(req, res, accountID) {
     }
   }
   if (req.method == "PUT") {
+    if(!req.params.id)  {
+      console.log("////////////////")
+      return res.status(400).end();
+    }
+      
     await updateHandler(req, res, accountID);
   }
   if (req.method == "DELETE") {
@@ -251,30 +253,6 @@ async function insertHandler(req, res, accountId) {
 
   const accountData = req.body;
   accountData.account_id = accountId;
-
-  if (typeof req.body.name !== 'string') {
-    return res.status(400).json({ error: "Name should be of type string" });
-  }
-
-  if (
-    accountData.points === null ||
-    accountData.points < 0 ||
-    isNaN(accountData.points) ||
-    !Number.isInteger(Number(accountData.points))
-  ) {
-    logger.warn("Invalid value for 'points'");
-    return res.status(400).end();
-  }
-
-  if (
-    accountData.num_of_attempts === null ||
-    accountData.num_of_attempts < 0 ||
-    isNaN(accountData.num_of_attempts) ||
-    !Number.isInteger(Number(accountData.num_of_attempts))
-  ) {
-    logger.warn("Invalid value for 'num_of_attempts'");
-    return res.status(400).end();
-  }
   
   requiredKeys.forEach((key) => {
     if (!(key in accountData)) {
@@ -290,6 +268,31 @@ async function insertHandler(req, res, accountId) {
 
   if (missingKeys.length > 0) {
     return res.status(400).json({ error: "Missing required keys" });
+  }
+  if (typeof req.body.name !== 'string') {
+    return res.status(400).json({ error: "Name should be of type string" });
+  }
+
+  if (
+    accountData.points === null ||
+    accountData.points < 1 ||
+    accountData.points > 100 ||
+    isNaN(accountData.points) ||
+    !Number.isInteger(Number(accountData.points))
+  ) {
+    logger.warn("Invalid value for 'points'");
+    return res.status(400).end();
+  }
+
+  if (
+    accountData.num_of_attempts === null ||
+    accountData.num_of_attempts < 1 ||
+    accountData.num_of_attempts > 10 ||
+    isNaN(accountData.num_of_attempts) ||
+    !Number.isInteger(Number(accountData.num_of_attempts))
+  ) {
+    logger.warn("Invalid value for 'num_of_attempts'");
+    return res.status(400).end();
   }
 
   if (accountData.assignment_created || accountData.assignment_updated) {
@@ -318,56 +321,62 @@ async function updateHandler(req, res, accountId) {
     "account_id",
   ];
 
-  if(typeof req.body.name !== 'string'){
-    logger.warn("Name should be of type string");
-    return res.status(400).end();
-  }
-
-  if (
-    typeof req.body === "undefined" ||
-    req.body.assignment_created ||
-    req.body.assignment_updated ||
-    Object.keys(req.body).length === 0 ||
-    !req.params.id
-  ) {
-    return res.status(400).end();
-  }
-  const assignmentId = req.params.id;
-  const updateFields = req.body;
-
-
-  for (const key in req.body) {
-    if (!requiredKeys.includes(key)) {
-      logger.warn("Missing required keys");
-      return res.status(400).end();
-    }
-  }
-
-  if (
-    updateFields.num_of_attempts === null ||
-    updateFields.num_of_attempts < 0
-  ) {
-    logger.warn("Invalid value for 'num_of_attempts'");
-    return res.status(400).end();
-  }
-
-  if (
-    updateFields.points === null ||
-    updateFields.points < 0
-  ) {
-    logger.warn("Invalid value for 'points'");
-    return res.status(400).end();
-  }
-
   try {
     existingAssignment = await assignmentModel.findOne({
       where: {
-        id: assignmentId,
+        id: req.params.id,
       },
     });
 
     if (existingAssignment) {
       if (existingAssignment.account_id === accountId) {
+
+        if(typeof req.body.name !== 'string'){
+          logger.warn("Name should be of type string");
+          return res.status(400).end();
+        }
+      
+        if (
+          typeof req.body === "undefined" ||
+          req.body.assignment_created ||
+          req.body.assignment_updated ||
+          Object.keys(req.body).length === 0 ||
+          !req.params.id
+        ) {
+          return res.status(400).end();
+        }
+        const assignmentId = req.params.id;
+        const updateFields = req.body;
+      
+        for (const key in req.body) {
+          if (!requiredKeys.includes(key)) {
+            logger.warn("Missing required keys");
+            return res.status(400).end();
+          }
+        }
+
+        if (updateFields.hasOwnProperty('num_of_attempts') &&
+          (updateFields.num_of_attempts === null ||
+          updateFields.num_of_attempts < 1 ||
+          updateFields.num_of_attempts > 10 ||
+          isNaN(updateFields.num_of_attempts) ||
+          !Number.isInteger(Number(updateFields.num_of_attempts)))
+        ) {
+          logger.warn("Invalid value for 'num_of_attempts'");
+          return res.status(400).end();
+        }
+      
+        if (updateFields.hasOwnProperty('points') && (
+          updateFields.points === null ||
+          updateFields.points < 1 ||
+          updateFields.points > 100 ||
+          isNaN(updateFields.points) ||
+          !Number.isInteger(Number(updateFields.points)))
+        ) {
+          logger.warn("Invalid value for 'points'");
+          return res.status(400).end();
+        }
+
         const [updatedRowsCount] = await assignmentModel.update(
           updateFields,
           {
@@ -397,6 +406,7 @@ async function updateHandler(req, res, accountId) {
     return res.status(500).end();
   }
 }
+
 
 
 async function deletionHandler(req, res, accountId) {
