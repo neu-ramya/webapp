@@ -19,6 +19,11 @@ async function assignmentExists(id){
   return (existingAssignment ? true : false)
 }
 
+async function isDateInFuture(date) {
+  const currentDate = new Date();
+  return new Date(date) > currentDate;
+}
+
 async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
   logger.info("assignments Handler......")
   let submissionTime = new Date();
@@ -262,6 +267,10 @@ async function insertHandler(req, res, accountId) {
     return res.status(400).json({ error: "Name should be of type string" });
   }
 
+  if (! (await isDateInFuture(req.body.deadline))) {
+    return res.status(400).json({ error: "Deadline should be a future date" });
+  }
+
   if (
     accountData.points === null ||
     accountData.points < 1 ||
@@ -333,6 +342,10 @@ async function updateHandler(req, res, accountId) {
           !req.params.id
         ) {
           return res.status(400).end();
+        }
+
+        if (! (await isDateInFuture(req.body.deadline))) {
+          return res.status(400).json({ error: "Deadline should be a future date" });
         }
         const assignmentId = req.params.id;
         const updateFields = req.body;
