@@ -48,17 +48,14 @@ async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
     return res.status(400).json({ error: "Invalid keys" });
   }
 
-  if(submissionTime > deadline) {
-    snsMessage['deadlineExceeded'] = true
-    sendNotification(snsMessage);
-    return res.status(400).json({ error: "Exceeded Deadline" });
-  }
-
   let snsMessage = {
     email: email,
     assignmentName: assignName,
     assignmentID: req.params.id,
-    attempt: submissionCount,
+    attempt: { 
+                limit: allowedSubmissionAttempts,
+                attemptCount: submissionCount,
+              },
     url: req.body.submission_url,
     deadlineExceeded: false,
   }
@@ -69,6 +66,11 @@ async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
     submission_url: submissionURL,
   }
 
+  if(submissionTime > deadline) {
+    snsMessage['deadlineExceeded'] = true
+    sendNotification(snsMessage);
+    return res.status(400).json({ error: "Exceeded Deadline" });
+  }
 
   if(allowedSubmissionAttempts > submissionCount) {
     try {
