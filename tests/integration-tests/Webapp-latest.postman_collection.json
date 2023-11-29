@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "c412dfac-ccf8-43e2-9a18-76e6d87b4f33",
-		"name": "Webapp Copy",
+		"_postman_id": "cf92dac9-964e-46a5-bcb9-4bba85f6eedb",
+		"name": "Webapp Copy 2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "24216985"
 	},
@@ -573,7 +573,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"points\" : \"53\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2020-10-29T09:00:00.001Z\"\n}",
+							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"points\" : \"53\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2024-10-29T09:00:00.001Z\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -627,7 +627,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"points\" : \"53\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2020-10-29T09:00:00.001Z\",\n    \"jhsakdjfghia\": \"usdgfugai\"\n}",
+							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"points\" : \"53\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2024-10-29T09:00:00.001Z\",\n    \"jhsakdjfghia\": \"usdgfugai\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -681,7 +681,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2020-10-29T09:00:00.001Z\"\n}",
+							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2024-10-29T09:00:00.001Z\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -733,6 +733,15 @@
 						},
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"assignment087\",\n    \"deadline\": \"2024-12-29T01:44:00.001Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{droplet_ip}}/assignments/",
 							"host": [
@@ -1012,14 +1021,13 @@
 						"method": "PUT",
 						"header": [],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "{{$randomFirstName}}",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"assignment087\",\n    \"deadline\": \"2024-12-29T01:44:00.001Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
 							"raw": "{{droplet_ip}}/assignments/{{assignmentId}}",
@@ -1069,7 +1077,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"points\" : \"53\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2020-10-29T09:00:00.001Z\"\n}",
+							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"points\" : \"53\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2024-10-29T09:00:00.001Z\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1254,13 +1262,13 @@
 							"type": "basic",
 							"basic": [
 								{
-									"key": "password",
-									"value": "password",
+									"key": "username",
+									"value": "saravanabhava.r@northeastern.edu",
 									"type": "string"
 								},
 								{
-									"key": "username",
-									"value": "ramyadevie93@gmail.com",
+									"key": "password",
+									"value": "password",
 									"type": "string"
 								}
 							]
@@ -1269,7 +1277,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"submission_url\": \"https://google.com\"\n}",
+							"raw": "{\n    \"submission_url\": \"https://github.com/tparikh/myrepo/archive/refs/tags/v1.0.0.zip\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1322,6 +1330,12 @@
 		{
 			"key": "droplet_ip",
 			"value": "http://dev.ramyadevie.me",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "droplet_ip",
+			"value": "http://demo.ramyadevie.me",
 			"type": "string",
 			"disabled": true
 		}
