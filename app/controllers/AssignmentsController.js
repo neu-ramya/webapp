@@ -6,7 +6,7 @@ const { sendNotification } = require("../utils/sendSNSNotification");
 const { logger } = require("../../config/logger");
 const accountModel = require("../models/Account");
 const path = require("path");
-const moment = require("moment");
+const validator = require('validator');
 
 async function assignmentExists(id){
   logger.info("--- check if assignment exists----")
@@ -21,6 +21,7 @@ async function assignmentExists(id){
 
 async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
   logger.info("assignments Handler......")
+  let submissionTime = new Date();
   const authHeader = req.headers.authorization.split(" ")[1];
   const auth = Buffer.from(authHeader, "base64").toString().split(":");
   email = auth[0];
@@ -29,35 +30,24 @@ async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
   let currentAssignment = await assignmentModel.findOne({where: {id: req.params.id}});
   let allowedSubmissionAttempts = currentAssignment.dataValues.num_of_attempts;
   let assignName = currentAssignment.dataValues.name;
+  let deadline = currentAssignment.dataValues.deadline
+
 // TODO: 
-// 1. check if submission URL existins in body
-// 2. Check if no other body params
 // 3. check if the url points to zip file
-// 4. Check if current submission time is less than the deadline
 // 5. check if the data the empty or null
-// 6. check if the url format is correct
-// 7. Float values for score? Range?
+// Future data and date format for assignment deadline
 
-const requiredKeys = [
-  "submission_url",
-];
-const missingKeys = [];
-
-requiredKeys.forEach((key) => {
-  if (!(key in accountData)) {
-    missingKeys.push(key);
+  if(Object.keys(req.body).length != 1 || 
+   (!req.body.hasOwnProperty('submission_url') ||
+   req.body.submission_url.length <= 0) || 
+   !validator.isURL(req.body.submission_url)) {
+    return res.status(400).json({ error: "Invalid keys" });
   }
-});
 
-for (const key in req.body) {
-  if (!requiredKeys.includes(key)) {
-    return res.status(400).json({ error: "Missing required keys" });
+  if(submissionTime > deadline) {
+    return res.status(400).json({ error: "Exceeded Deadline" });
   }
-}
 
-if (missingKeys.length > 0) {
-  return res.status(400).json({ error: "Missing required keys" });
-}
 
   let snsMessage = {
     email: email,
@@ -82,7 +72,7 @@ if (missingKeys.length > 0) {
       statdClient.increment('webapp.submission.insert.success');
       logger.info("Successfully created submission");
       // sendNotification(snsMessage)
-      return res.status(201).json(responseData);
+      return res.status(201).json(responseData.dataValues);
     } catch (error) {
       logger.error(error);
       return res.status(500).end();
@@ -98,9 +88,9 @@ async function assignmentsHandler(req, res) {
   return res.status(404).end();
 }
 
-async function patchHandler(req, res) {
+async function methodNotAllowedHanlder(req, res) {
   statdClient.increment('webapp.assignment.patch.total');
-  logger.warn("patch not allowed");
+  logger.warn("method not allowed");
   return res.status(405).end();
 }
 
@@ -460,6 +450,6 @@ module.exports = {
   putHandler: putHandler,
   postHandler: postHandler,
   deleteHandler: deleteHandler,
-  patchHandler: patchHandler,
+  methodNotAllowedHanlder: methodNotAllowedHanlder,
   assignmentSubmissionHandler: assignmentSubmissionHandler,
 };
