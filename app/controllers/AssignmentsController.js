@@ -154,7 +154,6 @@ async function methodDistributor(req, res, accountID) {
   }
   if (req.method == "PUT") {
     if(!req.params.id)  {
-      console.log("////////////////")
       return res.status(400).end();
     }
       
