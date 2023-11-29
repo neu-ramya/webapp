@@ -76,6 +76,7 @@ async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
       statdClient.increment('webapp.submission.insert.success');
       logger.info("Successfully created submission");
       sendNotification(snsMessage)
+      delete responseData.dataValues['account_id']
       return res.status(201).json(responseData.dataValues);
     } catch (error) {
       logger.error(error);
