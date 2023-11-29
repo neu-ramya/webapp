@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "07cba226-295e-488a-aa26-d3021cd94371",
-		"name": "Webapp",
+		"_postman_id": "c412dfac-ccf8-43e2-9a18-76e6d87b4f33",
+		"name": "Webapp Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "24216985"
 	},
@@ -254,7 +254,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"points\" : \"53\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2020-10-29T09:00:00.001Z\"\n}",
+							"raw": "{\n    \"name\" : \"testassignment34\",\n    \"points\" : \"53\",\n    \"num_of_attempts\" : \"4\",\n    \"deadline\": \"2024-12-29T01:44:00.001Z\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -827,7 +827,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\" : \"assignment087\"\n}",
+							"raw": "{\n    \"name\" : \"assignment087\",\n    \"deadline\": \"2024-12-29T01:44:00.001Z\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1229,6 +1229,62 @@
 									"value": "",
 									"disabled": true
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assignment Submission",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Assignment Submission returns 201 success\", function() {",
+									"    pm.response.to.have.status(201)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "ramyadevie93@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"submission_url\": \"https://google.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{droplet_ip}}/assignments/{{assignmentId}}/submission",
+							"host": [
+								"{{droplet_ip}}"
+							],
+							"path": [
+								"assignments",
+								"{{assignmentId}}",
+								"submission"
 							]
 						}
 					},

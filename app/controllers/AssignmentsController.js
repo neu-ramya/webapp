@@ -40,7 +40,6 @@ async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
 // TODO: 
 // 3. check if the url points to zip file
 // 5. check if the data the empty or null
-// Future data and date format for assignment deadline
 
   if(Object.keys(req.body).length != 1 || 
    (!req.body.hasOwnProperty('submission_url') ||
