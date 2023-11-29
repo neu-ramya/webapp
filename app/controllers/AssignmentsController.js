@@ -49,16 +49,18 @@ async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
   }
 
   if(submissionTime > deadline) {
+    snsMessage['deadlineExceeded'] = true
+    sendNotification(snsMessage);
     return res.status(400).json({ error: "Exceeded Deadline" });
   }
-
 
   let snsMessage = {
     email: email,
     assignmentName: assignName,
     assignmentID: req.params.id,
     attempt: submissionCount,
-    url: req.body.submission_url
+    url: req.body.submission_url,
+    deadlineExceeded: false,
   }
 
   let submissionData = {
@@ -83,6 +85,7 @@ async function assignmentSubmissionHandler(req, res, accountID, submissionURL) {
       return res.status(500).end();
     }
   } else {
+    sendNotification(snsMessage);
     return res.status(400).json({message: "Exceeded number of attempts"});
   }
   
