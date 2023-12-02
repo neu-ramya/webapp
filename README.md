@@ -33,3 +33,34 @@ Webapp has two endpoints as below.
 - Pulumi up to create instance with the most recent AMI created.
 - Run the npm using 'npm run server' to run the webapp in the instance
 - Run the integration tests using 'newman run webapp/tests/integration-tests/CSYE-webapp.postman_collection.json' or using postman application.
+
+
+### Certificates
+
+- Generate CSR using openSSL
+sudo openssl genrsa -out namecheap.key 2048
+
+- Create private key
+sudo openssl req -new -key namecheap.key -out namecheap-csr.pem
+
+
+- Certificate creation
+AWS_DEFAULT_PROFILE=demo aws iam upload-server-certificate --server-certificate-name certificate_object_name --certificate-body file:///Users/ramya/Cloud/assignment_9/demo_ramyadevie.me/demo_ramyadevie_me.crt --private-key file:///Users/ramya/.ssh/namecheap.key --certificate-chain file:///Users/ramya/Cloud/assignment_9/demo_ramyadevie.me/demo_ramyadevie_me.ca-bundle
+
+- List the certificate name
+AWS_DEFAULT_PROFILE=demo aws iam get-server-certificate --server-certificate-name certificate_object_name
+
+- Import certificate
+AWS_DEFAULT_PROFILE=demo aws acm import-certificate \
+    --certificate file:///Users/ramya/Cloud/assignment_9/demo_ramyadevie.me/demo_ramyadevie_me.crt \
+    --private-key file:///Users/ramya/.ssh/namecheap.key \
+    --certificate-chain file:///Users/ramya/Cloud/assignment_9/demo_ramyadevie.me/demo_ramyadevie_me.ca-bundle
+
+- Attach certificate to load balancer
+AWS_DEFAULT_PROFILE=demo aws elbv2 create-listener \
+    --load-balancer-arn <ALB_ARN> \
+    --protocol HTTPS \
+    --port 443 \
+    --ssl-policy ELBSecurityPolicy-2016-08 \
+    --certificates CertificateArn=<CERT_ARN> \
+    --default-actions Type=forward,TargetGroupArn=<TARGET_GROUP_ARN>
