@@ -85,51 +85,6 @@ jobs:
       - name: Run `packer build`
         id: build
         run: "packer build -var \"aws_access_key=${AWS_ACCESS_KEY_ID}\" -var \"aws_secret_key=${AWS_SECRET_ACCESS_KEY}\" ./packer/aws-debian.pkr.hcl"
-
-      # - name: Configure AWS credentials
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-access-key-id: ${{ secrets.DEMO_AWS_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.DEMO_AWS_SECRET_ACCESS_KEY }}
-      #     aws-region: "us-east-1"
-
-      # - name: Update new Launch Template
-      #   id: update-launch-template
-      #   run: |
-      #     latest_shared_ami_id=$(aws ec2 describe-images \
-      #     --owners 042487768049 \
-      #     --executable-users self \
-      #     --query 'Images | sort_by(@, &CreationDate) | [-1].ImageId' \
-      #     --output text)
-
-      #     launch_template_name_prefix="csye-6225-launch-template"
-      #     latest_launch_template_id=$(aws ec2 describe-launch-templates \
-      #     --launch-template-names "${launch_template_name_prefix}-*" \
-      #     --query 'LaunchTemplates | sort_by(@, &CreateTime) | [-1].LaunchTemplateId' \
-      #     --output text)
-
-      #     latest_version=$(aws ec2 describe-launch-templates \
-      #     --launch-template-names "${launch_template_name_prefix}-*" \
-      #     --query 'LaunchTemplates | sort_by(@, &CreateTime) | [-1].LatestVersionNumber' \
-      #     --output text)
-
-      #     new_version=$(aws ec2 create-launch-template-version \
-      #     --launch-template-id $launch_template_id \
-      #     --version-description "New version with AMI ID" \
-      #     --image-id $latest_shared_ami_id \
-      #     --output text \
-      #     --query 'LaunchTemplateVersion.VersionNumber')
-
-      #     echo "New Launch Template version created: $new_version"
-
-      #     echo "Latest version of Launch Template $latest_launch_template_id: $latest_version"
-      #     auto_scaling_group_name="csye-webapp-asg-name"
-          
-      #     launch_template_id=${{ steps.create-launch-template.outputs.latest_launch_template_id }}
-
-      #     aws autoscaling update-auto-scaling-group \
-      #       --auto-scaling-group-name $auto_scaling_group_name \
-      #       --launch-template "LaunchTemplateId=$latest_launch_template_id,Version=$new_version"  
   refresh-instances:
     needs: build-and-deploy-ami
     runs-on: ubuntu-latest
@@ -155,13 +110,11 @@ jobs:
         launch_template_name_prefix="csye-6225-launch-template"
 
         latest_launch_template_id=$(AWS_ACCESS_KEY_ID=${{ secrets.DEMO_AWS_ACCESS_KEY_ID }}  AWS_SECRET_ACCESS_KEY=${{ secrets.DEMO_AWS_SECRET_ACCESS_KEY }} aws ec2 describe-launch-templates \
-          --launch-template-names "${launch_template_name_prefix}-*" \
           --query 'LaunchTemplates | sort_by(@, &CreateTime) | [-1].LaunchTemplateId' \
           --output text)
         echo "Launch Template ID - $latest_launch_template_id"
 
         latest_version=$(AWS_ACCESS_KEY_ID=${{ secrets.DEMO_AWS_ACCESS_KEY_ID }}  AWS_SECRET_ACCESS_KEY=${{ secrets.DEMO_AWS_SECRET_ACCESS_KEY }} aws ec2 describe-launch-templates \
-          --launch-template-names "${launch_template_name_prefix}-*" \
           --query 'LaunchTemplates | sort_by(@, &CreateTime) | [-1].LatestVersionNumber' \
           --output text)
         echo "Latest Launch template version -  $latest_version"
