@@ -119,11 +119,11 @@ jobs:
           --output text)
         echo "Latest Launch template version -  $latest_version"
 
-        new_version=$(AWS_ACCESS_KEY_ID=${{ secrets.DEMO_AWS_ACCESS_KEY_ID }}  AWS_SECRET_ACCESS_KEY=${{ secrets.DEMO_AWS_SECRET_ACCESS_KEY }} aws ec2 create-launch-template-version \
-          --launch-template-id $launch_template_id \
+        new_version=$(AWS_ACCESS_KEY_ID=${{ secrets.DEMO_AWS_ACCESS_KEY_ID }}  AWS_SECRET_ACCESS_KEY=${{ secrets.DEMO_AWS_SECRET_ACCESS_KEY }} aws ec2 create-launch-template-version \        ✘ 252 Py base
+          --launch-template-id lt-0e9c93b3444b510d3 \
           --version-description "New version with AMI ID" \
-          --image-id $latest_shared_ami_id \
-          --output text \
+          --source-version $latest_version \
+          --launch-template-data '{"ImageId":"$latest_shared_ami_id"}' --output text \
           --query 'LaunchTemplateVersion.VersionNumber')
 
         echo "New Launch Template version created: $new_version"
