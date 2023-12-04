@@ -155,7 +155,8 @@ jobs:
             $auto_scaling_group_name --query 'InstanceRefreshes[0].Status')
             
         echo "Refresh status : $refresh_status"
-        if[ "$refresh_status" != "\"InProgress\"" ]; then
+        if[ "$refresh_status" != "\"InProgress\"" ];
+        then
           AWS_ACCESS_KEY_ID=${{ secrets.DEMO_AWS_ACCESS_KEY_ID }}  \
             AWS_SECRET_ACCESS_KEY=${{ secrets.DEMO_AWS_SECRET_ACCESS_KEY }} aws \
             autoscaling start-instance-refresh --auto-scaling-group-name $auto_scaling_group_name \
