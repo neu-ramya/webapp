@@ -129,8 +129,7 @@ jobs:
         echo "New Launch Template version created: $new_version"
 
         echo "Latest version of Launch Template $latest_launch_template_id: $latest_version"
-        auto_scaling_group_name="csye-webapp-asg-name"
-        
+        auto_scaling_group_name=(AWS_ACCESS_KEY_ID=${{ secrets.DEMO_AWS_ACCESS_KEY_ID }}  AWS_SECRET_ACCESS_KEY=${{ secrets.DEMO_AWS_SECRET_ACCESS_KEY }} aws autoscaling describe-auto-scaling-groups --query 'AutoScalingGroups[?contains(LaunchTemplate.LaunchTemplateId, `'$latest_launch_template_id'`)].AutoScalingGroupName' --output text)
         AWS_ACCESS_KEY_ID=${{ secrets.DEMO_AWS_ACCESS_KEY_ID }}  AWS_SECRET_ACCESS_KEY=${{ secrets.DEMO_AWS_SECRET_ACCESS_KEY }} aws autoscaling update-auto-scaling-group \
           --auto-scaling-group-name $auto_scaling_group_name \
           --launch-template "LaunchTemplateId=$latest_launch_template_id,Version=$new_version"  
