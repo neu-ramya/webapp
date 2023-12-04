@@ -149,16 +149,24 @@ jobs:
           --launch-template "LaunchTemplateId=$latest_launch_template_id,Version=$new_version"  
 
         # Issue the instance refresh command
+        refresh_status=$(AWS_ACCESS_KEY_ID=${{ secrets.DEMO_AWS_ACCESS_KEY_ID }}  \
+            AWS_SECRET_ACCESS_KEY=${{ secrets.DEMO_AWS_SECRET_ACCESS_KEY }} aws autoscaling \
+            describe-instance-refreshes --auto-scaling-group-name \
+            $auto_scaling_group_name --query 'InstanceRefreshes[0].Status')
+            
+        echo "Refresh status : $refresh_status"
+        if[ "$refresh_status" != "\"InProgress\""]; then
         AWS_ACCESS_KEY_ID=${{ secrets.DEMO_AWS_ACCESS_KEY_ID }}  \
           AWS_SECRET_ACCESS_KEY=${{ secrets.DEMO_AWS_SECRET_ACCESS_KEY }} aws \
           autoscaling start-instance-refresh --auto-scaling-group-name $auto_scaling_group_name \
           --preferences "MinHealthyPercentage=100" --output text --query 'InstanceRefreshes[0].Status'
-        
+        fi
+
         while [ $refresh_status != "Successful"  ]; do
           refresh_status=$(AWS_ACCESS_KEY_ID=${{ secrets.DEMO_AWS_ACCESS_KEY_ID }}  \
             AWS_SECRET_ACCESS_KEY=${{ secrets.DEMO_AWS_SECRET_ACCESS_KEY }} aws autoscaling \
             describe-instance-refreshes --auto-scaling-group-name \
-            csye-auto-scaling-group-91a871d --query 'InstanceRefreshes[0].Status')
+            $auto_scaling_group_name --query 'InstanceRefreshes[0].Status')
           echo $refresh_status
         done
 
