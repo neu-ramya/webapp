@@ -164,7 +164,7 @@ jobs:
             --preferences "MinHealthyPercentage=100" --output text --query 'InstanceRefreshes[0].Status'
         fi
 
-        while [ "$refresh_status" != "Successful" ]; do
+        while [ "$refresh_status" != "\"Successful\"" ]; do
           refresh_status=$(AWS_ACCESS_KEY_ID=${{ secrets.DEMO_AWS_ACCESS_KEY_ID }}  \
             AWS_SECRET_ACCESS_KEY=${{ secrets.DEMO_AWS_SECRET_ACCESS_KEY }} aws autoscaling \
             describe-instance-refreshes --auto-scaling-group-name \
