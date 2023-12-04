@@ -62,5 +62,5 @@ AWS_DEFAULT_PROFILE=demo aws elbv2 create-listener \
     --protocol HTTPS \
     --port 443 \
     --ssl-policy ELBSecurityPolicy-2016-08 \
-    --certificates CertificateArn=<CERT_ARN> \
+    --certificates CertificateArn=arn:aws:iam::544530547780:server-certificate/certificate_object_name \
     --default-actions Type=forward,TargetGroupArn=<TARGET_GROUP_ARN>
