@@ -7,7 +7,7 @@ function validateDBConnection(req, res) {
     .authenticate()
     .then(() => {
       logger.info("Successfull DB connection");
-      res.status(200).end();
+      res.status(200).json({"status": "success"});
     })
     .catch((error) => {
       logger.fatal("Unable to connect to DB");
