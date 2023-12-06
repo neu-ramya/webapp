@@ -262,12 +262,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{droplet_ip}}/demo/assignments",
+							"raw": "{{droplet_ip}}/v3/assignments",
 							"host": [
 								"{{droplet_ip}}"
 							],
 							"path": [
-								"demo",
+								"v3",
 								"assignments"
 							]
 						}
@@ -308,12 +308,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}/demo/assignments/{{assignmentId}}",
+							"raw": "{{droplet_ip}}/v3/assignments/{{assignmentId}}",
 							"host": [
 								"{{droplet_ip}}"
 							],
 							"path": [
-								"demo",
+								"v3",
 								"assignments",
 								"{{assignmentId}}"
 							]
@@ -355,12 +355,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}/demo/assignments",
+							"raw": "{{droplet_ip}}/v3/assignments",
 							"host": [
 								"{{droplet_ip}}"
 							],
 							"path": [
-								"demo",
+								"v3",
 								"assignments"
 							]
 						}
@@ -401,12 +401,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}/demo/assignments?asdfasdf=asdfasf",
+							"raw": "{{droplet_ip}}/v3/assignments?asdfasdf=asdfasf",
 							"host": [
 								"{{droplet_ip}}"
 							],
 							"path": [
-								"demo",
+								"v3",
 								"assignments"
 							],
 							"query": [
@@ -465,12 +465,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{droplet_ip}}/demo/assignments",
+							"raw": "{{droplet_ip}}/v3/assignments",
 							"host": [
 								"{{droplet_ip}}"
 							],
 							"path": [
-								"demo",
+								"v3",
 								"assignments"
 							]
 						}
@@ -511,12 +511,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}/demo/assignments",
+							"raw": "{{droplet_ip}}/v3/assignments",
 							"host": [
 								"{{droplet_ip}}"
 							],
 							"path": [
-								"demo",
+								"v3",
 								"assignments"
 							]
 						}
@@ -545,12 +545,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}/demo/assignments",
+							"raw": "{{droplet_ip}}/v3/assignments",
 							"host": [
 								"{{droplet_ip}}"
 							],
 							"path": [
-								"demo",
+								"v3",
 								"assignments"
 							]
 						}
@@ -588,12 +588,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{droplet_ip}}/demo/assignments",
+							"raw": "{{droplet_ip}}/v3/assignments",
 							"host": [
 								"{{droplet_ip}}"
 							],
 							"path": [
-								"demo",
+								"v3",
 								"assignments"
 							]
 						}
@@ -643,12 +643,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{droplet_ip}}/demo/assignments",
+							"raw": "{{droplet_ip}}/v3/assignments",
 							"host": [
 								"{{droplet_ip}}"
 							],
 							"path": [
-								"demo",
+								"v3",
 								"assignments"
 							]
 						}
@@ -698,12 +698,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{droplet_ip}}/demo/assignments",
+							"raw": "{{droplet_ip}}/v3/assignments",
 							"host": [
 								"{{droplet_ip}}"
 							],
 							"path": [
-								"demo",
+								"v3",
 								"assignments"
 							]
 						}
@@ -753,12 +753,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{droplet_ip}}/demo/assignments/",
+							"raw": "{{droplet_ip}}/v3/assignments/",
 							"host": [
 								"{{droplet_ip}}"
 							],
 							"path": [
-								"demo",
+								"v3",
 								"assignments",
 								""
 							]
@@ -800,12 +800,12 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}/demo/assignments/{{assignmentId}}",
+							"raw": "{{droplet_ip}}/v3/assignments/{{assignmentId}}",
 							"host": [
 								"{{droplet_ip}}"
 							],
 							"path": [
-								"demo",
+								"v3",
 								"assignments",
 								"{{assignmentId}}"
 							]
@@ -856,12 +856,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{droplet_ip}}/demo/assignments/{{assignmentId}}",
+							"raw": "{{droplet_ip}}/v3/assignments/{{assignmentId}}",
 							"host": [
 								"{{droplet_ip}}"
 							],
 							"path": [
-								"demo",
+								"v3",
 								"assignments",
 								"{{assignmentId}}"
 							],
@@ -919,12 +919,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{droplet_ip}}/demo/assignments/{{assignmentId}}",
+							"raw": "{{droplet_ip}}/v3/assignments/{{assignmentId}}",
 							"host": [
 								"{{droplet_ip}}"
 							],
 							"path": [
-								"demo",
+								"v3",
 								"assignments",
 								"{{assignmentId}}"
 							],
@@ -982,12 +982,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{droplet_ip}}/demo/assignments/{{assignmentId}}",
+							"raw": "{{droplet_ip}}/v3/assignments/{{assignmentId}}",
 							"host": [
 								"{{droplet_ip}}"
 							],
 							"path": [
-								"demo",
+								"v3",
 								"assignments",
 								"{{assignmentId}}"
 							],
@@ -1045,12 +1045,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{droplet_ip}}/demo/assignments/{{assignmentId}}",
+							"raw": "{{droplet_ip}}/v3/assignments/{{assignmentId}}",
 							"host": [
 								"{{droplet_ip}}"
 							],
 							"path": [
-								"demo",
+								"v3",
 								"assignments",
 								"{{assignmentId}}"
 							]
@@ -1101,12 +1101,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{droplet_ip}}/demo/assignments/{{assignmentId}}",
+							"raw": "{{droplet_ip}}/v3/assignments/{{assignmentId}}",
 							"host": [
 								"{{droplet_ip}}"
 							],
 							"path": [
-								"demo",
+								"v3",
 								"assignments",
 								"{{assignmentId}}"
 							]
@@ -1148,12 +1148,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}/demo/assignments/",
+							"raw": "{{droplet_ip}}/v3/assignments/",
 							"host": [
 								"{{droplet_ip}}"
 							],
 							"path": [
-								"demo",
+								"v3",
 								"assignments",
 								""
 							]
@@ -1195,12 +1195,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}/demo/assignments/asdfasfdasf",
+							"raw": "{{droplet_ip}}/v3/assignments/asdfasfdasf",
 							"host": [
 								"{{droplet_ip}}"
 							],
 							"path": [
-								"demo",
+								"v3",
 								"assignments",
 								"asdfasfdasf"
 							]
@@ -1242,12 +1242,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{droplet_ip}}/demo/assignments/{{assignmentId}}",
+							"raw": "{{droplet_ip}}/v3/assignments/{{assignmentId}}",
 							"host": [
 								"{{droplet_ip}}"
 							],
 							"path": [
-								"demo",
+								"v3",
 								"assignments",
 								"{{assignmentId}}"
 							],
@@ -1305,12 +1305,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{droplet_ip}}/demo/assignments/{{assignmentId}}/submission",
+							"raw": "{{droplet_ip}}/v3/assignments/{{assignmentId}}/submission",
 							"host": [
 								"{{droplet_ip}}"
 							],
 							"path": [
-								"demo",
+								"v3",
 								"assignments",
 								"{{assignmentId}}",
 								"submission"
@@ -1356,7 +1356,7 @@
 		},
 		{
 			"key": "droplet_ip",
-			"value": "http://demo.ramyadevie.me",
+			"value": "https://demo.ramyadevie.me",
 			"type": "string",
 			"disabled": true
 		}
