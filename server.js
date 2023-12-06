@@ -24,7 +24,7 @@ const Assignment = require("./app/models/Assignment");
 })();
 
 app.use("/healthz", bodyParser.raw(), bodyParser.json(), bodyParser.urlencoded(), bodyParser.text(), require("./app/routes/healthz"));
-app.use("/assignments", bodyParser.raw(), bodyParser.json(), bodyParser.urlencoded(), bodyParser.text(), require("./app/routes/assignments"));
+app.use("/demo/assignments", bodyParser.raw(), bodyParser.json(), bodyParser.urlencoded(), bodyParser.text(), require("./app/routes/assignments"));
 
 app.listen(port, () => {
   logger.info(`Server is listening on port ${port}`);
